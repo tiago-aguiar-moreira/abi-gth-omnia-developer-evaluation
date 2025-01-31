@@ -1,6 +1,35 @@
 @Ambev.DeveloperEvaluation.WebApi_HostAddress = http://localhost:5119
 
-GET {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/weatherforecast/
+### Criar usuário
+
+POST {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/Users
+Content-Type: application/json
+
+{
+  "username": "vanessa.azevedo",
+  "password": "abc123XYZ#",
+  "phone": "11959178484",
+  "email": "vanessa.azevedo@email.com",
+  "status": 1,
+  "role": 3
+}
+
+### Buscar usuário pelo ID
+
+GET {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/Users/ef72b2fe-9d09-45a1-8956-e2ea4b125b9d
 Accept: application/json
 
-###
+### Remover usuários
+
+DELETE {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/Users/c2d4a9dc-3af7-4f3f-be4e-0c77f349b7bd
+Accept: application/json
+
+### Autenticar usuário
+
+POST {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/Auth
+Content-Type: application/json
+
+{
+  "email": "tiago.aguiar@email.com",
+  "password": "abc123XYZ#"
+}
