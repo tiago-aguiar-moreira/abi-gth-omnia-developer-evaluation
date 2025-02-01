@@ -24,6 +24,11 @@ Accept: application/json
 DELETE {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/Users/c2d4a9dc-3af7-4f3f-be4e-0c77f349b7bd
 Accept: application/json
 
+### Listar usuários
+
+GET {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/Users?_page=1&_size=50&_order=email%20asc,role%20desc
+Accept: application/json
+
 ### Autenticar usuário
 
 POST {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/Auth
