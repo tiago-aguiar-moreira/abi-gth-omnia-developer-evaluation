@@ -45,4 +45,12 @@ public interface IUserRepository
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>The lis of users if found, empty list if not found</returns>
     Task<List<User>> ListUsersAsync(CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Updates a user from the repository
+    /// </summary>
+    /// <param name="id">The unique identifier of the user to delete</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>True if the user was updated, false if not found</returns>
+    Task<bool> UpdateAsync(User user, CancellationToken cancellationToken = default);
 }

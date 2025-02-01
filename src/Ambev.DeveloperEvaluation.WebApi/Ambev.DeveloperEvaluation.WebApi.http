@@ -29,6 +29,21 @@ Accept: application/json
 GET {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/Users?_page=1&_size=50&_order=email%20asc,role%20desc
 Accept: application/json
 
+### Alterar usuário
+
+PUT {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/Users/2ab0d6c5-4f29-4e9e-b10e-e8392f4213da
+Content-Type: application/json
+
+{
+  "id": "2ab0d6c5-4f29-4e9e-b10e-e8392f4213da",
+  "username": "Vanessa Azevedo",
+  "password": "abc123XYZ#",
+  "phone": "11959178489",
+  "email": "vanessa.azevedo@email.com",
+  "status": 1,
+  "role": 3
+}
+
 ### Autenticar usuário
 
 POST {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/Auth
