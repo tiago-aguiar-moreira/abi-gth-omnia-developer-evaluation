@@ -42,7 +42,7 @@ public class User : BaseEntity, IUser
     /// Gets the user's role in the system.
     /// Determines the user's permissions and access levels.
     /// </summary>
-    public UserRole Role { get;     set; }
+    public UserRole Role { get; set; }
 
     /// <summary>
     /// Gets the user's current status.
@@ -141,6 +141,28 @@ public class User : BaseEntity, IUser
     public void Suspend()
     {
         Status = UserStatus.Suspended;
+        UpdatedAt = DateTime.UtcNow;
+    }
+
+    /// <summary>
+    /// Updates the user's information with new values.
+    /// This method modifies the user's username, email, phone, password, role, and status.
+    /// The UpdatedAt field is automatically updated to the current UTC time.
+    /// </summary>
+    /// <param name="username">The new username for the user.</param>
+    /// <param name="email">The new email address for the user.</param>
+    /// <param name="phone">The new phone number for the user.</param>
+    /// <param name="password">The new password for the user.</param>
+    /// <param name="role">The new role for the user.</param>
+    /// <param name="status">The new status for the user.</param>
+    public void UpdateUser(string username, string email, string phone, string password, UserRole role, UserStatus status)
+    {
+        Username = username;
+        Email = email;
+        Phone = phone;
+        Password = password;
+        Role = role;
+        Status = status;
         UpdatedAt = DateTime.UtcNow;
     }
 }

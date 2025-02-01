@@ -96,12 +96,13 @@ public class UserRepository : IUserRepository
         if (existingUser == null)
             return false;
 
-        existingUser.Username = user.Username;
-        existingUser.Password = user.Password;
-        existingUser.Phone = user.Phone;
-        existingUser.Email = user.Email;
-        existingUser.Status = user.Status;
-        existingUser.Role = user.Role;
+        existingUser.UpdateUser(
+            user.Username,
+            user.Email,
+            user.Phone,
+            user.Password,
+            user.Role,
+            user.Status);
 
         _context.Users.Update(existingUser);
         await _context.SaveChangesAsync(cancellationToken);
