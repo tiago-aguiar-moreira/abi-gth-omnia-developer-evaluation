@@ -29,13 +29,13 @@ public class ListUsersHandler : IRequestHandler<ListUsersCommand, ListUsersResul
     /// <summary>
     /// Handles the ListUsersCommand request
     /// </summary>
-    /// <param name="request">The ListUsersCommand command</param>
+    /// <param name="command">The ListUsersCommand command</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>The lis of users if found, empty list if not found</returns>
-    public async Task<ListUsersResult> Handle(ListUsersCommand request, CancellationToken cancellationToken)
+    public async Task<ListUsersResult> Handle(ListUsersCommand command, CancellationToken cancellationToken)
     {
         var validator = new ListUsersValidator();
-        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+        var validationResult = await validator.ValidateAsync(command, cancellationToken);
 
         if (!validationResult.IsValid)
             throw new ValidationException(validationResult.Errors);

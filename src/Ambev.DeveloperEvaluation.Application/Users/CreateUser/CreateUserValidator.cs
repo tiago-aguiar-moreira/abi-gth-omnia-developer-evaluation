@@ -7,21 +7,21 @@ namespace Ambev.DeveloperEvaluation.Application.Users.CreateUser;
 /// <summary>
 /// Validator for CreateUserCommand that defines validation rules for user creation command.
 /// </summary>
-public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
+public class CreateUserValidator : AbstractValidator<CreateUserCommand>
 {
     /// <summary>
-    /// Initializes a new instance of the CreateUserCommandValidator with defined validation rules.
+    /// Initializes a new instance of the CreateUserValidator with defined validation rules.
     /// </summary>
     /// <remarks>
     /// Validation rules include:
-    /// - Email: Must be in valid format (using EmailValidator)
-    /// - Username: Required, must be between 3 and 50 characters
+    /// - Email: Must be valid format (using EmailValidator)
+    /// - Username: Required, length between 3 and 50 characters
     /// - Password: Must meet security requirements (using PasswordValidator)
     /// - Phone: Must match international format (+X XXXXXXXXXX)
-    /// - Status: Cannot be set to Unknown
-    /// - Role: Cannot be set to None
+    /// - Status: Cannot be Unknown
+    /// - Role: Cannot be None
     /// </remarks>
-    public CreateUserCommandValidator()
+    public CreateUserValidator()
     {
         RuleFor(user => user.Email).SetValidator(new EmailValidator());
         RuleFor(user => user.Username).NotEmpty().Length(3, 50);
