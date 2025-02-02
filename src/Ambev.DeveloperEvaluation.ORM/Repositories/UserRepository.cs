@@ -68,6 +68,8 @@ public class UserRepository : IUserRepository
         if (user == null)
             return false;
 
+        user.Deactivate();
+
         _context.Users.Update(user);
         await _context.SaveChangesAsync(cancellationToken);
         return true;
