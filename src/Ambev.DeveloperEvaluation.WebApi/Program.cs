@@ -56,8 +56,6 @@ public class Program
 
             var app = builder.Build();
             app.UseMiddleware<ExceptionMiddleware>();
-            app.UseMiddleware<KeyNotFoundExceptionMiddleware>();
-            app.UseMiddleware<ValidationExceptionMiddleware>();
 
             if (app.Environment.IsDevelopment())
             {
