@@ -11,6 +11,7 @@ using Ambev.DeveloperEvaluation.WebApi.Features.Users.ListUsers;
 using Ambev.DeveloperEvaluation.WebApi.Features.Users.UpdateUser;
 using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Users;
@@ -18,6 +19,7 @@ namespace Ambev.DeveloperEvaluation.WebApi.Features.Users;
 /// <summary>
 /// Controller for managing user operations
 /// </summary>
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class UsersController : BaseController
