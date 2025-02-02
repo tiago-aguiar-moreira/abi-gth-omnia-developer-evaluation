@@ -1,13 +1,15 @@
-@Ambev.DeveloperEvaluation.WebApi_HostAddress = http://localhost:5119
+@hostAddress = https://localhost:7181
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI3ZDYzYjViNC01MzIzLTQyYjQtODAwMi0yN2MxMmFjNzM5ZjgiLCJ1bmlxdWVfbmFtZSI6IlRpYWdvIEFndWlhciIsInJvbGUiOiIzIiwibmJmIjoxNzM4NTM4MzMwLCJleHAiOjE3Mzg1NjcxMzAsImlhdCI6MTczODUzODMzMH0.JQNxX2VeFLhp324Rl7T4gUBUUL1Paorc0AOZzha6-Eg
 
 ### Criar usuário
 
-POST {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/Users
+POST {{hostAddress}}/api/Users
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "email": "joao.silva11111@example.com",
-  "username": "joaosilva",
+  "email": "tiago.aguiar1@example.com",
+  "username": "Tiago Aguiar",
   "password": "SenhaForte@123",
   "address": {
     "city": "São Paulo",
@@ -26,22 +28,26 @@ Content-Type: application/json
 
 ### Buscar usuário pelo ID
 
-GET {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/Users/75d7377d-8f7b-4092-b637-2e8d3d97bb06
+GET {{hostAddress}}/api/Users/75d7377d-8f7b-4092-b637-2e8d3d97bb16
+Authorization: Bearer {{token}}
 Accept: application/json
 
 ### Remover usuários
 
-DELETE {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/Users/c2d4a9dc-3af7-4f3f-be4e-0c77f349b7bd
+DELETE {{hostAddress}}/api/Users/75d7377d-8f7b-4092-b637-2e8d3d97bb06
+Authorization: Bearer {{token}}
 Accept: application/json
 
 ### Listar usuários
 
-GET {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/Users?_page=1&_size=50&_order=email%20asc,role%20desc
+GET {{hostAddress}}/api/Users?_page=1&_size=50&_order=email%20asc,role%20desc
+Authorization: Bearer {{token}}
 Accept: application/json
 
 ### Alterar usuário
 
-PUT {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/Users/75d7377d-8f7b-4092-b637-2e8d3d97bb06
+PUT {{hostAddress}}/api/Users/75d7377d-8f7b-4092-b637-2e8d3d97bb06
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {

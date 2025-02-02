@@ -1,11 +1,11 @@
-@Ambev.DeveloperEvaluation.WebApi_HostAddress = http://localhost:5119
+@hostAddress = https://localhost:7181
 
 ### Autenticar usuário
 
-POST {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/Auth
+POST {{hostAddress}}/api/Auth
 Content-Type: application/json
 
 {
-  "email": "tiago.aguiar@email.com",
-  "password": "abc123XYZ#"
+  "email": "tiago.aguiar1@example.com",
+  "password": "SenhaForte@123"
 }
