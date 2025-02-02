@@ -11,29 +11,24 @@
 - Response: 
   ```json
   {
-    "data": [
-      {
+    "data": [{
         "id": "integer",
         "email": "string",
         "username": "string",
         "password": "string",
-        "name": {
-          "firstname": "string",
-          "lastname": "string"
-        },
         "address": {
           "city": "string",
           "street": "string",
           "number": "integer",
           "zipcode": "string",
           "geolocation": {
-            "lat": "string",
-            "long": "string"
+            "lat": "decimal",
+            "long": "decimal"
           }
         },
         "phone": "string",
-        "status": "string (enum: Active, Inactive, Suspended)",
-        "role": "string (enum: Customer, Manager, Admin)"
+        "status": "integer (1: Active, 2: Inactive, 3: Suspended)",
+        "role": "integer (1: Customer, 2: Manager, 3: Admin)"
       }
     ],
     "totalItems": "integer",
@@ -50,49 +45,45 @@
     "email": "string",
     "username": "string",
     "password": "string",
-    "name": {
-      "firstname": "string",
-      "lastname": "string"
-    },
     "address": {
       "city": "string",
       "street": "string",
       "number": "integer",
       "zipcode": "string",
       "geolocation": {
-        "lat": "string",
-        "long": "string"
+        "lat": "decimal",
+        "long": "decimal"
       }
     },
     "phone": "string",
-    "status": "string (enum: Active, Inactive, Suspended)",
-    "role": "string (enum: Customer, Manager, Admin)"
+    "status": "integer (1: Active, 2: Inactive, 3: Suspended)",
+    "role": "integer (1: Customer, 2: Manager, 3: Admin)"
   }
   ```
 - Response: 
   ```json
   {
-    "id": "integer",
-    "email": "string",
-    "username": "string",
-    "password": "string",
-    "name": {
-      "firstname": "string",
-      "lastname": "string"
+    "data": {
+      "id": "integer",
+      "email": "string",
+      "username": "string",
+      "address": {
+        "city": "string",
+        "street": "string",
+        "number": "integer",
+        "zipcode": "string",
+        "geolocation": {
+          "lat": "decimal",
+          "long": "decimal"
+        }
+      },
+      "phone": "string",
+      "status": "integer (1: Active, 2: Inactive, 3: Suspended)",
+      "role": "integer (1: Customer, 2: Manager, 3: Admin)"
     },
-    "address": {
-      "city": "string",
-      "street": "string",
-      "number": "integer",
-      "zipcode": "string",
-      "geolocation": {
-        "lat": "string",
-        "long": "string"
-      }
-    },
-    "phone": "string",
-    "status": "string (enum: Active, Inactive, Suspended)",
-    "role": "string (enum: Customer, Manager, Admin)"
+    "success": true,
+    "message": "",
+    "errors": []
   }
   ```
 
@@ -103,27 +94,28 @@
 - Response: 
   ```json
   {
-    "id": "integer",
-    "email": "string",
-    "username": "string",
-    "password": "string",
-    "name": {
-      "firstname": "string",
-      "lastname": "string"
+    "data": {
+      "id": "integer",
+      "email": "string",
+      "username": "string",
+      "password": "string",
+      "address": {
+        "city": "string",
+        "street": "string",
+        "number": "integer",
+        "zipcode": "string",
+        "geolocation": {
+          "lat": "decimal",
+          "long": "decimal"
+        }
+      },
+      "phone": "string",
+      "status": "integer (1: Active, 2: Inactive, 3: Suspended)",
+      "role": "integer (1: Customer, 2: Manager, 3: Admin)"
     },
-    "address": {
-      "city": "string",
-      "street": "string",
-      "number": "integer",
-      "zipcode": "string",
-      "geolocation": {
-        "lat": "string",
-        "long": "string"
-      }
-    },
-    "phone": "string",
-    "status": "string (enum: Active, Inactive, Suspended)",
-    "role": "string (enum: Customer, Manager, Admin)"
+    "success": true,
+    "message": "",
+    "errors": []
   }
   ```
 
@@ -137,49 +129,46 @@
     "email": "string",
     "username": "string",
     "password": "string",
-    "name": {
-      "firstname": "string",
-      "lastname": "string"
-    },
     "address": {
       "city": "string",
       "street": "string",
       "number": "integer",
       "zipcode": "string",
       "geolocation": {
-        "lat": "string",
-        "long": "string"
+        "lat": "decimal",
+        "long": "decimal"
       }
     },
     "phone": "string",
-    "status": "string (enum: Active, Inactive, Suspended)",
-    "role": "string (enum: Customer, Manager, Admin)"
+    "status": "integer (1: Active, 2: Inactive, 3: Suspended)",
+    "role": "integer (1: Customer, 2: Manager, 3: Admin)"
   }
   ```
 - Response: 
   ```json
   {
-    "id": "integer",
-    "email": "string",
-    "username": "string",
-    "password": "string",
-    "name": {
-      "firstname": "string",
-      "lastname": "string"
+    "data":
+    {
+      "id": "integer",
+      "email": "string",
+      "username": "string",
+      "address": {
+        "city": "string",
+        "street": "string",
+        "number": "integer",
+        "zipcode": "string",
+        "geolocation": {
+          "lat": "decimal",
+          "long": "decimal"
+        }
+      },
+      "phone": "string",
+      "status": "integer (1: Active, 2: Inactive, 3: Suspended)",
+      "role": "integer (1: Customer, 2: Manager, 3: Admin)"
     },
-    "address": {
-      "city": "string",
-      "street": "string",
-      "number": "integer",
-      "zipcode": "string",
-      "geolocation": {
-        "lat": "string",
-        "long": "string"
-      }
-    },
-    "phone": "string",
-    "status": "string (enum: Active, Inactive, Suspended)",
-    "role": "string (enum: Customer, Manager, Admin)"
+    "success": true,
+    "message": "",
+    "errors": []
   }
   ```
 
@@ -189,29 +178,8 @@
   - `id`: User ID
 - Response: 
   ```json
-  {
-    "id": "integer",
-    "email": "string",
-    "username": "string",
-    "password": "string",
-    "name": {
-      "firstname": "string",
-      "lastname": "string"
-    },
-    "address": {
-      "city": "string",
-      "street": "string",
-      "number": "integer",
-      "zipcode": "string",
-      "geolocation": {
-        "lat": "string",
-        "long": "string"
-      }
-    },
-    "phone": "string",
-    "status": "string (enum: Active, Inactive, Suspended)",
-    "role": "string (enum: Customer, Manager, Admin)"
-  }
+  
+  
   ```
 <br/>
 <div style="display: flex; justify-content: space-between;">
