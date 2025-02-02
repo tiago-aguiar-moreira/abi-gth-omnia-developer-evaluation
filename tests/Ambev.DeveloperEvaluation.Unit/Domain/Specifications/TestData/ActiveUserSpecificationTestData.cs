@@ -27,9 +27,9 @@ public static class ActiveUserSpecificationTestData
             Email = f.Internet.Email(),
             Password = $"Test@{f.Random.Number(100, 999)}",
             Username = f.Name.FirstName(),
-            Status = f.PickRandom<UserStatus>(),
+            Status = (short)f.PickRandom<UserStatus>(),
             Phone = $"+55{f.Random.Number(11, 99)}{f.Random.Number(100000000, 999999999)}",
-            Role = f.PickRandom<UserRole> ()
+            Role = (short)f.PickRandom<UserRole> ()
         });
 
     /// <summary>
@@ -40,7 +40,7 @@ public static class ActiveUserSpecificationTestData
     public static User GenerateUser(UserStatus status)
     {
         var user = userFaker.Generate();
-        user.Status = status;
+        user.Status = (short)status;
         return user;
     }
 }

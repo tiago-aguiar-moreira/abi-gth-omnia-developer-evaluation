@@ -86,12 +86,9 @@ public class UsersController : BaseController
         var command = _mapper.Map<GetUserCommand>(request.Id);
         var response = await _mediator.Send(command, cancellationToken);
 
-        return Ok(new ApiResponseWithData<GetUserResponse>
-        {
-            Success = true,
-            Message = "User retrieved successfully",
-            Data = _mapper.Map<GetUserResponse>(response)
-        });
+        return Ok(
+            _mapper.Map<GetUserResponse>(response),
+            "User retrieved successfully");
     }
 
     /// <summary>
@@ -116,11 +113,7 @@ public class UsersController : BaseController
         var command = _mapper.Map<DeleteUserCommand>(request.Id);
         await _mediator.Send(command, cancellationToken);
 
-        return Ok(new ApiResponse
-        {
-            Success = true,
-            Message = "User deleted successfully"
-        });
+        return Ok("User deleted successfully");
     }
 
     /// <summary>
@@ -136,12 +129,9 @@ public class UsersController : BaseController
     {
         var response = await _mediator.Send(new ListUsersCommand(), cancellationToken);
 
-        return Ok(new ApiResponseWithData<ListUsersResponse>
-        {
-            Success = true,
-            Message = "Users retrieved successfully",
-            Data = _mapper.Map<ListUsersResponse>(response)
-        });
+        return Ok(
+            _mapper.Map<ListUsersResponse>(response),
+            "Users retrieved successfully");
     }
 
     /// <summary>
@@ -160,7 +150,7 @@ public class UsersController : BaseController
         CancellationToken cancellationToken)
     {
         if (request.Id != id)
-            return BadRequest(ModelState);
+            return BadRequest("The ID provided in the route does not match the ID in the request body");
 
         var validator = new UpdateUserRequestValidator();
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
@@ -171,10 +161,6 @@ public class UsersController : BaseController
         var command = _mapper.Map<UpdateUserCommand>(request);
         await _mediator.Send(command, cancellationToken);
 
-        return Ok(new ApiResponse
-        {
-            Success = true,
-            Message = "User updated successfully"
-        });
+        return Ok("User updated successfully");
     }
 }

@@ -6,7 +6,7 @@
 public class UpdateUserResult
 {
     /// <summary>
-    /// Indicates whether the deletion was successful
+    /// Indicates whether the update was successful
     /// </summary>
     public bool Success { get; set; }
 }

@@ -19,13 +19,13 @@ public class UserTests
     {
         // Arrange
         var user = UserTestData.GenerateValidUser();
-        user.Status = UserStatus.Suspended;
+        user.Status = (short)UserStatus.Suspended;
 
         // Act
         user.Activate();
 
         // Assert
-        Assert.Equal(UserStatus.Active, user.Status);
+        Assert.Equal((short)UserStatus.Active, user.Status);
     }
 
     /// <summary>
@@ -36,13 +36,13 @@ public class UserTests
     {
         // Arrange
         var user = UserTestData.GenerateValidUser();
-        user.Status = UserStatus.Active;
+        user.Status = (short)UserStatus.Active;
 
         // Act
         user.Suspend();
 
         // Assert
-        Assert.Equal(UserStatus.Suspended, user.Status);
+        Assert.Equal((short)UserStatus.Suspended, user.Status);
     }
 
     /// <summary>
@@ -75,8 +75,8 @@ public class UserTests
             Password = UserTestData.GenerateInvalidPassword(), // Invalid: doesn't meet password requirements
             Email = UserTestData.GenerateInvalidEmail(), // Invalid: not a valid email
             Phone = UserTestData.GenerateInvalidPhone(), // Invalid: doesn't match pattern
-            Status = UserStatus.Unknown, // Invalid: cannot be Unknown
-            Role = UserRole.None // Invalid: cannot be None
+            Status = (short)UserStatus.Unknown, // Invalid: cannot be Unknown
+            Role = (short)UserRole.None // Invalid: cannot be None
         };
 
         // Act

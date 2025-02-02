@@ -173,7 +173,7 @@ public class UserValidatorTests
     {
         // Arrange
         var user = UserTestData.GenerateValidUser();
-        user.Status = UserStatus.Unknown;
+        user.Status = (short)UserStatus.Unknown;
 
         // Act
         var result = _validator.TestValidate(user);
@@ -195,7 +195,7 @@ public class UserValidatorTests
     {
         // Arrange
         var user = UserTestData.GenerateValidUser();
-        user.Role = UserRole.None;
+        user.Role = (short)UserRole.None;
 
         // Act
         var result = _validator.TestValidate(user);

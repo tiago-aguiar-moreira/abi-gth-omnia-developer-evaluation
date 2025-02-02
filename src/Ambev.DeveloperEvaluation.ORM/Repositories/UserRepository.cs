@@ -68,7 +68,7 @@ public class UserRepository : IUserRepository
         if (user == null)
             return false;
 
-        _context.Users.Remove(user);
+        _context.Users.Update(user);
         await _context.SaveChangesAsync(cancellationToken);
         return true;
     }
@@ -98,11 +98,17 @@ public class UserRepository : IUserRepository
 
         existingUser.UpdateUser(
             user.Username,
+            user.Password,
             user.Email,
             user.Phone,
-            user.Password,
+            user.Status,
             user.Role,
-            user.Status);
+            user.City,
+            user.Street,
+            user.Number,
+            user.Zipcode,
+            user.Latitude,
+            user.Longitude);
 
         _context.Users.Update(existingUser);
         await _context.SaveChangesAsync(cancellationToken);

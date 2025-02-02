@@ -55,6 +55,36 @@ public class UpdateUserCommand : IRequest<UpdateUserResult>
     /// </summary>
     public UserRole Role { get; set; }
 
+    /// <summary>
+    /// Gets or sets the city where the user resides.
+    /// </summary>
+    public string City { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Gets or sets the street name of the user's address.
+    /// </summary>
+    public string Street { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Gets or sets the house or apartment number.
+    /// </summary>
+    public string Number { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Gets or sets the postal code of the user's address.
+    /// </summary>
+    public string Zipcode { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Gets or sets the latitude coordinate of the address.
+    /// </summary>
+    public decimal Latitude { get; set; }
+
+    /// <summary>
+    /// Gets or sets the longitude coordinate of the address.
+    /// </summary>
+    public decimal Longitude { get; set; }
+
 
     public ValidationResultDetail Validate()
     {

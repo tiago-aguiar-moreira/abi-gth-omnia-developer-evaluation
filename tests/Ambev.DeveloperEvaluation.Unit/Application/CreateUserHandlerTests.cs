@@ -47,8 +47,8 @@ public class CreateUserHandlerTests
             Password = command.Password,
             Email = command.Email,
             Phone = command.Phone,
-            Status = command.Status,
-            Role = command.Role
+            Status = (byte)command.Status,
+            Role = (byte)command.Role
         };
 
         var result = new CreateUserResult
@@ -106,8 +106,8 @@ public class CreateUserHandlerTests
             Password = command.Password,
             Email = command.Email,
             Phone = command.Phone,
-            Status = command.Status,
-            Role = command.Role
+            Status = (byte)command.Status,
+            Role = (byte)command.Role
         };
 
         _mapper.Map<User>(command).Returns(user);
@@ -140,8 +140,8 @@ public class CreateUserHandlerTests
             Password = command.Password,
             Email = command.Email,
             Phone = command.Phone,
-            Status = command.Status,
-            Role = command.Role
+            Status = (byte)command.Status,
+            Role = (byte)command.Role
         };
 
         _mapper.Map<User>(command).Returns(user);

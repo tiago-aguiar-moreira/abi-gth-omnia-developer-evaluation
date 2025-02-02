@@ -19,6 +19,8 @@ public class Program
         try
         {
             Log.Information("Starting web application");
+            
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
             WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
             builder.AddDefaultLogging();
@@ -35,7 +37,7 @@ public class Program
                     b => b.MigrationsAssembly("Ambev.DeveloperEvaluation.ORM")
                 )
             );
-
+            
             builder.Services.AddJwtAuthentication(builder.Configuration);
 
             builder.RegisterDependencies();

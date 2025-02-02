@@ -6,7 +6,6 @@ using Ambev.DeveloperEvaluation.Domain.Validation;
 
 namespace Ambev.DeveloperEvaluation.Domain.Entities;
 
-
 /// <summary>
 /// Represents a user in the system with authentication and profile information.
 /// This entity follows domain-driven design principles and includes business rules validation.
@@ -42,18 +41,48 @@ public class User : BaseEntity, IUser
     /// Gets the user's role in the system.
     /// Determines the user's permissions and access levels.
     /// </summary>
-    public UserRole Role { get; set; }
+    public short Role { get; set; }
 
     /// <summary>
     /// Gets the user's current status.
     /// Indicates whether the user is active, inactive, or blocked in the system.
     /// </summary>
-    public UserStatus Status { get; set; }
+    public short Status { get; set; }
+
+    /// <summary>
+    /// City where the user resides.
+    /// </summary>
+    public string City { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Street address of the user.
+    /// </summary>
+    public string Street { get; set; } = string.Empty;
+
+    /// <summary>
+    /// House or building number of the user.
+    /// </summary>
+    public string Number { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Postal code (zip code) of the user's address.
+    /// </summary>
+    public string Zipcode { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Latitude of the user's location.
+    /// </summary>
+    public decimal Latitude { get; set; }
+
+    /// <summary>
+    /// Longitude of the user's location.
+    /// </summary>
+    public decimal Longitude { get; set; }
 
     /// <summary>
     /// Gets the date and time when the user was created.
     /// </summary>
-    public DateTime CreatedAt { get; set; }
+    public DateTime CreatedAt { get ; set; }
 
     /// <summary>
     /// Gets the date and time of the last update to the user's information.
@@ -120,7 +149,7 @@ public class User : BaseEntity, IUser
     /// </summary>
     public void Activate()
     {
-        Status = UserStatus.Active;
+        Status = (byte)UserStatus.Active;
         UpdatedAt = DateTime.UtcNow;
     }
 
@@ -130,7 +159,7 @@ public class User : BaseEntity, IUser
     /// </summary>
     public void Deactivate()
     {
-        Status = UserStatus.Inactive;
+        Status = (byte)UserStatus.Inactive;
         UpdatedAt = DateTime.UtcNow;
     }
 
@@ -140,29 +169,40 @@ public class User : BaseEntity, IUser
     /// </summary>
     public void Suspend()
     {
-        Status = UserStatus.Suspended;
+        Status = (byte)UserStatus.Suspended;
         UpdatedAt = DateTime.UtcNow;
     }
 
     /// <summary>
-    /// Updates the user's information with new values.
-    /// This method modifies the user's username, email, phone, password, role, and status.
-    /// The UpdatedAt field is automatically updated to the current UTC time.
+    /// Updates user properties, address details, and password.
     /// </summary>
-    /// <param name="username">The new username for the user.</param>
-    /// <param name="email">The new email address for the user.</param>
-    /// <param name="phone">The new phone number for the user.</param>
-    /// <param name="password">The new password for the user.</param>
-    /// <param name="role">The new role for the user.</param>
-    /// <param name="status">The new status for the user.</param>
-    public void UpdateUser(string username, string email, string phone, string password, UserRole role, UserStatus status)
+    /// <param name="username">The new username.</param>
+    /// <param name="password">The new password.</param>
+    /// <param name="email">The new email address.</param>
+    /// <param name="phone">The new phone number.</param>
+    /// <param name="status">The new user status.</param>
+    /// <param name="role">The new user role.</param>
+    /// <param name="city">The new city.</param>
+    /// <param name="street">The new street name.</param>
+    /// <param name="number">The new house/building number.</param>
+    /// <param name="zipCode">The new postal code.</param>
+    /// <param name="latitude">The new latitude coordinate.</param>
+    /// <param name="longitude">The new longitude coordinate.</param>
+    public void UpdateUser(string username, string password, string email, string phone, short status, short role,
+        string city, string street, string number, string zipCode, decimal latitude, decimal longitude)
     {
         Username = username;
+        Password = password;
         Email = email;
         Phone = phone;
-        Password = password;
-        Role = role;
         Status = status;
+        Role = role;
+        City = city;
+        Street = street;
+        Number = number;
+        Zipcode = zipCode;
+        Latitude = latitude;
+        Longitude = longitude;
         UpdatedAt = DateTime.UtcNow;
     }
 }
