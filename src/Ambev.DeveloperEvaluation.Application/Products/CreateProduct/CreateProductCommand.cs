@@ -1,20 +1,22 @@
-﻿namespace Ambev.DeveloperEvaluation.Application.Products;
+﻿using MediatR;
+
+namespace Ambev.DeveloperEvaluation.Application.Products.CreateProduct;
 
 /// <summary>
-/// Represents the response returned after successfully creating a new product.
+/// Command for creating a new user.
 /// </summary>
 /// <remarks>
-/// This response contains the unique identifier of the newly created product,
-/// which can be used for subsequent operations or reference.
+/// This command is used to capture the required data for creating a product. 
+/// It implements <see cref="IRequest{TResponse}"/> to initiate the request 
+/// that returns a <see cref="CreateProductResult"/>.
+/// 
+/// The data provided in this command is validated using the 
+/// <see cref="CreateProductValidator"/> which extends 
+/// <see cref="AbstractValidator{T}"/> to ensure that the fields are correctly 
+/// populated and follow the required rules.
 /// </remarks>
-public class CreateProductResult
+public class CreateProductCommand : IRequest<CreateProductResult>
 {
-    /// <summary>
-    /// Gets or sets the unique identifier of the newly created product.
-    /// </summary>
-    /// <value>A GUID that uniquely identifies the created product in the system.</value>
-    public Guid Id { get; set; }
-
     /// <summary>
     /// The product title.
     /// </summary>

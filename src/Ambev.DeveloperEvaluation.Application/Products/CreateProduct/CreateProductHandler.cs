@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ambev.DeveloperEvaluation.Application.Products;
+namespace Ambev.DeveloperEvaluation.Application.Products.CreateProduct;
 
 /// <summary>
 /// Handler for processing CreateProductCommand requests
@@ -49,7 +49,7 @@ public class CreateProductHandler : IRequestHandler<CreateProductCommand, Create
             throw new InvalidOperationException($"Product with title {command.Title} already exists");
 
         var product = _mapper.Map<Product>(command);
-        
+
         var createdUser = await _productRepository.CreateAsync(product, cancellationToken);
         var result = _mapper.Map<CreateProductResult>(createdUser);
         return result;
