@@ -43,7 +43,7 @@ public interface IUserRepository
     /// Retrieves a list of users
     /// </summary>
     /// <param name="cancellationToken">Cancellation token</param>
-    /// <returns>The lis of users if found, empty list if not found</returns>
+    /// <returns>The list of users if found, empty list if not found</returns>
     Task<List<User>> ListUsersAsync(CancellationToken cancellationToken = default);
 
     /// <summary>

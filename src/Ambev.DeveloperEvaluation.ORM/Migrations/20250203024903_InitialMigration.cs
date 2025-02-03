@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Ambev.DeveloperEvaluation.ORM.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigrations : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,16 +20,16 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
                     Email = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     Phone = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
                     Password = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    Role = table.Column<string>(type: "smallint", maxLength: 20, nullable: false),
-                    Status = table.Column<string>(type: "smallint", maxLength: 20, nullable: false),
+                    Role = table.Column<short>(type: "smallint", maxLength: 20, nullable: false),
+                    Status = table.Column<short>(type: "smallint", maxLength: 20, nullable: false),
                     City = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     Street = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     Number = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false),
                     Zipcode = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false),
                     Latitude = table.Column<decimal>(type: "numeric(9,6)", nullable: false),
                     Longitude = table.Column<decimal>(type: "numeric(9,6)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "timestamp", nullable: true)
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
