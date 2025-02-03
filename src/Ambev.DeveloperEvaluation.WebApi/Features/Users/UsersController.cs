@@ -111,7 +111,7 @@ public class UsersController : BaseController
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
 
         if (!validationResult.IsValid)
-            return BadRequest(validationResult.Errors);
+            throw new ValidationException(validationResult.Errors);
 
         var command = _mapper.Map<DeleteUserCommand>(request.Id);
         await _mediator.Send(command, cancellationToken);
@@ -140,7 +140,7 @@ public class UsersController : BaseController
     /// <summary>
     /// Updates a user by their ID
     /// </summary>
-    /// <param name="id">The unique identifier of the user to delete</param>
+    /// <param name="id">The unique identifier of the user to update</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>Success response if the user was updated</returns>
     [HttpPut("{id}")]
@@ -153,7 +153,7 @@ public class UsersController : BaseController
         CancellationToken cancellationToken)
     {
         if (request.Id != id)
-            return BadRequest("The ID provided in the route does not match the ID in the request body");
+            throw new ValidationException("The ID provided in the route does not match the ID in the request body");
 
         var validator = new UpdateUserRequestValidator();
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
