@@ -1,0 +1,88 @@
+@hostAddress = https://localhost:7181
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI3ZDYzYjViNC01MzIzLTQyYjQtODAwMi0yN2MxMmFjNzM5ZjgiLCJ1bmlxdWVfbmFtZSI6IlRpYWdvIEFndWlhciIsInJvbGUiOiIzIiwibmJmIjoxNzM4NTM4MzMwLCJleHAiOjE3Mzg1NjcxMzAsImlhdCI6MTczODUzODMzMH0.JQNxX2VeFLhp324Rl7T4gUBUUL1Paorc0AOZzha6-Eg
+
+### Listar produtos
+
+GET {{hostAddress}}/api/Products?_page=1&_size=10&_order=price desc, title asc
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+### Cadastra um novo produto
+
+POST {{hostAddress}}/api/Products
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "Smartphone S21 Ultra",
+  "price": 1299.99,
+  "description": "Smartphone com câmera de 50MP e tela AMOLED.",
+  "category": "Eletrônicos",
+  "image": "https://meusite.com/imagem-smartphone.jpg",
+  "rating": {
+    "rate": 4.8,
+    "count": 230
+  }
+}
+
+### Obter produto por ID
+
+GET {{hostAddress}}/api/Products/75e326bb-e947-44f7-a3da-35fdc6537ed6
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+### Altera produto
+
+PUT {{hostAddress}}/api/Products/75e326bb-e947-44f7-a3da-35fdc6537ed6
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "id": "75e326bb-e947-44f7-a3da-35fdc6537ed6",
+  "title": "Microondas",
+  "price": 1299.99,
+  "description": "",
+  "category": "Eletrodomestico",
+  "image": "https://meusite.com/imagem-smartphone.jpg",
+  "rating": {
+    "rate": 4.8,
+    "count": 230
+  }
+}
+
+### Altera produto
+
+PUT {{hostAddress}}/api/Products/75e326bb-e947-44f7-a3da-35fdc6537ed6
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "id": "75e326bb-e947-44f7-a3da-35fdc6537ed6",
+  "title": "Smartphone S21 Ultra",
+  "price": 1299.99,
+  "description": "Smartphone com câmera de 50MP e tela AMOLED.",
+  "category": "Eletrônicos",
+  "image": "https://meusite.com/imagem-smartphone.jpg",
+  "rating": {
+    "rate": 4.8,
+    "count": 230
+  }
+}
+
+### Remove produto
+
+DELETE {{hostAddress}}/api/Products/75e326bb-e947-44f7-a3da-35fdc6537ed6
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+### Recupera todas as cotegorias de produtos
+
+GET {{hostAddress}}/api/Products/Catetories
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+### Recupera todos os produtos de uma cotegoria
+
+GET {{hostAddress}}/api/Products/Catetories/Eletrodomestico
+Authorization: Bearer {{token}}
+Content-Type: application/json
