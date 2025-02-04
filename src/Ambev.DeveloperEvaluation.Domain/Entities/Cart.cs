@@ -6,17 +6,12 @@ public class Cart : BaseEntity
     /// <summary>
     /// Unique identifier for the sale.
     /// </summary>
-    public Guid SaleNumber { get; set; }
+    public int SaleNumber { get; set; }
 
     /// <summary>
     /// Date when the sale was made.
     /// </summary>
     public DateTime SaleDate { get; set; }
-
-    /// <summary>
-    /// Customer who made the purchase.
-    /// </summary>
-    public string Customer { get; set; } = string.Empty;
 
     /// <summary>
     /// Total value of the sale.
@@ -31,7 +26,7 @@ public class Cart : BaseEntity
     /// <summary>
     /// List of sold products.
     /// </summary>
-    public List<CartItem> Items { get; set; } = new();
+    public List<CartItem> Items { get; set; } = [];
 
     /// <summary>
     /// Indicates whether the sale is canceled.
@@ -47,4 +42,10 @@ public class Cart : BaseEntity
     /// Gets the date and time of the last update to the user's information.
     /// </summary>
     public DateTime? UpdatedAt { get; set; }
+
+    /// <summary>
+    /// User who owns the cart.
+    /// </summary>
+    public Guid UserId { get; set; }
+    public User User { get; set; } = null!;
 }

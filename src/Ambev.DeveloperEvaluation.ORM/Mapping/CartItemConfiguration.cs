@@ -9,9 +9,9 @@ public class CartItemConfiguration : IEntityTypeConfiguration<CartItem>
     {
         builder.HasKey(ci => ci.Id);
 
-        builder.Property(ci => ci.Product)
-            .IsRequired()
-            .HasMaxLength(200);
+        builder.Property(u => u.Id)
+            .HasColumnType("uuid")
+            .HasDefaultValueSql("gen_random_uuid()");
 
         builder.Property(ci => ci.Quantity)
             .IsRequired();
@@ -29,5 +29,10 @@ public class CartItemConfiguration : IEntityTypeConfiguration<CartItem>
             .IsRequired();
 
         builder.Property(ci => ci.UpdatedAt);
+
+        builder.HasOne(c => c.Product)
+            .WithMany()
+            .HasForeignKey(c => c.ProductId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

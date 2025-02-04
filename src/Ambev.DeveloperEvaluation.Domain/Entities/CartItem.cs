@@ -4,9 +4,10 @@ namespace Ambev.DeveloperEvaluation.Domain.Entities;
 public class CartItem : BaseEntity
 {
     /// <summary>
-    /// Product name or identifier.
+    /// Product identifier.
     /// </summary>
-    public string Product { get; set; } = string.Empty;
+    public Guid ProductId { get; set; }
+    public Product Product { get; set; } = null!;
 
     /// <summary>
     /// Quantity of the product sold.
@@ -37,4 +38,9 @@ public class CartItem : BaseEntity
     /// Gets the date and time of the last update to the cart item's information.
     /// </summary>
     public DateTime? UpdatedAt { get; set; }
+
+    public CartItem()
+    {
+        CreatedAt = DateTime.UtcNow;
+    }
 }
