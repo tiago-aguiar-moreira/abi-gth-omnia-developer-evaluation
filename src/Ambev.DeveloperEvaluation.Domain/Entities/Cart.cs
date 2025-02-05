@@ -26,7 +26,7 @@ public class Cart : BaseEntity
     /// <summary>
     /// List of sold products.
     /// </summary>
-    public List<CartItem> Items { get; set; } = [];
+    public List<CartItem> Products { get; set; } = [];
 
     /// <summary>
     /// Indicates whether the sale is canceled.
@@ -47,5 +47,46 @@ public class Cart : BaseEntity
     /// User who owns the cart.
     /// </summary>
     public Guid UserId { get; set; }
-    public User User { get; set; } = null!;
+
+    public Cart() => CreatedAt = DateTime.UtcNow;
+
+    /// <summary>
+    /// Cancel the cart.
+    /// Changes the user's status to Inactive.
+    /// </summary>
+    public void Cancel()
+    {
+        IsCanceled = true;
+        UpdatedAt = DateTime.UtcNow;
+    }
+
+    public void Update(int saleNumber, DateTime saleDate, string branch, List<CartItem> products)
+    {
+        SaleNumber = saleNumber;
+        SaleDate = saleDate;
+        Branch = branch;
+        Products = products;
+        IsCanceled = false;
+        CreatedAt = DateTime.UtcNow;
+    }
+
+    public void ApplyDiscounts()
+    {
+        foreach (var product in Products)
+            product.Discount = CalculateDiscount(product.Quantity, product.UnitPrice);
+    }
+
+    private decimal CalculateDiscount(int quantity, decimal unitPrice)
+    {
+        if (quantity >= 10 && quantity <= 20)
+            return unitPrice * quantity * 0.2m;
+
+        if (quantity >= 4)
+            return unitPrice * quantity * 0.1m;
+
+        return 0m;
+    }
+
+    public void SetTotalAmount()
+        => TotalAmount = Products.Sum(item => (item.UnitPrice * item.Quantity) - item.Discount);
 }

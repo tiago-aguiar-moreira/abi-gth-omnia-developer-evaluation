@@ -32,11 +32,11 @@ public class CartConfiguration : IEntityTypeConfiguration<Cart>
 
         builder.Property(c => c.UpdatedAt);
 
-        builder.HasMany(c => c.Items)
+        builder.HasMany(c => c.Products)
             .WithOne()
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasOne(c => c.User)
+        builder.HasOne<User>()
             .WithMany()
             .HasForeignKey(c => c.UserId)
             .OnDelete(DeleteBehavior.Restrict);

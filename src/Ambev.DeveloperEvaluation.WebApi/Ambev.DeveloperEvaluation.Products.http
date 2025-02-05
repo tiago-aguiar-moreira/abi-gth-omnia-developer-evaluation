@@ -14,10 +14,10 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "title": "Smartphone S21 Ultra",
+  "title": "Geladeira",
   "price": 1299.99,
-  "description": "Smartphone com câmera de 50MP e tela AMOLED.",
-  "category": "Eletrônicos",
+  "description": "abc teste",
+  "category": "Eletrodomestico",
   "image": "https://meusite.com/imagem-smartphone.jpg",
   "rating": {
     "rate": 4.8,
@@ -50,28 +50,9 @@ Content-Type: application/json
   }
 }
 
-### Altera produto
-
-PUT {{hostAddress}}/api/Products/75e326bb-e947-44f7-a3da-35fdc6537ed6
-Authorization: Bearer {{token}}
-Content-Type: application/json
-
-{
-  "id": "75e326bb-e947-44f7-a3da-35fdc6537ed6",
-  "title": "Smartphone S21 Ultra",
-  "price": 1299.99,
-  "description": "Smartphone com câmera de 50MP e tela AMOLED.",
-  "category": "Eletrônicos",
-  "image": "https://meusite.com/imagem-smartphone.jpg",
-  "rating": {
-    "rate": 4.8,
-    "count": 230
-  }
-}
-
 ### Remove produto
 
-DELETE {{hostAddress}}/api/Products/75e326bb-e947-44f7-a3da-35fdc6537ed6
+DELETE {{hostAddress}}/api/Products/1fb56425-1cfe-493b-b81d-6d3d361fe8df
 Authorization: Bearer {{token}}
 Content-Type: application/json
 

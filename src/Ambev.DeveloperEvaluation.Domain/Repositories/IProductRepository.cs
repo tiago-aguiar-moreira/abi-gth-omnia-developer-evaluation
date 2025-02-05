@@ -40,6 +40,13 @@ public interface IProductRepository
     Task<List<Product>> ListAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Retrieves a list of products by a list of ID's
+    /// </summary>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>The list of products if found, empty list if not found</returns>
+    Task<List<Product>> ListAsync(IEnumerable<Guid> productId, CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// Updates a new product in the repository
     /// </summary>
     /// <param name="product">The product to update</param>

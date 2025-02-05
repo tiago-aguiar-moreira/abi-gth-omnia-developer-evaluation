@@ -15,10 +15,7 @@ public class ProductRepository : IProductRepository
     /// Initializes a new instance of ProductRepository
     /// </summary>
     /// <param name="context">The database context</param>
-    public ProductRepository(DefaultContext context)
-    {
-        _context = context;
-    }
+    public ProductRepository(DefaultContext context) => _context = context;
 
     /// <summary>
     /// Creates a new product in the database
@@ -84,6 +81,14 @@ public class ProductRepository : IProductRepository
     /// <returns>The list of products if found, empty list if not found</returns>
     public async Task<List<Product>> ListAsync(CancellationToken cancellationToken = default)
         => await _context.Products.ToListAsync(cancellationToken);
+
+    /// <summary>
+    /// Retrieves a list of products by a list of ID's
+    /// </summary>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>The list of products if found, empty list if not found</returns>
+    public async Task<List<Product>> ListAsync(IEnumerable<Guid> productId, CancellationToken cancellationToken = default)
+        => await _context.Products.Where(w => productId.Contains(w.Id)).ToListAsync(cancellationToken);
 
     /// <summary>
     /// Updates a new product in the repository

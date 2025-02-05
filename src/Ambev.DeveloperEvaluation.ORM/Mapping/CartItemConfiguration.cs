@@ -23,16 +23,14 @@ public class CartItemConfiguration : IEntityTypeConfiguration<CartItem>
         builder.Property(ci => ci.Discount)
             .HasColumnType("decimal(18,2)");
 
-        builder.Ignore(ci => ci.TotalPrice);
-
         builder.Property(ci => ci.CreatedAt)
             .IsRequired();
 
         builder.Property(ci => ci.UpdatedAt);
 
-        builder.HasOne(c => c.Product)
+        builder.HasOne<Product>()
             .WithMany()
-            .HasForeignKey(c => c.ProductId)
+            .HasForeignKey(ci => ci.ProductId)
             .OnDelete(DeleteBehavior.Restrict);
     }
 }
