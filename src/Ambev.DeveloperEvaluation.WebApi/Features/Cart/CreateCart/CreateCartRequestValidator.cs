@@ -30,5 +30,9 @@ public class CreateCartRequestValidator : AbstractValidator<CreateCartRequest>
             item.RuleFor(i => i.Quantity)
                 .GreaterThan(0).WithMessage("Quantity must be greater than zero.");
         });
+
+        RuleFor(cart => cart.Products)
+            .Must(products => products.GroupBy(p => p.ProductId).All(g => g.Count() == 1))
+            .WithMessage("Duplicate products are not allowed in the cart.");
     }
 }
