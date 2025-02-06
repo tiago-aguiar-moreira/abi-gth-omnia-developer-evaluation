@@ -1,5 +1,6 @@
 ﻿using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
+using Ambev.DeveloperEvaluation.Domain.Services;
 using AutoMapper;
 using FluentValidation;
 using MediatR;
@@ -12,19 +13,20 @@ namespace Ambev.DeveloperEvaluation.Application.Carts.CreateCart;
 public class CreateCartHandler : IRequestHandler<CreateCartCommand, CreateCartResult>
 {
     private readonly ICartRepository _cartRepository;
-    private readonly IProductRepository _productRepository;
+    private readonly IProductService _productService;
     private readonly IMapper _mapper;
 
     /// <summary>
     /// Initializes a new instance of CreateCartHandler
     /// </summary>
     /// <param name="userRepository">The cart repository</param>
+    /// <param name="productService">The product service</param>
     /// <param name="mapper">The AutoMapper instance</param>
     public CreateCartHandler(
-        ICartRepository cartRepository, IProductRepository productRepository, IMapper mapper)
+        ICartRepository cartRepository, IProductService productService, IMapper mapper)
     {
         _cartRepository = cartRepository;
-        _productRepository = productRepository;
+        _productService = productService;
         _mapper = mapper;
     }
 
@@ -48,17 +50,7 @@ public class CreateCartHandler : IRequestHandler<CreateCartCommand, CreateCartRe
 
         var cart = _mapper.Map<Cart>(command);
 
-        var products = await _productRepository.ListAsync(
-            cart.Products.Select(s => s.ProductId).Distinct(),
-            cancellationToken);
-
-        foreach (var product in cart.Products)
-        {
-            var selectedProduct = products.FirstOrDefault(f => f.Id == product.ProductId)
-                ?? throw new KeyNotFoundException($"Product with ID {product.ProductId} not found");
-            
-            product.UnitPrice = selectedProduct.Price;
-        }
+        await _productService.SetProductPricesAsync(cart.Products, cancellationToken);
 
         var success = await _cartRepository.CreateAsync(cart, cancellationToken);
         if(!success)

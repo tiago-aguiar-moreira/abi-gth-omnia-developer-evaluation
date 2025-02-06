@@ -96,15 +96,23 @@ public class CartRepository : ICartRepository
         if (existingCart == null)
             return false;
 
-        existingCart.Update(
-            cart.SaleNumber, cart.SaleDate, cart.Branch, cart.Products);
+        existingCart.Update(cart.SaleNumber, cart.SaleDate, cart.Branch, cart.IsCanceled);
+        
+        ReplaceCartItems(existingCart, cart.Products);
 
         existingCart.ApplyDiscounts();
         existingCart.SetTotalAmount();
 
         _context.Carts.Update(existingCart);
-        await _context.CartItems.AddRangeAsync(existingCart.Products, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
         return true;
+    }
+
+    private void ReplaceCartItems(Cart existingCart, List<CartItem> updatedProducts)
+    {
+        _context.CartItems.RemoveRange(existingCart.Products);
+
+        existingCart.Products.Clear();
+        existingCart.Products.AddRange(updatedProducts);
     }
 }

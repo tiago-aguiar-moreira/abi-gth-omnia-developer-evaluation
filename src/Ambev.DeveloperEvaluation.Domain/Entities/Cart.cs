@@ -1,4 +1,5 @@
 ﻿using Ambev.DeveloperEvaluation.Domain.Common;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ambev.DeveloperEvaluation.Domain.Entities;
 public class Cart : BaseEntity
@@ -60,13 +61,12 @@ public class Cart : BaseEntity
         UpdatedAt = DateTime.UtcNow;
     }
 
-    public void Update(int saleNumber, DateTime saleDate, string branch, List<CartItem> products)
+    public void Update(int saleNumber, DateTime saleDate, string branch, bool isCanceled)
     {
         SaleNumber = saleNumber;
         SaleDate = saleDate;
         Branch = branch;
-        Products = products;
-        IsCanceled = false;
+        IsCanceled = isCanceled;
         CreatedAt = DateTime.UtcNow;
     }
 

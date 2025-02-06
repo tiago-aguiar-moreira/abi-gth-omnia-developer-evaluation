@@ -1,10 +1,12 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Carts.CreateCart;
 using Ambev.DeveloperEvaluation.Application.Carts.DeleteCart;
 using Ambev.DeveloperEvaluation.Application.Carts.GetCart;
+using Ambev.DeveloperEvaluation.Application.Carts.UpdateCart;
 using Ambev.DeveloperEvaluation.WebApi.Common;
 using Ambev.DeveloperEvaluation.WebApi.Features.Cart.CreateCart;
 using Ambev.DeveloperEvaluation.WebApi.Features.Cart.DeleteCart;
 using Ambev.DeveloperEvaluation.WebApi.Features.Cart.GetCart;
+using Ambev.DeveloperEvaluation.WebApi.Features.Cart.UpdateCart;
 using AutoMapper;
 using FluentValidation;
 using MediatR;
@@ -111,5 +113,35 @@ public class CartsController : BaseController
         return Ok(
             _mapper.Map<GetCartResponse>(response),
             "Cart retrieved successfully");
+    }
+
+    /// <summary>
+    /// Updates a cart by their ID
+    /// </summary>
+    /// <param name="id">The unique identifier of the cart to update</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>Success response if the cart was updated</returns>
+    [HttpPut("{id}")]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> UpdateCart(
+        [FromRoute] Guid id,
+        [FromBody] UpdateCartRequest request,
+        CancellationToken cancellationToken)
+    {
+        if (request.Id != id)
+            throw new ValidationException("The ID provided in the route does not match the ID in the request body");
+
+        var validator = new UpdateCartRequestValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+
+        if (!validationResult.IsValid)
+            throw new ValidationException(validationResult.Errors);
+
+        var command = _mapper.Map<UpdateCartCommand>(request);
+        await _mediator.Send(command, cancellationToken);
+
+        return Ok("Cart updated successfully");
     }
 }
