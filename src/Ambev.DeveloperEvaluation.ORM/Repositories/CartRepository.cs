@@ -39,6 +39,8 @@ public class CartRepository : ICartRepository
         if (cart == null)
             return false;
 
+        cart.Cancel();
+
         _context.Carts.Update(cart);
         await _context.SaveChangesAsync(cancellationToken);
         return true;
