@@ -5,7 +5,7 @@ using FluentValidation;
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Users.UpdateUser;
 
 /// <summary>
-/// Validator for CreateUserCommand that defines validation rules for user creation command.
+/// Validator for UpdateUserCommand that defines validation rules for user update command.
 /// </summary>
 public class UpdateUserRequestValidator : AbstractValidator<UpdateUserRequest>
 {
