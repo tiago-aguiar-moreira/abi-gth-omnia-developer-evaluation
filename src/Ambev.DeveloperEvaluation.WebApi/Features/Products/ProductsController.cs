@@ -1,10 +1,12 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Products.CreateProduct;
 using Ambev.DeveloperEvaluation.Application.Products.DeleteProduct;
 using Ambev.DeveloperEvaluation.Application.Products.GetProduct;
+using Ambev.DeveloperEvaluation.Application.Products.UpdateProduct;
 using Ambev.DeveloperEvaluation.WebApi.Common;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.CreateProduct;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.DeleteProduct;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.GetProduct;
+using Ambev.DeveloperEvaluation.WebApi.Features.Products.UpdateProduct;
 using AutoMapper;
 using FluentValidation;
 using MediatR;
@@ -111,5 +113,35 @@ public class ProductsController : BaseController
         return Ok(
             _mapper.Map<GetProductResponse>(response),
             "Product retrieved successfully");
+    }
+
+    /// <summary>
+    /// Updates a product by their ID
+    /// </summary>
+    /// <param name="id">The unique identifier of the product to update</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>Success response if the product was updated</returns>
+    [HttpPut("{id}")]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> UpdateProduct(
+        [FromRoute] Guid id,
+        [FromBody] UpdateProductRequest request,
+        CancellationToken cancellationToken)
+    {
+        if (request.Id != id)
+            throw new ValidationException("The ID provided in the route does not match the ID in the request body");
+
+        var validator = new UpdateProductRequestValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+
+        if (!validationResult.IsValid)
+            throw new ValidationException(validationResult.Errors);
+
+        var command = _mapper.Map<UpdateProductCommand>(request);
+        await _mediator.Send(command, cancellationToken);
+
+        return Ok("Product updated successfully");
     }
 }
