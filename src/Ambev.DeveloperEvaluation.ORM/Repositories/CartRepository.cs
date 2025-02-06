@@ -97,7 +97,7 @@ public class CartRepository : ICartRepository
             return false;
 
         existingCart.Update(cart.SaleNumber, cart.SaleDate, cart.Branch, cart.IsCanceled);
-        
+
         ReplaceCartItems(existingCart, cart.Products);
 
         _context.Carts.Update(existingCart);
@@ -108,9 +108,6 @@ public class CartRepository : ICartRepository
     private void ReplaceCartItems(Cart existingCart, List<CartItem> updatedProducts)
     {
         _context.CartItems.RemoveRange(existingCart.Products);
-
-        foreach (var product in updatedProducts)
-            product.UpdatedAt = DateTime.UtcNow;
 
         existingCart.Products.Clear();
         existingCart.Products.AddRange(updatedProducts);

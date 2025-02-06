@@ -28,10 +28,5 @@ public class CartItem : BaseEntity
     /// </summary>
     public DateTime CreatedAt { get; set; }
 
-    /// <summary>
-    /// Gets the date and time of the last update to the cart item's information.
-    /// </summary>
-    public DateTime? UpdatedAt { get; set; }
-
     public CartItem() => CreatedAt = DateTime.UtcNow;
 }

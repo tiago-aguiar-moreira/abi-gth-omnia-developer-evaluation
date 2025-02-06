@@ -26,8 +26,6 @@ public class CartItemConfiguration : IEntityTypeConfiguration<CartItem>
         builder.Property(ci => ci.CreatedAt)
             .IsRequired();
 
-        builder.Property(ci => ci.UpdatedAt);
-
         builder.HasOne<Product>()
             .WithMany()
             .HasForeignKey(ci => ci.ProductId)
