@@ -96,9 +96,9 @@ public class CartRepository : ICartRepository
         if (existingCart == null)
             return false;
 
-        existingCart.Update(cart.SaleNumber, cart.SaleDate, cart.Branch, cart.IsCanceled);
-
         ReplaceCartItems(existingCart, cart.Products);
+
+        existingCart.Update(cart.SaleNumber, cart.SaleDate, cart.Branch, cart.IsCanceled);
 
         _context.Carts.Update(existingCart);
         await _context.SaveChangesAsync(cancellationToken);
