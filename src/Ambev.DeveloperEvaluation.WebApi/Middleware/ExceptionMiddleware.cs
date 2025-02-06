@@ -42,7 +42,7 @@ public class ExceptionMiddleware
         => HandlebaseAsync(context, StatusCodes.Status500InternalServerError, exception.Message);
 
     private static Task HandleValidationExceptionAsync(HttpContext context, ValidationException exception)
-        => HandlebaseAsync(context, StatusCodes.Status400BadRequest, "Validation Failed", exception.Errors.Select(error => (ValidationErrorDetail)error));
+        => HandlebaseAsync(context, StatusCodes.Status400BadRequest, exception.Message, exception.Errors.Select(error => (ValidationErrorDetail)error));
 
     private static Task HandleUnauthorizedAccessAsync(HttpContext context, Exception exception)
         => HandlebaseAsync(context, StatusCodes.Status401Unauthorized, exception.Message);
