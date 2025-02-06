@@ -15,10 +15,7 @@ public class UserRepository : IUserRepository
     /// Initializes a new instance of UserRepository
     /// </summary>
     /// <param name="context">The database context</param>
-    public UserRepository(DefaultContext context)
-    {
-        _context = context;
-    }
+    public UserRepository(DefaultContext context) => _context = context;
 
     /// <summary>
     /// Creates a new user in the database
@@ -80,7 +77,7 @@ public class UserRepository : IUserRepository
     /// </summary>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>The lis of users if found, empty list if not found</returns>
-    public async Task<List<User>> ListUsersAsync(CancellationToken cancellationToken = default)
+    public async Task<List<User>> ListAsync(CancellationToken cancellationToken = default)
     {
         return await _context.Users.ToListAsync(cancellationToken);
     }
@@ -88,7 +85,6 @@ public class UserRepository : IUserRepository
     /// <summary>
     /// Updates a user from the database
     /// </summary>
-    /// <param name="id">The unique identifier of the user to delete</param>
     /// <param name="user">The user to create</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>True if the user was updated, false if not found</returns>
@@ -98,7 +94,7 @@ public class UserRepository : IUserRepository
         if (existingUser == null)
             return false;
 
-        existingUser.UpdateUser(
+        existingUser.Update(
             user.Username,
             user.Password,
             user.Email,

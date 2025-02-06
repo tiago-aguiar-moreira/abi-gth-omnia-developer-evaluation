@@ -40,7 +40,7 @@ public class ListUsersHandler : IRequestHandler<ListUsersCommand, ListUsersResul
         if (!validationResult.IsValid)
             throw new ValidationException(validationResult.Errors);
 
-        var users = await _userRepository.ListUsersAsync(cancellationToken);
+        var users = await _userRepository.ListAsync(cancellationToken);
         var result = _mapper.Map<ListUsersResult>(users);
         return result;
     }

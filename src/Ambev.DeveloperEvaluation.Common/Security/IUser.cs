@@ -22,5 +22,7 @@
         /// </summary>
         /// <returns>O papel do usuário como uma string.</returns>
         public string Role { get; }
+
+        void Update(string username, string password, string email, string phone, short status, short role, string city, string street, string number, string zipCode, decimal latitude, decimal longitude);
     }
 }

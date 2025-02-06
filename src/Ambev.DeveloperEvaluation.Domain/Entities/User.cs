@@ -188,7 +188,7 @@ public class User : BaseEntity, IUser
     /// <param name="zipCode">The new postal code.</param>
     /// <param name="latitude">The new latitude coordinate.</param>
     /// <param name="longitude">The new longitude coordinate.</param>
-    public void UpdateUser(string username, string password, string email, string phone, short status, short role,
+    public void Update(string username, string password, string email, string phone, short status, short role,
         string city, string street, string number, string zipCode, decimal latitude, decimal longitude)
     {
         Username = username;
