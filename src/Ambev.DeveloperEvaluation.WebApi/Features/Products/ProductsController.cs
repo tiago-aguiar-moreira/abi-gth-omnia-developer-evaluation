@@ -1,8 +1,10 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Products.CreateProduct;
 using Ambev.DeveloperEvaluation.Application.Products.DeleteProduct;
+using Ambev.DeveloperEvaluation.Application.Products.GetProduct;
 using Ambev.DeveloperEvaluation.WebApi.Common;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.CreateProduct;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.DeleteProduct;
+using Ambev.DeveloperEvaluation.WebApi.Features.Products.GetProduct;
 using AutoMapper;
 using FluentValidation;
 using MediatR;
@@ -11,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Products;
 
 /// <summary>
-/// Controller for managing user operations
+/// Controller for managing product operations
 /// </summary>
 [ApiController]
 [Route("api/[controller]")]
@@ -40,7 +42,7 @@ public class ProductsController : BaseController
     [HttpPost]
     [ProducesResponseType(typeof(ApiResponseWithData<CreateProductResponse>), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> CreateUser([FromBody] CreateProductRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateProduct([FromBody] CreateProductRequest request, CancellationToken cancellationToken)
     {
         var validator = new CreateProductRequestValidator();
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
@@ -81,6 +83,33 @@ public class ProductsController : BaseController
         var command = _mapper.Map<DeleteProductCommand>(request.Id);
         await _mediator.Send(command, cancellationToken);
 
-        return Ok("User deleted successfully");
+        return Ok("Product deleted successfully");
+    }
+
+    /// <summary>
+    /// Retrieves a product by their ID
+    /// </summary>
+    /// <param name="id">The unique identifier of the product</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>The product details if found</returns>
+    [HttpGet("{id}")]
+    [ProducesResponseType(typeof(ApiResponseWithData<GetProductResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetProduct([FromRoute] Guid id, CancellationToken cancellationToken)
+    {
+        var request = new GetProductRequest { Id = id };
+        var validator = new GetProductRequestValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+
+        if (!validationResult.IsValid)
+            throw new ValidationException(validationResult.Errors);
+
+        var command = _mapper.Map<GetProductCommand>(request.Id);
+        var response = await _mediator.Send(command, cancellationToken);
+
+        return Ok(
+            _mapper.Map<GetProductResponse>(response),
+            "Product retrieved successfully");
     }
 }
