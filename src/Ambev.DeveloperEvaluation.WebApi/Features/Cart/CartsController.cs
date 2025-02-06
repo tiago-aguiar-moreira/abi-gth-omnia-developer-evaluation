@@ -1,6 +1,10 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Carts.CreateCart;
+using Ambev.DeveloperEvaluation.Application.Carts.DeleteCart;
+using Ambev.DeveloperEvaluation.Application.Carts.GetCart;
 using Ambev.DeveloperEvaluation.WebApi.Common;
 using Ambev.DeveloperEvaluation.WebApi.Features.Cart.CreateCart;
+using Ambev.DeveloperEvaluation.WebApi.Features.Cart.DeleteCart;
+using Ambev.DeveloperEvaluation.WebApi.Features.Cart.GetCart;
 using AutoMapper;
 using FluentValidation;
 using MediatR;
@@ -9,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Cart;
 
 /// <summary>
-/// Controller for managing user operations
+/// Controller for managing product operations
 /// </summary>
 [ApiController]
 [Route("api/[controller]")]
@@ -55,5 +59,57 @@ public class CartsController : BaseController
             Message = "Cart created successfully",
             Data = _mapper.Map<CreateCartResponse>(response)
         });
+    }
+
+    /// <summary>
+    /// Deletes a cart by their ID
+    /// </summary>
+    /// <param name="id">The unique identifier of the cart to delete</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>Success response if the cart was deleted</returns>
+    [HttpDelete("{id}")]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> DeleteCart([FromRoute] Guid id, CancellationToken cancellationToken)
+    {
+        var request = new DeleteCartRequest { Id = id };
+        var validator = new DeleteCartRequestValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+
+        if (!validationResult.IsValid)
+            throw new ValidationException(validationResult.Errors);
+
+        var command = _mapper.Map<DeleteCartCommand>(request.Id);
+        await _mediator.Send(command, cancellationToken);
+
+        return Ok("Cart deleted successfully");
+    }
+
+    /// <summary>
+    /// Retrieves a cart by their ID
+    /// </summary>
+    /// <param name="id">The unique identifier of the cart</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>The cart details if found</returns>
+    [HttpGet("{id}")]
+    [ProducesResponseType(typeof(ApiResponseWithData<GetCartResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetCart([FromRoute] Guid id, CancellationToken cancellationToken)
+    {
+        var request = new GetCartRequest { Id = id };
+        var validator = new GetCartRequestValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+
+        if (!validationResult.IsValid)
+            throw new ValidationException(validationResult.Errors);
+
+        var command = _mapper.Map<GetCartCommand>(request.Id);
+        var response = await _mediator.Send(command, cancellationToken);
+
+        return Ok(
+            _mapper.Map<GetCartResponse>(response),
+            "Cart retrieved successfully");
     }
 }
