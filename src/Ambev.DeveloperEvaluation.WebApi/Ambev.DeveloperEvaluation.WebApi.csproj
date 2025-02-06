@@ -24,9 +24,4 @@
     <ProjectReference Include="..\Ambev.DeveloperEvaluation.IoC\Ambev.DeveloperEvaluation.IoC.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\Products\UpdateProduct\" />
-    <Folder Include="Features\Users\DeleteUser\" />
-  </ItemGroup>
-
 </Project>
