@@ -67,7 +67,10 @@ public class Cart : BaseEntity
         SaleDate = saleDate;
         Branch = branch;
         IsCanceled = isCanceled;
-        CreatedAt = DateTime.UtcNow;
+        UpdatedAt = DateTime.UtcNow;
+
+        ApplyDiscounts();
+        SetTotalAmount();
     }
 
     public void ApplyDiscounts()

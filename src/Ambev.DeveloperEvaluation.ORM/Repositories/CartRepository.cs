@@ -100,9 +100,6 @@ public class CartRepository : ICartRepository
         
         ReplaceCartItems(existingCart, cart.Products);
 
-        existingCart.ApplyDiscounts();
-        existingCart.SetTotalAmount();
-
         _context.Carts.Update(existingCart);
         await _context.SaveChangesAsync(cancellationToken);
         return true;
@@ -111,6 +108,9 @@ public class CartRepository : ICartRepository
     private void ReplaceCartItems(Cart existingCart, List<CartItem> updatedProducts)
     {
         _context.CartItems.RemoveRange(existingCart.Products);
+
+        foreach (var product in updatedProducts)
+            product.UpdatedAt = DateTime.UtcNow;
 
         existingCart.Products.Clear();
         existingCart.Products.AddRange(updatedProducts);
