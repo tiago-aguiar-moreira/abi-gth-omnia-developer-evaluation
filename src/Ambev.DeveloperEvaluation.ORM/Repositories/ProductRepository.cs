@@ -61,18 +61,38 @@ public class ProductRepository : IProductRepository
         int? pageNumber,
         int? pageSize,
         List<(string PropertyName, bool Ascendent)> sortingFields,
+        List<(string PropertyName, object?)> filters,
         CancellationToken cancellationToken = default)
     {
         var query = _context.Products.AsQueryable();
+
+        foreach (var (property, value) in filters)
+        {
+            if (value is null) continue;
+
+            query = property.ToLower() switch
+            {
+                "title" => query.FilterStringField(property, value),
+                "price" => query.Where(w => w.Price == (decimal)value),
+                "_minprice" => query.FilterRangeField(property, value),
+                "_maxprice" => query.FilterRangeField(property, value),
+                "description" => query.FilterStringField(property, value),
+                "image" => query.FilterStringField(property, value),
+                "rate" => query.FilterRangeField(property, value),
+                "_minrate" => query.FilterStringField(property, value),
+                "_maxrate" => query.FilterRangeField(property, value),
+                "count" => query.Where(w => w.Count == (decimal)value),
+                "_mincount" => query.FilterRangeField(property, (decimal)value),
+                "_maxcount" => query.FilterRangeField(property, (decimal)value),
+                _ => query
+            };
+        }
 
         if (!categoryName.IsNullOrEmpty())
             query = query.Where(w => w.Category.ToLower() == categoryName!.ToLower());
 
         return await PaginatedList<Product>.CreateAsync(
-            query.ApplyOrdering(sortingFields),
-            pageNumber,
-            pageSize,
-            cancellationToken);
+            query.ApplyOrdering(sortingFields), pageNumber, pageSize, cancellationToken);
     }
 
     /// <summary>
@@ -114,13 +134,36 @@ public class ProductRepository : IProductRepository
         int? pageNumber,
         int? pageSize,
         List<(string PropertyName, bool Ascendent)> sortingFields,
+        List<(string PropertyName, object?)> filters,
         CancellationToken cancellationToken = default)
     {
+        var query = _context.Products.AsQueryable();
+
+        foreach (var (property, value) in filters)
+        {
+            if (value is null) continue;
+
+            query = property.ToLower() switch
+            {
+                "title" => query.FilterStringField(property, value),
+                "price" => query.Where(w => w.Price == (decimal)value),
+                "_minprice" => query.FilterRangeField(property, value),
+                "_maxprice" => query.FilterRangeField(property, value),
+                "description" => query.FilterStringField(property, value),
+                "category" => query.FilterStringField(property, value),
+                "image" => query.FilterStringField(property, value),
+                "rate" => query.FilterRangeField(property, value),
+                "_minrate" => query.FilterStringField(property, value),
+                "_maxrate" => query.FilterRangeField(property, value),
+                "count" => query.Where(w => w.Count == (decimal)value),
+                "_mincount" => query.FilterRangeField(property, (decimal)value),
+                "_maxcount" => query.FilterRangeField(property, (decimal)value),
+                _ => query
+            };
+        }
+
         return await PaginatedList<Product>.CreateAsync(
-            _context.Products.ApplyOrdering(sortingFields),
-            pageNumber,
-            pageSize,
-            cancellationToken);
+            query.ApplyOrdering(sortingFields), pageNumber, pageSize, cancellationToken);
     }
 
     /// <summary>

@@ -3,7 +3,7 @@
 
 ### Listar produtos
 
-GET {{hostAddress}}/api/Products?_page=1&_size=2&_order=count
+GET {{hostAddress}}/api/Products?minPrice=1200&maxPrice=1300&title=iphone*
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -64,6 +64,6 @@ Content-Type: application/json
 
 ### Recupera todos os produtos de uma cotegoria
 
-GET {{hostAddress}}/api/Products/Category/Eletrônicos?minPrice=1300&maxPrice=1400
+GET {{hostAddress}}/api/Products/Category/Eletrônicos?minPrice=1200&maxPrice=1300&title=iphone*
 Authorization: Bearer {{token}}
 Content-Type: application/json
