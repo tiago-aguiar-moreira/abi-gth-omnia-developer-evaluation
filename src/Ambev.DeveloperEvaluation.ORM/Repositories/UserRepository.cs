@@ -1,6 +1,7 @@
 ﻿using Ambev.DeveloperEvaluation.Common.Helpers;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
+using Ambev.DeveloperEvaluation.ORM.Helpers;
 using Microsoft.EntityFrameworkCore;
 
 namespace Ambev.DeveloperEvaluation.ORM.Repositories;
@@ -78,8 +79,19 @@ public class UserRepository : IUserRepository
     /// </summary>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>The lis of users if found, empty list if not found</returns>
-    public async Task<PaginatedList<User>> ListAsync(int? pageNumber, int? pageSize, CancellationToken cancellationToken = default)
-        => await PaginatedList<User>.CreateAsync(_context.Users, pageNumber, pageSize, cancellationToken);
+    public async Task<PaginatedList<User>> ListAsync(
+        int? pageNumber,
+        int? pageSize,
+        List<(string PropertyName, bool Ascendent)> sortingFields,
+        CancellationToken cancellationToken = default)
+    {
+        return await PaginatedList<User>.CreateAsync(
+            _context.Users.ApplyOrdering(sortingFields),
+            pageNumber,
+            pageSize,
+            cancellationToken);
+    }
+        
 
     /// <summary>
     /// Updates a user from the database

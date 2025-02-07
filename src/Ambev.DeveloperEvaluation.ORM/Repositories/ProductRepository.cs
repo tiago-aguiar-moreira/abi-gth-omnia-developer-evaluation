@@ -3,6 +3,7 @@ using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Ambev.DeveloperEvaluation.Common.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Ambev.DeveloperEvaluation.ORM.Helpers;
 
 namespace Ambev.DeveloperEvaluation.ORM.Repositories;
 
@@ -56,14 +57,22 @@ public class ProductRepository : IProductRepository
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>The product if found, null otherwise</returns>
     public async Task<PaginatedList<Product>> ListByCategoryAsync(
-        string? categoryName, int? pageNumber, int? pageSize, CancellationToken cancellationToken = default)
+        string? categoryName,
+        int? pageNumber,
+        int? pageSize,
+        List<(string PropertyName, bool Ascendent)> sortingFields,
+        CancellationToken cancellationToken = default)
     {
         var query = _context.Products.AsQueryable();
 
         if (!categoryName.IsNullOrEmpty())
             query = query.Where(w => w.Category.ToLower() == categoryName!.ToLower());
 
-        return await PaginatedList<Product>.CreateAsync(query, pageNumber, pageSize, cancellationToken);
+        return await PaginatedList<Product>.CreateAsync(
+            query.ApplyOrdering(sortingFields),
+            pageNumber,
+            pageSize,
+            cancellationToken);
     }
 
     /// <summary>
@@ -101,8 +110,18 @@ public class ProductRepository : IProductRepository
     /// </summary>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>The list of products if found, empty list if not found</returns>
-    public async Task<PaginatedList<Product>> ListAsync(int? pageNumber, int? pageSize, CancellationToken cancellationToken = default)
-        => await PaginatedList<Product>.CreateAsync(_context.Products, pageNumber, pageSize, cancellationToken);
+    public async Task<PaginatedList<Product>> ListAsync(
+        int? pageNumber,
+        int? pageSize,
+        List<(string PropertyName, bool Ascendent)> sortingFields,
+        CancellationToken cancellationToken = default)
+    {
+        return await PaginatedList<Product>.CreateAsync(
+            _context.Products.ApplyOrdering(sortingFields),
+            pageNumber,
+            pageSize,
+            cancellationToken);
+    }
 
     /// <summary>
     /// Retrieves a list of products by a list of ID's

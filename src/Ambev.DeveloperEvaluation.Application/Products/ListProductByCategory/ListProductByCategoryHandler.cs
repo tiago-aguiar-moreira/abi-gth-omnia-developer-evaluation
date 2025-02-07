@@ -25,7 +25,11 @@ public class ListProductByCategoryHandler : IRequestHandler<ListProductByCategor
             throw new ValidationException(validationResult.Errors);
 
         var products = await _productRepository.ListByCategoryAsync(
-            command.CategoryName, command.PageNumber, command.PageSize, cancellationToken);
+            command.CategoryName,
+            command.PageNumber,
+            command.PageSize,
+            command.Order,
+            cancellationToken);
 
         return new PaginatedList<ListProductByCategoryResult>(
             _mapper.Map<List<ListProductByCategoryResult>>(products),

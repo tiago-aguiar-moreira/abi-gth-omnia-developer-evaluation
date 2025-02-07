@@ -40,7 +40,8 @@ public interface IProductRepository
     /// <param name="pageSize">Page sizetoken</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>The list of products if found, empty list if not found</returns>
-    Task<PaginatedList<Product>> ListAsync(int? pageNumber, int? pageSize, CancellationToken cancellationToken = default);
+    Task<PaginatedList<Product>> ListAsync(
+        int? pageNumber, int? pageSize, List<(string PropertyName, bool Ascendent)> sortingFields, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Retrieves a list of product category
@@ -78,5 +79,6 @@ public interface IProductRepository
     /// <param name="id">The category of the product</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>The product if found, null otherwise</returns>
-    Task<PaginatedList<Product>> ListByCategoryAsync(string? categoryName, int? pageNumber, int? pageSize, CancellationToken cancellationToken = default);
+    Task<PaginatedList<Product>> ListByCategoryAsync(
+        string? categoryName, int? pageNumber, int? pageSize, List<(string PropertyName, bool Ascendent)> sortingFields, CancellationToken cancellationToken = default);
 }

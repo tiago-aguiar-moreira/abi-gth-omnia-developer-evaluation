@@ -10,5 +10,5 @@ public class ListCartCommand : IRequest<PaginatedList<ListCartResult>>
 {
     public int? PageNumber { get; set; }
     public int? PageSize { get; set; }
-    public string? Order { get; set; }
+    public List<(string PropertyName, bool Ascendent)> Order { get; set; } = [];
 }

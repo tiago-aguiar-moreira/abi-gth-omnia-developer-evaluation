@@ -11,5 +11,5 @@ public class ListProductByCategoryCommand : IRequest<PaginatedList<ListProductBy
     public string? CategoryName {  get; set; }
     public int? PageNumber { get; set; }
     public int? PageSize { get; set; }
-    public string? Order { get; set; }
+    public List<(string PropertyName, bool Ascendent)> Order { get; set; } = [];
 }

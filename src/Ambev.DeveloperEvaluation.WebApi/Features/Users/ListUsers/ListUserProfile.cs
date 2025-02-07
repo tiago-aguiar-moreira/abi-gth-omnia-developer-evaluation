@@ -1,4 +1,5 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Users.ListUsers;
+using Ambev.DeveloperEvaluation.Common.Helpers;
 using AutoMapper;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Users.ListUsers;
@@ -13,6 +14,7 @@ public class ListUserProfile : Profile
     /// </summary>
     public ListUserProfile()
     {
-        CreateMap<ListUserRequest, ListUserCommand>();
+        CreateMap<ListUserRequest, ListUserCommand>()
+            .ForMember(dest => dest.Order, opt => opt.MapFrom(src => src.Order.ParseSortingFields()));
     }
 }

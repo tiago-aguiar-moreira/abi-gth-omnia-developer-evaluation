@@ -39,7 +39,10 @@ public class ListUserHandler : IRequestHandler<ListUserCommand, PaginatedList<Li
             throw new ValidationException(validationResult.Errors);
 
         var users = await _userRepository.ListAsync(
-            command.PageNumber, command.PageSize, cancellationToken);
+            command.PageNumber,
+            command.PageSize,
+            command.Order,
+            cancellationToken);
 
         return new PaginatedList<ListUserResult>(
             _mapper.Map<List<ListUserResult>>(users),

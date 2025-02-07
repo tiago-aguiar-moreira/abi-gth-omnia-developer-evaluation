@@ -25,7 +25,10 @@ public class ListProductHandler : IRequestHandler<ListProductCommand, PaginatedL
             throw new ValidationException(validationResult.Errors);
 
         var products = await _productRepository.ListAsync(
-            command.PageNumber, command.PageSize, cancellationToken);
+            command.PageNumber,
+            command.PageSize,
+            command.Order,
+            cancellationToken);
 
         return new PaginatedList<ListProductResult>(
             _mapper.Map<List<ListProductResult>>(products),

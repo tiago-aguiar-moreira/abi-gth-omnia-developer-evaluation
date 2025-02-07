@@ -3,7 +3,7 @@
 
 ### Listar produtos
 
-GET {{hostAddress}}/api/Products?_page=1&_size=2&_order=price%20desc,%20title%20asc
+GET {{hostAddress}}/api/Products?_page=1&_size=2&_order=count
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -33,20 +33,20 @@ Content-Type: application/json
 
 ### Altera produto
 
-PUT {{hostAddress}}/api/Products/cdaea54b-9005-4107-bc64-e6e8b83fb6e4
+PUT {{hostAddress}}/api/Products/7d18d6ad-d6a8-4eff-8435-c1348a5485a2
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "id": "cdaea54b-9005-4107-bc64-e6e8b83fb6e4",
-  "title": "Microondas",
+  "id": "7d18d6ad-d6a8-4eff-8435-c1348a5485a2",
+  "title": "Smartphone S21",
   "price": 1399.99,
-  "description": "abc teste",
-  "category": "Eletrodomestico PLUS",
+  "description": "Smartphone com câmera de 50MP e tela AMOLED",
+  "category": "Eletrônicos",
   "image": "https://meusite.com/imagem-smartphone.jpg",
   "rating": {
     "rate": 4.7,
-    "count": 220
+    "count": 210
   }
 }
 
@@ -64,6 +64,6 @@ Content-Type: application/json
 
 ### Recupera todos os produtos de uma cotegoria
 
-GET {{hostAddress}}/api/Products/Category/Eletrônicos
+GET {{hostAddress}}/api/Products/Category/Eletrônicos?_order=price%20desc
 Authorization: Bearer {{token}}
 Content-Type: application/json

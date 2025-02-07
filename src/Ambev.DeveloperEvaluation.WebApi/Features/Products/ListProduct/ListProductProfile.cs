@@ -1,4 +1,5 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Products.ListProduct;
+using Ambev.DeveloperEvaluation.Common.Helpers;
 using AutoMapper;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Products.ListProduct;
@@ -13,6 +14,7 @@ public class ListProductProfile : Profile
     /// </summary>
     public ListProductProfile()
     {
-        CreateMap<ListProductRequest, ListProductCommand>();
+        CreateMap<ListProductRequest, ListProductCommand>()
+            .ForMember(dest => dest.Order, opt => opt.MapFrom(src => src.Order.ParseSortingFields()));
     }
 }

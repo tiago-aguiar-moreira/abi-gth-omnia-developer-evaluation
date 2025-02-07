@@ -1,4 +1,5 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Products.ListProductByCategory;
+using Ambev.DeveloperEvaluation.Common.Helpers;
 using AutoMapper;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Products.ListProductByCategory;
@@ -13,6 +14,7 @@ public class ListProductByCategoryProfile : Profile
     /// </summary>
     public ListProductByCategoryProfile()
     {
-        CreateMap<ListProductByCategoryRequest, ListProductByCategoryCommand>();
+        CreateMap<ListProductByCategoryRequest, ListProductByCategoryCommand>()
+            .ForMember(dest => dest.Order, opt => opt.MapFrom(src => src.Order.ParseSortingFields()));
     }
 }
