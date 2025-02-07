@@ -23,7 +23,7 @@ namespace Ambev.DeveloperEvaluation.WebApi.Features.Products;
 /// <summary>
 /// Controller for managing product operations
 /// </summary>
-//[Authorize]
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class ProductsController : BaseController
