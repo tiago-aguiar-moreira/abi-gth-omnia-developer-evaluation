@@ -8,8 +8,8 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "email": "rodigo.lima@example.com",
-  "username": "Rodrigo Lima",
+  "email": "rodigovanessa.azevedo@example.com",
+  "username": "Vanessa de Azevedo Silva",
   "password": "SenhaForte@123",
   "address": {
     "city": "São Paulo",
@@ -40,18 +40,18 @@ Accept: application/json
 
 ### Listar usuários
 
-GET {{hostAddress}}/api/Users?_page=1&_size=2&_order=email%20asc,role%20desc
+GET {{hostAddress}}/api/Users?_page=1&_size=10&username=T*
 Authorization: Bearer {{token}}
 Accept: application/json
 
 ### Alterar usuário
 
-PUT {{hostAddress}}/api/Users/75d7377d-8f7b-4092-b637-2e8d3d97bb06
+PUT {{hostAddress}}/api/Users/c3e0da0a-b647-4cb6-8ca9-a6e8f3c7d00e
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "id": "75d7377d-8f7b-4092-b637-2e8d3d97bb06",
+  "id": "c3e0da0a-b647-4cb6-8ca9-a6e8f3c7d00e",
   "email": "joao.silva11111@example.com",
   "username": "joão da silva",
   "password": "SenhaForte@123",
@@ -67,5 +67,5 @@ Content-Type: application/json
   },
   "phone": "+5511998765477",
   "status": 2,
-  "role": 3
+  "role":1
 }

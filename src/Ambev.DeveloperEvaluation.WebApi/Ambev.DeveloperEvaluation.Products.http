@@ -64,6 +64,6 @@ Content-Type: application/json
 
 ### Recupera todos os produtos de uma cotegoria
 
-GET {{hostAddress}}/api/Products/Category/Eletrônicos?_order=price%20desc
+GET {{hostAddress}}/api/Products/Category/Eletrônicos?minPrice=1300&maxPrice=1400
 Authorization: Bearer {{token}}
 Content-Type: application/json

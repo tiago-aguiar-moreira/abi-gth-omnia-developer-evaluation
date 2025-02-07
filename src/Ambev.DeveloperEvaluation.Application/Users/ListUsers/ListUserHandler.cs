@@ -38,10 +38,27 @@ public class ListUserHandler : IRequestHandler<ListUserCommand, PaginatedList<Li
         if (!validationResult.IsValid)
             throw new ValidationException(validationResult.Errors);
 
+        var filters = new List<(string PropertyName, object?)>
+        {
+            (nameof(command.Username), command.Username),
+            (nameof(command.Email), command.Email),
+            (nameof(command.Phone), command.Phone),
+            (nameof(command.Role), command.Role),
+            (nameof(command.Status), command.Status),
+            (nameof(command.City), command.City),
+            (nameof(command.Street), command.Street),
+            (nameof(command.Zipcode), command.Zipcode),
+            (nameof(command.MinLatitude), command.MinLatitude),
+            (nameof(command.MaxLatitude), command.MaxLatitude),
+            (nameof(command.MinLongitude), command.MinLongitude),
+            (nameof(command.MaxLongitude), command.MaxLongitude)
+        };
+
         var users = await _userRepository.ListAsync(
             command.PageNumber,
             command.PageSize,
             command.Order,
+            filters,
             cancellationToken);
 
         return new PaginatedList<ListUserResult>(

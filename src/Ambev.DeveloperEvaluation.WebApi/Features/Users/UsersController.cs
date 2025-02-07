@@ -20,8 +20,8 @@ namespace Ambev.DeveloperEvaluation.WebApi.Features.Users;
 /// <summary>
 /// Controller for managing user operations
 /// </summary>
-[Authorize]
-//[ApiController]
+//[Authorize]
+[ApiController]
 [Route("api/[controller]")]
 public class UsersController : BaseController
 {

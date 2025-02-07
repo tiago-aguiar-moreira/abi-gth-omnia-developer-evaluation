@@ -46,7 +46,11 @@ public interface IUserRepository
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>The list of users if found, empty list if not found</returns>
     Task<PaginatedList<User>> ListAsync(
-        int? pageNumber, int? pageSize, List<(string PropertyName, bool Ascendent)> sortingFields, CancellationToken cancellationToken = default);
+        int? pageNumber,
+        int? pageSize,
+        List<(string PropertyName, bool Ascendent)> sortingFields,
+        List<(string PropertyName, object?)> filters,
+        CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Updates a user from the repository

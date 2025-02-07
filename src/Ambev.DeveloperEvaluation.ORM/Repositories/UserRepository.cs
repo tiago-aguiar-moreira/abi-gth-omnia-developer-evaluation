@@ -83,10 +83,35 @@ public class UserRepository : IUserRepository
         int? pageNumber,
         int? pageSize,
         List<(string PropertyName, bool Ascendent)> sortingFields,
+        List<(string PropertyName, object?)> filters,
         CancellationToken cancellationToken = default)
     {
+        var query = _context.Users.AsQueryable();
+
+        foreach (var (property, value) in filters)
+        {
+            if (value is null) continue;
+
+            query = property switch
+            {
+                "Username" => query.FilterStringField("Username", value),
+                "Email" => query.FilterStringField("Email", value),
+                "Phone" => query.FilterStringField("Phone", value),
+                "Role" => query.Where(w => w.Role == (short)value),
+                "Status" => query.Where(w => w.Status == (short)value),
+                "City" => query.FilterStringField("City", value),
+                "Street" => query.FilterStringField("Street", value),
+                "Zipcode" => query.FilterStringField("Zipcode", value),
+                "MinLatitude" => query.FilterNumberField("Latitude", (decimal)value),
+                "MaxLatitude" => query.FilterNumberField("Latitude", (decimal)value),
+                "MinLongitude" => query.FilterNumberField("Longitude", (decimal)value),
+                "MaxLongitude" => query.FilterNumberField("Longitude", (decimal)value),
+                _ => query
+            };
+        }
+
         return await PaginatedList<User>.CreateAsync(
-            _context.Users.ApplyOrdering(sortingFields),
+            query.ApplyOrdering(sortingFields),
             pageNumber,
             pageSize,
             cancellationToken);

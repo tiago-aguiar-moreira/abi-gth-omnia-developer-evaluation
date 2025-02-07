@@ -1,4 +1,5 @@
 ﻿using Ambev.DeveloperEvaluation.Common.Helpers;
+using Ambev.DeveloperEvaluation.Domain.Enums;
 using MediatR;
 
 namespace Ambev.DeveloperEvaluation.Application.Users.ListUsers;
@@ -11,4 +12,16 @@ public class ListUserCommand : IRequest<PaginatedList<ListUserResult>>
     public int? PageNumber { get; set; }
     public int? PageSize { get; set; }
     public List<(string PropertyName, bool Ascendent)> Order { get; set; } = [];
+    public string? Username { get; set; }
+    public string? Email { get; set; }
+    public string? Phone { get; set; }
+    public UserRole? Role { get; set; }
+    public UserStatus? Status { get; set; }
+    public string? City { get; set; }
+    public string? Street { get; set; }
+    public string? Zipcode { get; set; }
+    public decimal? MinLatitude { get; set; }
+    public decimal? MaxLatitude { get; set; }
+    public decimal? MinLongitude { get; set; }
+    public decimal? MaxLongitude { get; set; }
 }
