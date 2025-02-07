@@ -1,6 +1,7 @@
 ﻿using Ambev.DeveloperEvaluation.Common.Helpers;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
+using Ambev.DeveloperEvaluation.ORM.Helpers;
 using Microsoft.EntityFrameworkCore;
 
 namespace Ambev.DeveloperEvaluation.ORM.Repositories;
@@ -78,8 +79,44 @@ public class CartRepository : ICartRepository
     /// </summary>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>The lis of carts if found, empty list if not found</returns>
-    public async Task<PaginatedList<Cart>> ListAsync(int? pageNumber, int? pageSize, CancellationToken cancellationToken = default)
-        => await PaginatedList<Cart>.CreateAsync(_context.Carts.Include(c => c.Products), pageNumber, pageSize, cancellationToken);
+    public async Task<PaginatedList<Cart>> ListAsync(
+        int? pageNumber,
+        int? pageSize,
+        List<(string PropertyName, bool Ascendent)> sortingFields,
+        List<(string PropertyName, object?)> filters,
+        CancellationToken cancellationToken = default)
+    {
+        var query = _context.Carts.Include(c => c.Products).AsQueryable();
+
+        foreach (var (property, value) in filters)
+        {
+            if (value is null) continue;
+
+            query = property.ToLower() switch
+            {
+                "salenumber" => query.Where(w => w.SaleNumber == (int)value),
+                "_minsalenumber" => query.FilterRangeField(property, (int)value),
+                "_maxsalenumber" => query.FilterRangeField(property, (int)value),
+                "branch" => query.FilterStringField(property, value),
+                "saledate" => query.Where(w => w.SaleDate == (DateTime)value),
+                "_minsaledate" => query.FilterRangeField(property,(DateTime)value),
+                "_maxsaledate" => query.FilterRangeField(property,(DateTime)value),
+                "iscanceled" => query.Where(w => w.IsCanceled == (bool)value),
+                "userid" => query.Where(w => w.UserId == (Guid)value),
+                "quantity" => query.Where(w => w.Products.Any(a => a.Quantity == (int)value)),
+                "_minquantity" => query.Where(w => w.Products.Any(a => a.UnitPrice >= (int)value)),
+                "_maxquantity" => query.Where(w => w.Products.Any(a => a.UnitPrice <= (int)value)),
+                "price" => query.Where(w => w.Products.Any(a => (int)value == a.UnitPrice)),
+                "_minprice" => query.Where(w => w.Products.Any(a => a.UnitPrice <= (int)value)),
+                "_maxprice" => query.Where(w => w.Products.Any(a => a.UnitPrice >= (int)value)),
+                _ => query
+            };
+        }
+
+        return await PaginatedList<Cart>.CreateAsync(
+            query.ApplyOrdering(sortingFields), pageNumber, pageSize, cancellationToken);
+    }
+
 
     /// <summary>
     /// Updates a cart from the database

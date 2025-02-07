@@ -20,8 +20,10 @@ public class ListUserCommand : IRequest<PaginatedList<ListUserResult>>
     public string? City { get; set; }
     public string? Street { get; set; }
     public string? Zipcode { get; set; }
+    public decimal? Latitude { get; set; }
     public decimal? MinLatitude { get; set; }
     public decimal? MaxLatitude { get; set; }
+    public decimal? Longitude { get; set; }
     public decimal? MinLongitude { get; set; }
     public decimal? MaxLongitude { get; set; }
 }

@@ -92,29 +92,28 @@ public class UserRepository : IUserRepository
         {
             if (value is null) continue;
 
-            query = property switch
+            query = property.ToLower() switch
             {
-                "Username" => query.FilterStringField("Username", value),
-                "Email" => query.FilterStringField("Email", value),
-                "Phone" => query.FilterStringField("Phone", value),
-                "Role" => query.Where(w => w.Role == (short)value),
-                "Status" => query.Where(w => w.Status == (short)value),
-                "City" => query.FilterStringField("City", value),
-                "Street" => query.FilterStringField("Street", value),
-                "Zipcode" => query.FilterStringField("Zipcode", value),
-                "MinLatitude" => query.FilterNumberField("Latitude", (decimal)value),
-                "MaxLatitude" => query.FilterNumberField("Latitude", (decimal)value),
-                "MinLongitude" => query.FilterNumberField("Longitude", (decimal)value),
-                "MaxLongitude" => query.FilterNumberField("Longitude", (decimal)value),
+                "username" => query.FilterStringField(property, value),
+                "email" => query.FilterStringField(property, value),
+                "phone" => query.FilterStringField(property, value),
+                "role" => query.Where(w => w.Role == (short)value),
+                "status" => query.Where(w => w.Status == (short)value),
+                "city" => query.FilterStringField(property, value),
+                "street" => query.FilterStringField(property, value),
+                "zipcode" => query.FilterStringField(property, value),
+                "latitude" => query.Where(w => w.Latitude == (decimal)value),
+                "_minlatitude" => query.FilterRangeField(property, (decimal)value),
+                "_maxlatitude" => query.FilterRangeField(property, (decimal)value),
+                "longitude" => query.Where(w => w.Latitude == (decimal)value),
+                "_minlongitude" => query.FilterRangeField(property, (decimal)value),
+                "_maxlongitude" => query.FilterRangeField(property, (decimal)value),
                 _ => query
             };
         }
 
         return await PaginatedList<User>.CreateAsync(
-            query.ApplyOrdering(sortingFields),
-            pageNumber,
-            pageSize,
-            cancellationToken);
+            query.ApplyOrdering(sortingFields), pageNumber, pageSize, cancellationToken);
     }
         
 

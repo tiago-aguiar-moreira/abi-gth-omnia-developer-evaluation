@@ -34,7 +34,7 @@ Accept: application/json
 
 ### Listar compras
 
-GET {{hostAddress}}/api/Carts?_page=1&_size=2&_order=email%20asc,role%20desc
+GET {{hostAddress}}/api/Carts?_minSaleDate=2025-02-01T00:00:00
 Authorization: Bearer {{token}}
 Accept: application/json
 
@@ -47,8 +47,8 @@ Content-Type: application/json
 {
   "id": "79fd6120-d64a-4852-928f-3918fdf3f219",
   "saleNumber": 22,
-  "saleDate": "2025-02-05T17:52:07",
-  "branch": "Filial 2",
+  "saleDate": "2025-01-17T18:52:07",
+  "branch": "Filial 7",
   "userId": "327b51a5-f826-4d4b-8c0a-14c9998c89a7",
   "products": [
     {

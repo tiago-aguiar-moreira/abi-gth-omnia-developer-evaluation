@@ -38,8 +38,31 @@ public class ListCartHandler : IRequestHandler<ListCartCommand, PaginatedList<Li
         if (!validationResult.IsValid)
             throw new ValidationException(validationResult.Errors);
 
+        var filters = new List<(string PropertyName, object?)>
+        {
+            (nameof(command.SaleNumber), command.SaleNumber),
+            ("_" + nameof(command.MinSaleNumber), command.MinSaleNumber),
+            ("_" + nameof(command.MaxSaleNumber), command.MaxSaleNumber),
+            (nameof(command.Branch), command.Branch),
+            (nameof(command.SaleDate), command.SaleDate),
+            ("_" + nameof(command.MinSaleDate), command.MinSaleDate),
+            ("_" + nameof(command.MaxSaleDate), command.MaxSaleDate),
+            (nameof(command.IsCanceled), command.IsCanceled),
+            (nameof(command.UserId), command.UserId),
+            (nameof(command.Quantity), command.Quantity),
+            ("_" + nameof(command.MinQuantity), command.MinQuantity),
+            ("_" + nameof(command.MaxQuantity), command.MaxQuantity),
+            (nameof(command.Price), command.Price),
+            ("_" + nameof(command.MinPrice), command.MinPrice),
+            ("_" + nameof(command.MaxPrice), command.MaxPrice)
+        };
+
         var carts = await _cartRepository.ListAsync(
-            command.PageNumber, command.PageSize, cancellationToken);
+            command.PageNumber,
+            command.PageSize,
+            command.Order,
+            filters,
+            cancellationToken);
 
         return new PaginatedList<ListCartResult>(
             _mapper.Map<List<ListCartResult>>(carts),
@@ -48,4 +71,5 @@ public class ListCartHandler : IRequestHandler<ListCartCommand, PaginatedList<Li
             carts.PageSize
         );
     }
+
 }

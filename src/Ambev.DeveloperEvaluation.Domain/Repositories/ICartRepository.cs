@@ -37,7 +37,12 @@ public interface ICartRepository
     /// </summary>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>The list of carts if found, empty list if not found</returns>
-    Task<PaginatedList<Cart>> ListAsync(int? pageNumber, int? pageSize, CancellationToken cancellationToken = default);
+    Task<PaginatedList<Cart>> ListAsync(
+        int? pageNumber,
+        int? pageSize,
+        List<(string PropertyName, bool Ascendent)> sortingFields,
+        List<(string PropertyName, object?)> filters,
+        CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Updates a cart from the repository

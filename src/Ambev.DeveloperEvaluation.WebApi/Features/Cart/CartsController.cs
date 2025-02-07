@@ -20,8 +20,8 @@ namespace Ambev.DeveloperEvaluation.WebApi.Features.Cart;
 /// <summary>
 /// Controller for managing product operations
 /// </summary>
-[Authorize]
-//[ApiController]
+//[Authorize]
+[ApiController]
 [Route("api/[controller]")]
 public class CartsController : BaseController
 {

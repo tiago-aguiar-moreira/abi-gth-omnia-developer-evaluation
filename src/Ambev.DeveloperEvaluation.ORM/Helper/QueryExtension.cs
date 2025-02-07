@@ -95,15 +95,15 @@ public static class QueryExtension
         }
     }
 
-    public static IQueryable<T> FilterNumberField<T>(this IQueryable<T> query, string propertyName, object? value)
+    public static IQueryable<T> FilterRangeField<T>(this IQueryable<T> query, string propertyName, object? value)
     {
         // Check if the property name ends with "_min" or "_max"
-        var isMinFilter = propertyName.EndsWith("_min");
-        var isMaxFilter = propertyName.EndsWith("_max");
+        var isMinFilter = propertyName.StartsWith("_min", StringComparison.CurrentCultureIgnoreCase);
+        var isMaxFilter = propertyName.StartsWith("_max", StringComparison.CurrentCultureIgnoreCase);
 
         // Remove the "_min" or "_max" prefix from the property name
         var basePropertyName = isMinFilter || isMaxFilter
-            ? propertyName[..^4] // Remove "_min" or "_max"
+            ? propertyName[4..] // Remove "_min" or "_max"
             : propertyName;
 
         var parameter = Expression.Parameter(typeof(T), "x");

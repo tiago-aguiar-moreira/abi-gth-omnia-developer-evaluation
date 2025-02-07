@@ -48,10 +48,12 @@ public class ListUserHandler : IRequestHandler<ListUserCommand, PaginatedList<Li
             (nameof(command.City), command.City),
             (nameof(command.Street), command.Street),
             (nameof(command.Zipcode), command.Zipcode),
-            (nameof(command.MinLatitude), command.MinLatitude),
-            (nameof(command.MaxLatitude), command.MaxLatitude),
-            (nameof(command.MinLongitude), command.MinLongitude),
-            (nameof(command.MaxLongitude), command.MaxLongitude)
+            (nameof(command.Latitude), command.Latitude),
+            ("_" + nameof(command.MinLatitude), command.MinLatitude),
+            ("_" + nameof(command.MaxLatitude), command.MaxLatitude),
+            (nameof(command.Longitude), command.Longitude),
+            ("_" + nameof(command.MinLongitude), command.MinLongitude),
+            ("_" + nameof(command.MaxLongitude), command.MaxLongitude)
         };
 
         var users = await _userRepository.ListAsync(

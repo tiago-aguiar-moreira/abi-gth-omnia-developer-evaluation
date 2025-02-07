@@ -6,6 +6,11 @@
 public class ListCartResult
 {
     /// <summary>
+    /// The unique identifier of the user
+    /// </summary>
+    public Guid Id { get; set; }
+
+    /// <summary>
     /// Unique identifier for the sale.
     /// </summary>
     public int SaleNumber { get; set; }
