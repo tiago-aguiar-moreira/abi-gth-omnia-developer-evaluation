@@ -8,8 +8,8 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "email": "tiago.aguiar1@example.com",
-  "username": "Tiago Aguiar",
+  "email": "rodigo.lima@example.com",
+  "username": "Rodrigo Lima",
   "password": "SenhaForte@123",
   "address": {
     "city": "São Paulo",
@@ -28,7 +28,7 @@ Content-Type: application/json
 
 ### Buscar usuário pelo ID
 
-GET {{hostAddress}}/api/Users/75d7377d-8f7b-4092-b637-2e8d3d97bb16
+GET {{hostAddress}}/api/Users/327b51a5-f826-4d4b-8c0a-14c9998c89a7
 Authorization: Bearer {{token}}
 Accept: application/json
 
@@ -40,7 +40,7 @@ Accept: application/json
 
 ### Listar usuários
 
-GET {{hostAddress}}/api/Users?_page=1&_size=50&_order=email%20asc,role%20desc
+GET {{hostAddress}}/api/Users?_page=1&_size=2&_order=email%20asc,role%20desc
 Authorization: Bearer {{token}}
 Accept: application/json
 

@@ -1,15 +1,18 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Carts.CreateCart;
 using Ambev.DeveloperEvaluation.Application.Carts.DeleteCart;
 using Ambev.DeveloperEvaluation.Application.Carts.GetCart;
+using Ambev.DeveloperEvaluation.Application.Carts.ListCart;
 using Ambev.DeveloperEvaluation.Application.Carts.UpdateCart;
 using Ambev.DeveloperEvaluation.WebApi.Common;
 using Ambev.DeveloperEvaluation.WebApi.Features.Cart.CreateCart;
 using Ambev.DeveloperEvaluation.WebApi.Features.Cart.DeleteCart;
 using Ambev.DeveloperEvaluation.WebApi.Features.Cart.GetCart;
+using Ambev.DeveloperEvaluation.WebApi.Features.Cart.ListCart;
 using Ambev.DeveloperEvaluation.WebApi.Features.Cart.UpdateCart;
 using AutoMapper;
 using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Cart;
@@ -17,6 +20,7 @@ namespace Ambev.DeveloperEvaluation.WebApi.Features.Cart;
 /// <summary>
 /// Controller for managing product operations
 /// </summary>
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class CartsController : BaseController
@@ -113,6 +117,29 @@ public class CartsController : BaseController
         return Ok(
             _mapper.Map<GetCartResponse>(response),
             "Cart retrieved successfully");
+    }
+
+    /// <summary>
+    /// Retrieves a list of carts
+    /// </summary>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>The lis of carts if found, empty list if not found</returns>
+    [HttpGet()]
+    [ProducesResponseType(typeof(PaginatedResponse<GetCartResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> ListCart(ListCartRequest request, CancellationToken cancellationToken)
+    {
+        var validator = new ListCartRequestValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+
+        if (!validationResult.IsValid)
+            throw new ValidationException(validationResult.Errors);
+
+        var command = _mapper.Map<ListCartCommand>(request);
+        var response = await _mediator.Send(command, cancellationToken);
+
+        return OkPaginated(response);
     }
 
     /// <summary>

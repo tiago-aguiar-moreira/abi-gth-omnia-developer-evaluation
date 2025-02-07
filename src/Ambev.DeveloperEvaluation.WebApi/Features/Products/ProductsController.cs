@@ -1,15 +1,21 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Products.CreateProduct;
 using Ambev.DeveloperEvaluation.Application.Products.DeleteProduct;
 using Ambev.DeveloperEvaluation.Application.Products.GetProduct;
+using Ambev.DeveloperEvaluation.Application.Products.ListCategory;
+using Ambev.DeveloperEvaluation.Application.Products.ListProduct;
+using Ambev.DeveloperEvaluation.Application.Products.ListProductByCategory;
 using Ambev.DeveloperEvaluation.Application.Products.UpdateProduct;
 using Ambev.DeveloperEvaluation.WebApi.Common;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.CreateProduct;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.DeleteProduct;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.GetProduct;
+using Ambev.DeveloperEvaluation.WebApi.Features.Products.ListProduct;
+using Ambev.DeveloperEvaluation.WebApi.Features.Products.ListProductByCategory;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.UpdateProduct;
 using AutoMapper;
 using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Products;
@@ -17,6 +23,7 @@ namespace Ambev.DeveloperEvaluation.WebApi.Features.Products;
 /// <summary>
 /// Controller for managing product operations
 /// </summary>
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class ProductsController : BaseController
@@ -143,5 +150,67 @@ public class ProductsController : BaseController
         await _mediator.Send(command, cancellationToken);
 
         return Ok("Product updated successfully");
+    }
+
+    /// <summary>
+    /// Retrieves a list of products
+    /// </summary>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>The list of products if found, empty list if not found</returns>
+    [HttpGet()]
+    [ProducesResponseType(typeof(PaginatedResponse<GetProductResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> ListProducts(ListProductRequest request, CancellationToken cancellationToken)
+    {
+        var validator = new ListProductRequestValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+
+        if (!validationResult.IsValid)
+            throw new ValidationException(validationResult.Errors);
+
+        var command = _mapper.Map<ListProductCommand>(request);
+        var response = await _mediator.Send(command, cancellationToken);
+        
+        return OkPaginated(response);
+    }
+
+    /// <summary>
+    /// Retrieves a list of products by category name
+    /// </summary>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>The list of products if found, empty list if not found</returns>
+    [HttpGet("category/{CategoryName}")]
+    [ProducesResponseType(typeof(PaginatedResponse<GetProductResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> ListProductsByCategory(ListProductByCategoryRequest request, CancellationToken cancellationToken)
+    {
+        var validator = new ListProductByCategoryRequestValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+
+        if (!validationResult.IsValid)
+            throw new ValidationException(validationResult.Errors);
+
+        var command = _mapper.Map<ListProductByCategoryCommand>(request);
+        var response = await _mediator.Send(command, cancellationToken);
+
+        return OkPaginated(response);
+    }
+
+    /// <summary>
+    /// Retrieves a list of product categories
+    /// </summary>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>The list of product categories if found, empty list if not found</returns>
+    [HttpGet("category")]
+    [ProducesResponseType(typeof(string[]), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> ListProductsByCategory(CancellationToken cancellationToken)
+    {
+        var response = await _mediator.Send(new ListCategoryCommand(), cancellationToken);
+
+        return Ok(response.Category, "Category retrieved successfully");
     }
 }

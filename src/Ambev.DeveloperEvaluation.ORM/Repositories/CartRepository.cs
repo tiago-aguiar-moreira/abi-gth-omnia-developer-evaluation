@@ -1,4 +1,5 @@
-﻿using Ambev.DeveloperEvaluation.Domain.Entities;
+﻿using Ambev.DeveloperEvaluation.Common.Helpers;
+using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -77,12 +78,8 @@ public class CartRepository : ICartRepository
     /// </summary>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>The lis of carts if found, empty list if not found</returns>
-    public async Task<List<Cart>> ListAsync(CancellationToken cancellationToken = default)
-    {
-        return await _context.Carts
-            .Include(c => c.Products)
-            .ToListAsync(cancellationToken);
-    }
+    public async Task<PaginatedList<Cart>> ListAsync(int? pageNumber, int? pageSize, CancellationToken cancellationToken = default)
+        => await PaginatedList<Cart>.CreateAsync(_context.Carts.Include(c => c.Products), pageNumber, pageSize, cancellationToken);
 
     /// <summary>
     /// Updates a cart from the database

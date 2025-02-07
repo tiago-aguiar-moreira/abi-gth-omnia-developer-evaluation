@@ -6,14 +6,13 @@ namespace Ambev.DeveloperEvaluation.Application.Users.ListUsers;
 /// <summary>
 /// Profile for mapping between User entity and ListUsersResponse
 /// </summary>
-public class ListUsersProfile : Profile
+public class ListUserProfile : Profile
 {
     /// <summary>
     /// Initializes the mappings for ListUsers operation
     /// </summary>
-    public ListUsersProfile()
+    public ListUserProfile()
     {
-        CreateMap<List<User>, ListUsersResult>()
-            .ForMember(dest => dest.Users, opt => opt.MapFrom(src => src));
+        CreateMap<User, ListUserResult>();
     }
 }

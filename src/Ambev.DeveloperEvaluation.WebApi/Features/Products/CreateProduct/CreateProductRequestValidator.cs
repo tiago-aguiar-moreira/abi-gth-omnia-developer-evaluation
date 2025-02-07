@@ -29,10 +29,15 @@ public class CreateProductRequestValidator : AbstractValidator<CreateProductRequ
             .NotEmpty().WithMessage("Image URL is required.")
             .Must(uri => Uri.TryCreate(uri, UriKind.Absolute, out _)).WithMessage("Invalid image URL format.");
 
-        RuleFor(product => product.Rating.Rate)
-            .InclusiveBetween(0, 5).WithMessage("Rate must be between 0 and 5.");
+        RuleFor(product => product.Rating)
+    .NotNull().WithMessage("Rating cannot be null.");
 
-        RuleFor(product => product.Rating.Count)
-            .GreaterThanOrEqualTo(0).WithMessage("Count must be 0 or greater.");
+        RuleFor(product => product.Rating!.Rate)
+            .InclusiveBetween(0, 5).WithMessage("Rate must be between 0 and 5.")
+            .When(product => product.Rating is not null);
+
+        RuleFor(product => product.Rating!.Count)
+            .GreaterThanOrEqualTo(0).WithMessage("Count must be 0 or greater.")
+            .When(product => product.Rating is not null);
     }
 }

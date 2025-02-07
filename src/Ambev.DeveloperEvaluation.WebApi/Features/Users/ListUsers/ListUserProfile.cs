@@ -6,13 +6,13 @@ namespace Ambev.DeveloperEvaluation.WebApi.Features.Users.ListUsers;
 /// <summary>
 /// Profile for mapping ListUsers feature requests to commands
 /// </summary>
-public class ListUsersProfile : Profile
+public class ListUserProfile : Profile
 {
     /// <summary>
     /// Initializes the mappings for ListUsers feature
     /// </summary>
-    public ListUsersProfile()
+    public ListUserProfile()
     {
-        CreateMap<ListUsersResult, ListUsersResponse>();
+        CreateMap<ListUserRequest, ListUserCommand>();
     }
 }

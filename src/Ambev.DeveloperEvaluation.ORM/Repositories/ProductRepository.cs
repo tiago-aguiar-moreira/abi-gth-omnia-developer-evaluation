@@ -1,6 +1,8 @@
 ﻿using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
+using Ambev.DeveloperEvaluation.Common.Helpers;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Ambev.DeveloperEvaluation.ORM.Repositories;
 
@@ -53,8 +55,28 @@ public class ProductRepository : IProductRepository
     /// <param name="id">The category of the product</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>The product if found, null otherwise</returns>
-    public async Task<List<Product>> GetByCategoryAsync(string category, CancellationToken cancellationToken = default)
-        => await _context.Products.Where(w => w.Category == category).ToListAsync(cancellationToken);
+    public async Task<PaginatedList<Product>> ListByCategoryAsync(
+        string? categoryName, int? pageNumber, int? pageSize, CancellationToken cancellationToken = default)
+    {
+        var query = _context.Products.AsQueryable();
+
+        if (!categoryName.IsNullOrEmpty())
+            query = query.Where(w => w.Category.ToLower() == categoryName!.ToLower());
+
+        return await PaginatedList<Product>.CreateAsync(query, pageNumber, pageSize, cancellationToken);
+    }
+
+    /// <summary>
+    /// Retrieves a list of product category
+    /// </summary>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>The product if found, null otherwise</returns>
+    public async Task<List<string>> ListCategoryAsync(CancellationToken cancellationToken = default)
+    {
+        var products = await _context.Products.ToListAsync(cancellationToken);
+
+        return products.Select(s => s.Category).Distinct().ToList();
+    }
 
     /// <summary>
     /// Retrieves a product by their unique identifier
@@ -79,8 +101,8 @@ public class ProductRepository : IProductRepository
     /// </summary>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>The list of products if found, empty list if not found</returns>
-    public async Task<List<Product>> ListAsync(CancellationToken cancellationToken = default)
-        => await _context.Products.ToListAsync(cancellationToken);
+    public async Task<PaginatedList<Product>> ListAsync(int? pageNumber, int? pageSize, CancellationToken cancellationToken = default)
+        => await PaginatedList<Product>.CreateAsync(_context.Products, pageNumber, pageSize, cancellationToken);
 
     /// <summary>
     /// Retrieves a list of products by a list of ID's

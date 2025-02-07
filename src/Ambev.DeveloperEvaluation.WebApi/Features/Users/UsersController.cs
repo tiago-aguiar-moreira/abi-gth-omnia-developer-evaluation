@@ -125,16 +125,21 @@ public class UsersController : BaseController
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>The lis of users if found, empty list if not found</returns>
     [HttpGet()]
-    [ProducesResponseType(typeof(ApiResponseWithData<GetUserResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(PaginatedResponse<GetUserResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> ListUser(CancellationToken cancellationToken)
+    public async Task<IActionResult> ListUser(ListUserRequest request, CancellationToken cancellationToken)
     {
-        var response = await _mediator.Send(new ListUsersCommand(), cancellationToken);
+        var validator = new ListUserRequestValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
 
-        return Ok(
-            _mapper.Map<ListUsersResponse>(response),
-            "Users retrieved successfully");
+        if (!validationResult.IsValid)
+            throw new ValidationException(validationResult.Errors);
+
+        var command = _mapper.Map<ListUserCommand>(request);
+        var response = await _mediator.Send(command, cancellationToken);
+
+        return OkPaginated(response);
     }
 
     /// <summary>

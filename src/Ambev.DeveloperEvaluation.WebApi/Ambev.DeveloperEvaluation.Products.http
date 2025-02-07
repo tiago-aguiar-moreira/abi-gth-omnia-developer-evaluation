@@ -3,7 +3,7 @@
 
 ### Listar produtos
 
-GET {{hostAddress}}/api/Products?_page=1&_size=10&_order=price desc, title asc
+GET {{hostAddress}}/api/Products?_page=1&_size=2&_order=price%20desc,%20title%20asc
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -27,26 +27,26 @@ Content-Type: application/json
 
 ### Obter produto por ID
 
-GET {{hostAddress}}/api/Products/75e326bb-e947-44f7-a3da-35fdc6537ed6
+GET {{hostAddress}}/api/Products/cdaea54b-9005-4107-bc64-e6e8b83fb6e4
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 ### Altera produto
 
-PUT {{hostAddress}}/api/Products/75e326bb-e947-44f7-a3da-35fdc6537ed6
+PUT {{hostAddress}}/api/Products/cdaea54b-9005-4107-bc64-e6e8b83fb6e4
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "id": "75e326bb-e947-44f7-a3da-35fdc6537ed6",
+  "id": "cdaea54b-9005-4107-bc64-e6e8b83fb6e4",
   "title": "Microondas",
-  "price": 1299.99,
-  "description": "",
-  "category": "Eletrodomestico",
+  "price": 1399.99,
+  "description": "abc teste",
+  "category": "Eletrodomestico PLUS",
   "image": "https://meusite.com/imagem-smartphone.jpg",
   "rating": {
-    "rate": 4.8,
-    "count": 230
+    "rate": 4.7,
+    "count": 220
   }
 }
 
@@ -58,12 +58,12 @@ Content-Type: application/json
 
 ### Recupera todas as cotegorias de produtos
 
-GET {{hostAddress}}/api/Products/Catetories
+GET {{hostAddress}}/api/Products/Category
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 ### Recupera todos os produtos de uma cotegoria
 
-GET {{hostAddress}}/api/Products/Catetories/Eletrodomestico
+GET {{hostAddress}}/api/Products/Category/Eletrônicos
 Authorization: Bearer {{token}}
 Content-Type: application/json

@@ -14,8 +14,8 @@ public class CreateProductProfile : Profile
     public CreateProductProfile()
     {
         CreateMap<CreateProductRequest, CreateProductCommand>()
-            .ForMember(dest => dest.Rate, opt => opt.MapFrom(src => src.Rating.Rate))
-            .ForMember(dest => dest.Count, opt => opt.MapFrom(src => src.Rating.Count));
+            .ForMember(dest => dest.Rate, opt => opt.MapFrom(src => src.Rating != null ? src.Rating.Rate : 0))
+            .ForMember(dest => dest.Count, opt => opt.MapFrom(src => src.Rating != null ? src.Rating.Count : 0));
 
         CreateMap<CreateProductResult, CreateProductResponse>()
             .ForMember(dest => dest.Rating, opt => opt.MapFrom(src => new CreateProductRateResponse

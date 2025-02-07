@@ -1,3 +1,4 @@
+using Ambev.DeveloperEvaluation.Common.Helpers;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 
 namespace Ambev.DeveloperEvaluation.Domain.Repositories;
@@ -44,7 +45,7 @@ public interface IUserRepository
     /// </summary>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>The list of users if found, empty list if not found</returns>
-    Task<List<User>> ListAsync(CancellationToken cancellationToken = default);
+    Task<PaginatedList<User>> ListAsync(int? pageNumber, int? pageSize, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Updates a user from the repository

@@ -1,4 +1,5 @@
-﻿using Ambev.DeveloperEvaluation.Domain.Entities;
+﻿using Ambev.DeveloperEvaluation.Common.Helpers;
+using Ambev.DeveloperEvaluation.Domain.Entities;
 
 namespace Ambev.DeveloperEvaluation.Domain.Repositories;
 
@@ -36,7 +37,7 @@ public interface ICartRepository
     /// </summary>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>The list of carts if found, empty list if not found</returns>
-    Task<List<Cart>> ListAsync(CancellationToken cancellationToken = default);
+    Task<PaginatedList<Cart>> ListAsync(int? pageNumber, int? pageSize, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Updates a cart from the repository
