@@ -38,7 +38,7 @@ public interface IUserRepository
     /// <param name="id">The unique identifier of the user to delete</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>True if the user was deleted, false if not found</returns>
-    Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<User?> DeleteAsync(Guid id, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Retrieves a list of users
@@ -57,6 +57,6 @@ public interface IUserRepository
     /// </summary>
     /// <param name="id">The unique identifier of the user to delete</param>
     /// <param name="cancellationToken">Cancellation token</param>
-    /// <returns>True if the user was updated, false if not found</returns>
-    Task<bool> UpdateAsync(User user, CancellationToken cancellationToken = default);
+    /// <returns>The updated user</returns>
+    Task<User?> UpdateAsync(User user, CancellationToken cancellationToken = default);
 }

@@ -12,7 +12,6 @@ using Ambev.DeveloperEvaluation.WebApi.Features.Users.UpdateUser;
 using AutoMapper;
 using FluentValidation;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Users;
@@ -20,7 +19,6 @@ namespace Ambev.DeveloperEvaluation.WebApi.Features.Users;
 /// <summary>
 /// Controller for managing user operations
 /// </summary>
-[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class UsersController : BaseController
@@ -114,9 +112,9 @@ public class UsersController : BaseController
             throw new ValidationException(validationResult.Errors);
 
         var command = _mapper.Map<DeleteUserCommand>(request.Id);
-        await _mediator.Send(command, cancellationToken);
+        var response = await _mediator.Send(command, cancellationToken);
 
-        return Ok("User deleted successfully");
+        return Ok(_mapper.Map<DeleteUserResponse>(response), "User deleted successfully");
     }
 
     /// <summary>
@@ -152,23 +150,17 @@ public class UsersController : BaseController
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> UpdateUser(
-        [FromRoute] Guid id,
-        [FromBody] UpdateUserRequest request,
-        CancellationToken cancellationToken)
+    public async Task<IActionResult> UpdateUser([FromRoute] Guid id, [FromBody] UpdateUserRequest request, CancellationToken cancellationToken)
     {
-        if (request.Id != id)
-            throw new ValidationException("The ID provided in the route does not match the ID in the request body");
-
         var validator = new UpdateUserRequestValidator();
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
 
         if (!validationResult.IsValid)
             throw new ValidationException(validationResult.Errors);
 
-        var command = _mapper.Map<UpdateUserCommand>(request);
-        await _mediator.Send(command, cancellationToken);
+        var command = _mapper.Map<UpdateUserCommand>(request, opt => opt.Items["Id"] = id);
+        var response = await _mediator.Send(command, cancellationToken);
 
-        return Ok("User updated successfully");
+        return Ok(_mapper.Map<UpdateUserResponse>(response), "User updated successfully");
     }
 }

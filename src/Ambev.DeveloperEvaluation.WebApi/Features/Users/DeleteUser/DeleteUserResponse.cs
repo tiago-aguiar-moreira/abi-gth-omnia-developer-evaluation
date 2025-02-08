@@ -1,15 +1,15 @@
-﻿using Ambev.DeveloperEvaluation.Domain.Enums;
+using Ambev.DeveloperEvaluation.Domain.Enums;
 using System.Text.Json.Serialization;
 
-namespace Ambev.DeveloperEvaluation.Application.Users.ListUsers;
+namespace Ambev.DeveloperEvaluation.WebApi.Features.Users.CreateUser;
 
 /// <summary>
-/// Response model for ListUsersResult operation
+/// API response model for CreateUser operation
 /// </summary>
-public class ListUserResult
-{
+public class DeleteUserResponse
+{ 
     /// <summary>
-    /// The unique identifier of the user
+    /// The unique identifier of the created user
     /// </summary>
     public Guid Id { get; set; }
 
@@ -26,7 +26,7 @@ public class ListUserResult
     /// <summary>
     /// Gets or sets the address details of the user.
     /// </summary>
-    public ListUserAddressResult Address { get; set; } = new();
+    public DeleteUserAddressResponse Address { get; set; } = new();
 
     /// <summary>
     /// The user's phone number
@@ -45,9 +45,9 @@ public class ListUserResult
 }
 
 /// <summary>
-/// Represents address details for a user update request.
+/// Represents address details for a user creation request.
 /// </summary>
-public class ListUserAddressResult
+public class DeleteUserAddressResponse
 {
     /// <summary>
     /// Gets or sets the city where the user resides.
@@ -72,13 +72,13 @@ public class ListUserAddressResult
     /// <summary>
     /// Gets or sets the geolocation details of the user's address.
     /// </summary>
-    public ListUserGeolocationResult Geolocation { get; set; } = new();
+    public DeleteUserGeolocationResponse Geolocation { get; set; } = new();
 }
 
 /// <summary>
-/// Represents geolocation details for a user update request.
+/// Represents geolocation details for a user creation request.
 /// </summary>
-public class ListUserGeolocationResult
+public class DeleteUserGeolocationResponse
 {
     /// <summary>
     /// Gets or sets the latitude coordinate of the address.

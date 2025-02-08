@@ -13,6 +13,18 @@ public class ListUserProfile : Profile
     /// </summary>
     public ListUserProfile()
     {
-        CreateMap<User, ListUserResult>();
+        CreateMap<User, ListUserResult>()
+            .ForMember(dest => dest.Address, opt => opt.MapFrom(src => new ListUserAddressResult
+            {
+                City = src.City,
+                Street = src.Street,
+                Number = src.Number,
+                Zipcode = src.Zipcode,
+                Geolocation = new ListUserGeolocationResult
+                {
+                    Latitude = src.Latitude,
+                    Longitude = src.Longitude
+                }
+            }));
     }
 }

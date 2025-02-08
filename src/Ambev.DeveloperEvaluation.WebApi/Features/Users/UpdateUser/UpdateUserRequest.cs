@@ -9,11 +9,6 @@ namespace Ambev.DeveloperEvaluation.WebApi.Features.Users.UpdateUser;
 public class UpdateUserRequest
 {
     /// <summary>
-    /// The unique identifier of the user to delete
-    /// </summary>
-    public Guid Id { get; set; }
-
-    /// <summary>
     /// Gets or sets the username of the user to be created.
     /// </summary>
     public string Username { get; set; } = string.Empty;

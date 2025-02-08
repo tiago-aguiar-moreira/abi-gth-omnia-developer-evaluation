@@ -61,17 +61,17 @@ public class UserRepository : IUserRepository
     /// <param name="id">The unique identifier of the user to delete</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>True if the user was deleted, false if not found</returns>
-    public async Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<User?> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var user = await GetByIdAsync(id, cancellationToken);
         if (user == null)
-            return false;
+            return null;
 
         user.Deactivate();
 
         _context.Users.Update(user);
         await _context.SaveChangesAsync(cancellationToken);
-        return true;
+        return user;
     }
 
     /// <summary>
@@ -123,11 +123,11 @@ public class UserRepository : IUserRepository
     /// <param name="user">The user to create</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>True if the user was updated, false if not found</returns>
-    public async Task<bool> UpdateAsync(User user, CancellationToken cancellationToken = default)
+    public async Task<User?> UpdateAsync(User user, CancellationToken cancellationToken = default)
     {
         var existingUser = await GetByIdAsync(user.Id, cancellationToken);
         if (existingUser == null)
-            return false;
+            return null;
 
         existingUser.Update(
             user.Username,
@@ -145,6 +145,6 @@ public class UserRepository : IUserRepository
 
         _context.Users.Update(existingUser);
         await _context.SaveChangesAsync(cancellationToken);
-        return true;
+        return user;
     }
 }

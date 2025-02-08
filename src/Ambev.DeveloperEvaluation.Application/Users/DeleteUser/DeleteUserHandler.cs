@@ -1,4 +1,5 @@
 using Ambev.DeveloperEvaluation.Domain.Repositories;
+using AutoMapper;
 using FluentValidation;
 using MediatR;
 
@@ -10,14 +11,17 @@ namespace Ambev.DeveloperEvaluation.Application.Users.DeleteUser;
 public class DeleteUserHandler : IRequestHandler<DeleteUserCommand, DeleteUserResult>
 {
     private readonly IUserRepository _userRepository;
+    private readonly IMapper _mapper;
 
     /// <summary>
     /// Initializes a new instance of DeleteUserHandler
     /// </summary>
     /// <param name="userRepository">The user repository</param>
-    public DeleteUserHandler(IUserRepository userRepository)
+    /// <param name="mapper">The AutoMapper instance</param>
+    public DeleteUserHandler(IUserRepository userRepository, IMapper mapper)
     {
         _userRepository = userRepository;
+        _mapper = mapper;
     }
 
     /// <summary>
@@ -34,10 +38,9 @@ public class DeleteUserHandler : IRequestHandler<DeleteUserCommand, DeleteUserRe
         if (!validationResult.IsValid)
             throw new ValidationException(validationResult.Errors);
 
-        var success = await _userRepository.DeleteAsync(command.Id, cancellationToken);
-        if (!success)
-            throw new KeyNotFoundException($"User with ID {command.Id} not found");
+        var deactivateUser = await _userRepository.DeleteAsync(command.Id, cancellationToken)
+            ?? throw new KeyNotFoundException($"User with ID {command.Id} not found");
 
-        return new DeleteUserResult { Success = true };
+        return _mapper.Map<DeleteUserResult>(deactivateUser);
     }
 }

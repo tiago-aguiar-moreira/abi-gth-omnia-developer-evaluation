@@ -1,4 +1,5 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Users.UpdateUser;
+using Ambev.DeveloperEvaluation.WebApi.Features.Users.CreateUser;
 using AutoMapper;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Users.UpdateUser;
@@ -14,11 +15,23 @@ public class UpdateUserProfile : Profile
     public UpdateUserProfile()
     {
         CreateMap<UpdateUserRequest, UpdateUserCommand>()
-            .ForMember(dest => dest.City, opt => opt.MapFrom(src => src.Address.City))
-            .ForMember(dest => dest.Street, opt => opt.MapFrom(src => src.Address.Street))
-            .ForMember(dest => dest.Number, opt => opt.MapFrom(src => src.Address.Number))
-            .ForMember(dest => dest.Zipcode, opt => opt.MapFrom(src => src.Address.Zipcode))
-            .ForMember(dest => dest.Latitude, opt => opt.MapFrom(src => src.Address.Geolocation.Latitude))
-            .ForMember(dest => dest.Longitude, opt => opt.MapFrom(src => src.Address.Geolocation.Longitude));
+            .ConstructUsing((src, ctx) => new UpdateUserCommand
+            {
+                Id = ctx.Items["Id"] as Guid? ?? Guid.Empty,
+                City = src.Address.City,
+                Street = src.Address.Street,
+                Number = src.Address.Number,
+                Zipcode = src.Address.Zipcode,
+                Latitude = src.Address.Geolocation.Latitude,
+                Longitude = src.Address.Geolocation.Longitude
+            });
+
+        CreateMap<UpdateUserResult, UpdateUserResponse>()
+            .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src));
+
+        CreateMap<UpdateUserResult, UpdateUserAddressResponse>()
+            .ForMember(dest => dest.Geolocation, opt => opt.MapFrom(src => src));
+
+        CreateMap<UpdateUserResult, UpdateUserGeolocationResponse>();
     }
 }

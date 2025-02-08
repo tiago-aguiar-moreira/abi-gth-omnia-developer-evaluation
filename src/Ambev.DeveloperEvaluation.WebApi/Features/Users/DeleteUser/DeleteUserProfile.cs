@@ -1,3 +1,5 @@
+using Ambev.DeveloperEvaluation.Application.Users.DeleteUser;
+using Ambev.DeveloperEvaluation.WebApi.Features.Users.CreateUser;
 using AutoMapper;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Users.DeleteUser;
@@ -12,7 +14,21 @@ public class DeleteUserProfile : Profile
     /// </summary>
     public DeleteUserProfile()
     {
-        CreateMap<Guid, Application.Users.DeleteUser.DeleteUserCommand>()
-            .ConstructUsing(id => new Application.Users.DeleteUser.DeleteUserCommand(id));
+        CreateMap<Guid, DeleteUserCommand>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src));
+
+        CreateMap<DeleteUserResult, DeleteUserResponse>()
+            .ForMember(dest => dest.Address, opt => opt.MapFrom(src => new DeleteUserAddressResponse
+            {
+                City = src.City,
+                Street = src.Street,
+                Number = src.Number,
+                Zipcode = src.Zipcode,
+                Geolocation = new DeleteUserGeolocationResponse
+                {
+                    Latitude = src.Latitude,
+                    Longitude = src.Longitude
+                }
+            }));
     }
 }

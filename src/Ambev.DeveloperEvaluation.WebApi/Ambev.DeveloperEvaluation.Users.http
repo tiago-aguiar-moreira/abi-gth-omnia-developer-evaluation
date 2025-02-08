@@ -1,5 +1,5 @@
 @hostAddress = https://localhost:7181
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI3ZDYzYjViNC01MzIzLTQyYjQtODAwMi0yN2MxMmFjNzM5ZjgiLCJ1bmlxdWVfbmFtZSI6IlRpYWdvIEFndWlhciIsInJvbGUiOiIzIiwibmJmIjoxNzM4NTM4MzMwLCJleHAiOjE3Mzg1NjcxMzAsImlhdCI6MTczODUzODMzMH0.JQNxX2VeFLhp324Rl7T4gUBUUL1Paorc0AOZzha6-Eg
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJiYzI4OTYwYi1hNzIyLTQxOTQtOWRmNC00ZDdkMWMyYzM3ZmUiLCJ1bmlxdWVfbmFtZSI6IlZhbmVzc2EgZGUgQXpldmVkbyBTaWx2YSIsInJvbGUiOiIzIiwibmJmIjoxNzM5MDUzMTYyLCJleHAiOjE3MzkwODE5NjIsImlhdCI6MTczOTA1MzE2Mn0.A0bJrmrU3nx_oio86ZAIiVPxTm8-0NwWpvRoPWiuPwk
 
 ### Criar usuário
 
@@ -8,7 +8,7 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "email": "rodigovanessa.azevedo@example.com",
+  "email": "vanessa.azevedo@example.com",
   "username": "Vanessa de Azevedo Silva",
   "password": "SenhaForte@123",
   "address": {
@@ -28,44 +28,43 @@ Content-Type: application/json
 
 ### Buscar usuário pelo ID
 
-GET {{hostAddress}}/api/Users/327b51a5-f826-4d4b-8c0a-14c9998c89a7
+GET {{hostAddress}}/api/Users/4f270cbe-3e23-46e5-a410-365aaf7d24c0
 Authorization: Bearer {{token}}
 Accept: application/json
 
 ### Remover usuários
 
-DELETE {{hostAddress}}/api/Users/75d7377d-8f7b-4092-b637-2e8d3d97bb06
+DELETE {{hostAddress}}/api/Users/4f270cbe-3e23-46e5-a410-365aaf7d24c0
 Authorization: Bearer {{token}}
 Accept: application/json
 
 ### Listar usuários
 
-GET {{hostAddress}}/api/Users?_page=1&_size=10&username=T*
+GET {{hostAddress}}/api/Users?_page=1&_size=10
 Authorization: Bearer {{token}}
 Accept: application/json
 
 ### Alterar usuário
 
-PUT {{hostAddress}}/api/Users/c3e0da0a-b647-4cb6-8ca9-a6e8f3c7d00e
+PUT {{hostAddress}}/api/Users/4f270cbe-3e23-46e5-a410-365aaf7d24c0
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "id": "c3e0da0a-b647-4cb6-8ca9-a6e8f3c7d00e",
-  "email": "joao.silva11111@example.com",
-  "username": "joão da silva",
+  "email": "vanessa.azevedo@example.com",
+  "username": "Vanessa de Azevedo Silva",
   "password": "SenhaForte@123",
   "address": {
     "city": "São Paulo",
     "street": "Avenida Paulista",
-    "number": "100",
-    "zipcode": "01310-001",
+    "number": "1000",
+    "zipcode": "01310-000",
     "geolocation": {
       "lat": -23.5617,
       "long": -46.6561
     }
   },
-  "phone": "+5511998765477",
-  "status": 2,
-  "role":1
+  "phone": "+5511998765432",
+  "status": 1,
+  "role": 3
 }

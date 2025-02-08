@@ -46,10 +46,9 @@ public class UpdateUserHandler : IRequestHandler<UpdateUserCommand, UpdateUserRe
         var user = _mapper.Map<User>(command);
         user.Password = _passwordHasher.HashPassword(command.Password);
 
-        var success = await _userRepository.UpdateAsync(user, cancellationToken);
-        if (!success)
-            throw new KeyNotFoundException($"User with ID {command.Id} not found");
+        var updatedUser = await _userRepository.UpdateAsync(user, cancellationToken)
+            ?? throw new KeyNotFoundException($"User with ID {command.Id} not found");
 
-        return new UpdateUserResult { Success = true };
+        return _mapper.Map<UpdateUserResult>(updatedUser);
     }
 }
