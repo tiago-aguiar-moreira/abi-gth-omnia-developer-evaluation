@@ -17,16 +17,13 @@ public class CartRepository : ICartRepository
     /// <param name="cart">The cart to create</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>The created cart</returns>
-    public async Task<bool> CreateAsync(Cart cart, CancellationToken cancellationToken = default)
+    public async Task<Cart?> CreateAsync(Cart cart, CancellationToken cancellationToken = default)
     {
-        cart.ApplyDiscounts();
-        cart.SetTotalAmount();
-
         await _context.Carts.AddAsync(cart, cancellationToken);
         await _context.CartItems.AddRangeAsync(cart.Products, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
 
-        return true;
+        return cart;
     }
 
     /// <summary>
@@ -41,9 +38,7 @@ public class CartRepository : ICartRepository
         if (cart == null)
             return false;
 
-        cart.Cancel();
-
-        _context.Carts.Update(cart);
+        _context.Carts.Remove(cart);
         await _context.SaveChangesAsync(cancellationToken);
         return true;
     }
@@ -62,16 +57,16 @@ public class CartRepository : ICartRepository
     }
 
     /// <summary>
-    /// Retrieves a cart by their sale number
+    /// Retrieves a cart by user id and date
     /// </summary>
-    /// <param name="id">The sale number of the cart</param>
+    /// <param name="userId">The unique identifier of the user</param>
+    /// <param name="date">The cart date</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>The cart if found, null otherwise</returns>
-    public async Task<Cart?> GetBySaleNumberAsync(int saleNumber, CancellationToken cancellationToken = default)
+    public async Task<Cart?> GetByUserIdAndDateAsync(Guid userId, DateTime date, CancellationToken cancellationToken = default)
     {
         return await _context.Carts
-            .Include(c => c.Products)
-            .FirstOrDefaultAsync(o => o.SaleNumber == saleNumber, cancellationToken);
+            .FirstOrDefaultAsync(o => o.UserId == userId && o.Date.Date == date.Date, cancellationToken);
     }
 
     /// <summary>
@@ -94,21 +89,13 @@ public class CartRepository : ICartRepository
 
             query = property.ToLower() switch
             {
-                "salenumber" => query.Where(w => w.SaleNumber == (int)value),
-                "_minsalenumber" => query.FilterRangeField(property, (int)value),
-                "_maxsalenumber" => query.FilterRangeField(property, (int)value),
-                "branch" => query.FilterStringField(property, value),
-                "saledate" => query.Where(w => w.SaleDate == (DateTime)value),
-                "_minsaledate" => query.FilterRangeField(property,(DateTime)value),
-                "_maxsaledate" => query.FilterRangeField(property,(DateTime)value),
-                "iscanceled" => query.Where(w => w.IsCanceled == (bool)value),
                 "userid" => query.Where(w => w.UserId == (Guid)value),
+                "date" => query.Where(w => w.Date == (DateTime)value),
+                "_mindate" => query.FilterRangeField(property,(DateTime)value),
+                "_maxdate" => query.FilterRangeField(property,(DateTime)value),
                 "quantity" => query.Where(w => w.Products.Any(a => a.Quantity == (int)value)),
-                "_minquantity" => query.Where(w => w.Products.Any(a => a.UnitPrice >= (int)value)),
-                "_maxquantity" => query.Where(w => w.Products.Any(a => a.UnitPrice <= (int)value)),
-                "price" => query.Where(w => w.Products.Any(a => (int)value == a.UnitPrice)),
-                "_minprice" => query.Where(w => w.Products.Any(a => a.UnitPrice <= (int)value)),
-                "_maxprice" => query.Where(w => w.Products.Any(a => a.UnitPrice >= (int)value)),
+                "_minquantity" => query.FilterRangeField(property, (int)value),
+                "_maxquantity" => query.FilterRangeField(property, (int)value),
                 _ => query
             };
         }
@@ -124,19 +111,19 @@ public class CartRepository : ICartRepository
     /// <param name="cart">The cart to create</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>True if the cart was updated, false if not found</returns>
-    public async Task<bool> UpdateAsync(Cart cart, CancellationToken cancellationToken = default)
+    public async Task<Cart?> UpdateAsync(Cart cart, CancellationToken cancellationToken = default)
     {
         var existingCart = await GetByIdAsync(cart.Id, cancellationToken);
         if (existingCart == null)
-            return false;
+            return null;
 
         ReplaceCartItems(existingCart, cart.Products);
 
-        existingCart.Update(cart.SaleNumber, cart.SaleDate, cart.Branch, cart.IsCanceled);
+        existingCart.Update(cart.UserId, cart.Date);
 
         _context.Carts.Update(existingCart);
         await _context.SaveChangesAsync(cancellationToken);
-        return true;
+        return existingCart;
     }
 
     private void ReplaceCartItems(Cart existingCart, List<CartItem> updatedProducts)

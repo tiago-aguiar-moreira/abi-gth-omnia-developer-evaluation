@@ -44,21 +44,18 @@ public class CreateCartHandler : IRequestHandler<CreateCartCommand, CreateCartRe
         if (!validationResult.IsValid)
             throw new ValidationException(validationResult.Errors);
 
-        var existingCart = await _cartRepository.GetBySaleNumberAsync(command.SaleNumber, cancellationToken);
+        var existingCart = await _cartRepository.GetByUserIdAndDateAsync(command.UserId, command.Date, cancellationToken);
         if (existingCart != null)
-            throw new InvalidOperationException($"Cart with sale number {command.SaleNumber} already exists");
+            throw new InvalidOperationException($"An cart with user id {command.UserId} and date {command.Date:dd/MM/yyyy} already exists");
 
         var cart = _mapper.Map<Cart>(command);
 
-        await _productService.SetProductPricesAsync(cart.Products, cancellationToken);
+        await _productService.CheckProductAsync(cart.Products, cancellationToken);
 
-        var success = await _cartRepository.CreateAsync(cart, cancellationToken);
-        if(!success)
-            throw new Exception($"An error occurred while processing the order. SaleNumber: {cart.SaleNumber}, SaleDate: {cart.SaleDate}.");
+        var createdCart = await _cartRepository.CreateAsync(cart, cancellationToken);
 
-        var createdCart = await _cartRepository.GetByIdAsync(cart.Id, cancellationToken);
-        var result = _mapper.Map<CreateCartResult>(createdCart);
-
-        return result;
+        return createdCart == null
+            ? throw new Exception($"An error occurred while creating the cart with user id {cart.UserId} and date {cart.Date}.")
+            : _mapper.Map<CreateCartResult>(createdCart);
     }
 }

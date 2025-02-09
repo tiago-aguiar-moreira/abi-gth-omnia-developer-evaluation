@@ -7,17 +7,17 @@ GET {{hostAddress}}/api/Products?minPrice=1200&maxPrice=1300&title=iphone*
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
-### Cadastra um novo produto
+### Criar
 
 POST {{hostAddress}}/api/Products
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "title": "Geladeira",
-  "price": 1299.99,
+  "title": "Celular",
+  "price": 899.99,
   "description": "abc teste",
-  "category": "Eletrodomestico",
+  "category": "Eletrônico",
   "image": "https://meusite.com/imagem-smartphone.jpg",
   "rating": {
     "rate": 4.8,

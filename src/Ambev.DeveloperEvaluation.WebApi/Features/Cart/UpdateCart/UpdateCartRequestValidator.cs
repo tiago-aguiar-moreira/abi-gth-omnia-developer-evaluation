@@ -12,15 +12,8 @@ public class UpdateCartRequestValidator : AbstractValidator<UpdateCartRequest>
     /// </summary>
     public UpdateCartRequestValidator()
     {
-        RuleFor(cart => cart.SaleNumber)
-            .GreaterThan(0).WithMessage("Sale number must be greater than zero.");
-
-        RuleFor(cart => cart.SaleDate)
+        RuleFor(cart => cart.Date)
             .LessThanOrEqualTo(DateTime.UtcNow).WithMessage("Sale date cannot be in the future.");
-
-        RuleFor(cart => cart.Branch)
-            .NotEmpty().WithMessage("Branch is required.")
-            .MaximumLength(100).WithMessage("Branch cannot exceed 100 characters.");
 
         RuleFor(cart => cart.UserId)
             .NotEmpty().WithMessage("User ID is required.");

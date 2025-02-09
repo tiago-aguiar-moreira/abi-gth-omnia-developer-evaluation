@@ -14,16 +14,6 @@ public class CartItem : BaseEntity
     public int Quantity { get; set; }
 
     /// <summary>
-    /// Unit price of the product.
-    /// </summary>
-    public decimal UnitPrice { get; set; }
-
-    /// <summary>
-    /// Discount applied to the product.
-    /// </summary>
-    public decimal Discount { get; set; }
-
-    /// <summary>
     /// Gets the date and time when the cart item was created.
     /// </summary>
     public DateTime CreatedAt { get; set; }

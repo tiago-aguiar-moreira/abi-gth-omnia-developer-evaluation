@@ -111,7 +111,7 @@ public class CartsController : BaseController
         if (!validationResult.IsValid)
             throw new ValidationException(validationResult.Errors);
 
-        var command = _mapper.Map<GetCartCommand>(request.Id);
+        var command = _mapper.Map<GetCartCommand>(request);
         var response = await _mediator.Send(command, cancellationToken);
 
         return Ok(
@@ -153,22 +153,17 @@ public class CartsController : BaseController
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateCart(
-        [FromRoute] Guid id,
-        [FromBody] UpdateCartRequest request,
-        CancellationToken cancellationToken)
+        [FromRoute] Guid id, [FromBody] UpdateCartRequest request, CancellationToken cancellationToken)
     {
-        if (request.Id != id)
-            throw new ValidationException("The ID provided in the route does not match the ID in the request body");
-
         var validator = new UpdateCartRequestValidator();
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
 
         if (!validationResult.IsValid)
             throw new ValidationException(validationResult.Errors);
 
-        var command = _mapper.Map<UpdateCartCommand>(request);
-        await _mediator.Send(command, cancellationToken);
+        var command = _mapper.Map<UpdateCartCommand>(request, opt => opt.Items["Id"] = id);
+        var response = await _mediator.Send(command, cancellationToken);
 
-        return Ok("Cart updated successfully");
+        return Ok(_mapper.Map<UpdateCartResponse>(response), "Cart updated successfully");
     }
 }

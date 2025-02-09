@@ -14,7 +14,7 @@ public interface ICartRepository
     /// <param name="cart">The cart to create</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>The created cart</returns>
-    Task<bool> CreateAsync(Cart cart, CancellationToken cancellationToken = default);
+    Task<Cart?> CreateAsync(Cart cart, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Retrieves a cart by their unique identifier
@@ -23,6 +23,15 @@ public interface ICartRepository
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>The cart if found, null otherwise</returns>
     Task<Cart?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Retrieves a cart by user id and date
+    /// </summary>
+    /// <param name="userId">The unique identifier of the user</param>
+    /// <param name="date">The cart date</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>The cart if found, null otherwise</returns>
+    Task<Cart?> GetByUserIdAndDateAsync(Guid userId, DateTime date, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes a cart from the repository
@@ -50,13 +59,5 @@ public interface ICartRepository
     /// <param name="id">The unique identifier of the cart to delete</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>True if the cart was updated, false if not found</returns>
-    Task<bool> UpdateAsync(Cart cart, CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// Retrieves a cart by their unique identifier
-    /// </summary>
-    /// <param name="id">The unique identifier of the cart</param>
-    /// <param name="cancellationToken">Cancellation token</param>
-    /// <returns>The cart if found, null otherwise</returns>
-    Task<Cart?> GetBySaleNumberAsync(int saleNumber, CancellationToken cancellationToken = default);
+    Task<Cart?> UpdateAsync(Cart cart, CancellationToken cancellationToken = default);
 }

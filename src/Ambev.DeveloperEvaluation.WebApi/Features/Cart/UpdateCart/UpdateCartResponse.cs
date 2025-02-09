@@ -1,6 +1,8 @@
-﻿namespace Ambev.DeveloperEvaluation.WebApi.Features.Cart.CreateCart;
+﻿using Ambev.DeveloperEvaluation.WebApi.Features.Cart.CreateCart;
 
-public class CreateCartResponse
+namespace Ambev.DeveloperEvaluation.WebApi.Features.Cart.UpdateCart;
+
+public class UpdateCartResponse
 {
     /// <summary>
     /// Unique identifier for the sale.
@@ -20,10 +22,10 @@ public class CreateCartResponse
     /// <summary>
     /// List of sold products.
     /// </summary>
-    public List<CreateCartItemResponse> Products { get; set; } = [];
+    public List<UpdateCartItemResponse> Products { get; set; } = [];
 }
 
-public class CreateCartItemResponse
+public class UpdateCartItemResponse
 {
     /// <summary>
     /// Product identifier.

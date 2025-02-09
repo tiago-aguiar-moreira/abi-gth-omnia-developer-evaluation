@@ -21,12 +21,12 @@ namespace Ambev.DeveloperEvaluation.Application.Users.UpdateUser;
 public class UpdateUserCommand : IRequest<UpdateUserResult>
 {
     /// <summary>
-    /// The unique identifier of the user to delete
+    /// The unique identifier of the user.
     /// </summary>
     public Guid Id { get; set; }
 
     /// <summary>
-    /// Gets or sets the username of the user to be created.
+    /// Gets or sets the username of the user.
     /// </summary>
     public string Username { get; set; } = string.Empty;
 

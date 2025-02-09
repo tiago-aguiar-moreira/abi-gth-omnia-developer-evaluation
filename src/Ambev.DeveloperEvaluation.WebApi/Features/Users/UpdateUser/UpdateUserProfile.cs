@@ -24,7 +24,7 @@ public class UpdateUserProfile : Profile
                 Zipcode = src.Address.Zipcode,
                 Latitude = src.Address.Geolocation.Latitude,
                 Longitude = src.Address.Geolocation.Longitude
-            });
+            }).ForMember(dest => dest.Id, opt => opt.Ignore());
 
         CreateMap<UpdateUserResult, UpdateUserResponse>()
             .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src));

@@ -1,22 +1,21 @@
 ﻿using MediatR;
 
 namespace Ambev.DeveloperEvaluation.Application.Carts.CreateCart;
+
+/// <summary>
+/// Command for creating a cart
+/// </summary>
 public class CreateCartCommand : IRequest<CreateCartResult>
 {
     /// <summary>
-    /// Unique identifier for the sale.
+    /// User who owns the cart.
     /// </summary>
-    public int SaleNumber { get; set; }
+    public Guid UserId { get; set; }
 
     /// <summary>
     /// Date when the sale was made.
     /// </summary>
-    public DateTime SaleDate { get; set; }
-
-    /// <summary>
-    /// Branch where the sale was made.
-    /// </summary>
-    public string Branch { get; set; } = string.Empty;
+    public DateTime Date { get; set; }
 
     /// <summary>
     /// List of sold products.
@@ -24,14 +23,9 @@ public class CreateCartCommand : IRequest<CreateCartResult>
     public List<CreateCartItemCommand> Products { get; set; } = [];
 
     /// <summary>
-    /// Indicates whether the sale is canceled.
+    /// Gets the date and time when the user was created.
     /// </summary>
-    public bool IsCanceled { get; set; }
-
-    /// <summary>
-    /// User who owns the cart.
-    /// </summary>
-    public Guid UserId { get; set; }
+    public DateTime CreatedAt { get; set; }
 }
 
 public class CreateCartItemCommand

@@ -5,32 +5,22 @@ public class CreateCartRequest
     /// <summary>
     /// Unique identifier for the sale.
     /// </summary>
-    public int SaleNumber { get; set; }
-
-    /// <summary>
-    /// Date when the sale was made.
-    /// </summary>
-    public DateTime SaleDate { get; set; }
-
-    /// <summary>
-    /// Branch where the sale was made.
-    /// </summary>
-    public string Branch { get; set; } = string.Empty;
-
-    /// <summary>
-    /// List of sold products.
-    /// </summary>
-    public List<CreateCartItemRequest> Products { get; set; } = [];
-
-    /// <summary>
-    /// Indicates whether the sale is canceled.
-    /// </summary>
-    public bool IsCanceled { get; set; }
+    public Guid Id { get; set; }
 
     /// <summary>
     /// User who owns the cart.
     /// </summary>
     public Guid UserId { get; set; }
+
+    /// <summary>
+    /// Date when the sale was made.
+    /// </summary>
+    public DateTime Date { get; set; }
+
+    /// <summary>
+    /// List of sold products.
+    /// </summary>
+    public List<CreateCartItemRequest> Products { get; set; } = [];
 }
 
 public class CreateCartItemRequest

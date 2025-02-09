@@ -13,7 +13,18 @@ public class UpdateCartProfile : Profile
     /// </summary>
     public UpdateCartProfile()
     {
-        CreateMap<UpdateCartRequest, UpdateCartCommand>();
         CreateMap<UpdateCartItemRequest, UpdateCartItemCommand>();
+
+        CreateMap<UpdateCartRequest, UpdateCartCommand>()
+            .ConstructUsing((src, ctx) => new UpdateCartCommand
+            {
+                Id = ctx.Items["Id"] as Guid? ?? Guid.Empty,
+                Date = src.Date,
+                UserId = src.UserId,
+                Products = ctx.Mapper.Map<List<UpdateCartItemCommand>>(src.Products)
+            }).ForMember(dest => dest.Id, opt => opt.Ignore());
+
+        CreateMap<UpdateCartItemResult, UpdateCartItemResponse>();
+        CreateMap<UpdateCartResult, UpdateCartResponse>();
     }
 }

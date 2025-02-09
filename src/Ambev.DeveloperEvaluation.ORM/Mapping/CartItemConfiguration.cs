@@ -13,22 +13,15 @@ public class CartItemConfiguration : IEntityTypeConfiguration<CartItem>
             .HasColumnType("uuid")
             .HasDefaultValueSql("gen_random_uuid()");
 
-        builder.Property(ci => ci.Quantity)
-            .IsRequired();
-
-        builder.Property(ci => ci.UnitPrice)
-            .IsRequired()
-            .HasColumnType("decimal(18,2)");
-
-        builder.Property(ci => ci.Discount)
-            .HasColumnType("decimal(18,2)");
-
-        builder.Property(ci => ci.CreatedAt)
-            .IsRequired();
-
         builder.HasOne<Product>()
             .WithMany()
             .HasForeignKey(ci => ci.ProductId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Property(ci => ci.Quantity)
+            .IsRequired();
+
+        builder.Property(ci => ci.CreatedAt)
+            .IsRequired();
     }
 }

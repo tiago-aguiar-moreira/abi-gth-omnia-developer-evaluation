@@ -1,6 +1,4 @@
-﻿using Ambev.DeveloperEvaluation.Application.Carts.UpdateCart;
-
-namespace Ambev.DeveloperEvaluation.WebApi.Features.Cart.UpdateCart;
+﻿namespace Ambev.DeveloperEvaluation.WebApi.Features.Cart.UpdateCart;
 
 public class UpdateCartRequest
 {
@@ -10,34 +8,19 @@ public class UpdateCartRequest
     public Guid Id { get; set; }
 
     /// <summary>
-    /// Unique identifier for the sale.
+    /// User who owns the cart.
     /// </summary>
-    public int SaleNumber { get; set; }
+    public Guid UserId { get; set; }
 
     /// <summary>
     /// Date when the sale was made.
     /// </summary>
-    public DateTime SaleDate { get; set; }
-
-    /// <summary>
-    /// Branch where the sale was made.
-    /// </summary>
-    public string Branch { get; set; } = string.Empty;
+    public DateTime Date { get; set; }
 
     /// <summary>
     /// List of sold products.
     /// </summary>
     public List<UpdateCartItemRequest> Products { get; set; } = [];
-
-    /// <summary>
-    /// Indicates whether the sale is canceled.
-    /// </summary>
-    public bool IsCanceled { get; set; }
-
-    /// <summary>
-    /// User who owns the cart.
-    /// </summary>
-    public Guid UserId { get; set; }
 }
 
 public class UpdateCartItemRequest

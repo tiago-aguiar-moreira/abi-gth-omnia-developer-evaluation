@@ -1,4 +1,8 @@
 ﻿namespace Ambev.DeveloperEvaluation.Application.Carts.CreateCart;
+
+/// <summary>
+/// Response model for CreateCart operation
+/// </summary>
 public class CreateCartResult
 {
     /// <summary>
@@ -7,39 +11,19 @@ public class CreateCartResult
     public Guid Id { get; set; }
 
     /// <summary>
-    /// Identifier for the sale.
-    /// </summary>
-    public int SaleNumber { get; set; }
-
-    /// <summary>
     /// User who owns the cart.
     /// </summary>
     public Guid UserId { get; set; }
 
     /// <summary>
-    /// Date when the sale was made.
+    /// Date when the cart was made.
     /// </summary>
-    public DateTime SaleDate { get; set; }
-
-    /// <summary>
-    /// Total value of the sale.
-    /// </summary>
-    public decimal TotalAmount { get; set; }
-
-    /// <summary>
-    /// Branch where the sale was made.
-    /// </summary>
-    public string Branch { get; set; } = string.Empty;
+    public DateTime Date { get; set; }
 
     /// <summary>
     /// List of sold products.
     /// </summary>
     public List<CreateCartItemResult> Products { get; set; } = [];
-
-    /// <summary>
-    /// Indicates whether the sale is canceled.
-    /// </summary>
-    public bool IsCanceled { get; set; }
 }
 
 public class CreateCartItemResult
@@ -53,14 +37,4 @@ public class CreateCartItemResult
     /// Quantity of the product sold.
     /// </summary>
     public int Quantity { get; set; }
-
-    /// <summary>
-    /// Unit price of the product.
-    /// </summary>
-    public decimal UnitPrice { get; set; }
-
-    /// <summary>
-    /// Discount applied to the product.
-    /// </summary>
-    public decimal Discount { get; set; }
 }

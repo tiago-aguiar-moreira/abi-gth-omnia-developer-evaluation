@@ -45,12 +45,12 @@ public class UpdateCartHandler : IRequestHandler<UpdateCartCommand, UpdateCartRe
 
         var cart = _mapper.Map<Cart>(command);
 
-        await _productService.SetProductPricesAsync(cart.Products, cancellationToken);
+        await _productService.CheckProductAsync(cart.Products, cancellationToken);
 
-        var success = await _cartRepository.UpdateAsync(cart, cancellationToken);
-        if (!success)
-            throw new KeyNotFoundException($"Cart with ID {command.Id} not found");
-
-        return new UpdateCartResult { Success = true };
+        var updatedCart = await _cartRepository.UpdateAsync(cart, cancellationToken);
+        
+        return updatedCart == null
+            ? throw new KeyNotFoundException($"Cart with ID {command.Id} not found")
+            : _mapper.Map<UpdateCartResult>(updatedCart);
     }
 }

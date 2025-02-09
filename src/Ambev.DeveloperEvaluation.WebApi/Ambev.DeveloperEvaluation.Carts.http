@@ -1,63 +1,58 @@
 @hostAddress = https://localhost:7181
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI3ZDYzYjViNC01MzIzLTQyYjQtODAwMi0yN2MxMmFjNzM5ZjgiLCJ1bmlxdWVfbmFtZSI6IlRpYWdvIEFndWlhciIsInJvbGUiOiIzIiwibmJmIjoxNzM4NTM4MzMwLCJleHAiOjE3Mzg1NjcxMzAsImlhdCI6MTczODUzODMzMH0.JQNxX2VeFLhp324Rl7T4gUBUUL1Paorc0AOZzha6-Eg
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJiYzI4OTYwYi1hNzIyLTQxOTQtOWRmNC00ZDdkMWMyYzM3ZmUiLCJ1bmlxdWVfbmFtZSI6IlZhbmVzc2EgZGUgQXpldmVkbyBTaWx2YSIsInJvbGUiOiIzIiwibmJmIjoxNzM5MTI5OTIzLCJleHAiOjE3MzkxNTg3MjMsImlhdCI6MTczOTEyOTkyM30.0UN2_VOjnlvKAY3E0O-HC8gnF-a_m8P7NOg_PQvN8CI
 
-### Criar compra
+### GET /carts
+
+GET {{hostAddress}}/api/Carts?_page=1&_size=2
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### POST /carts
 
 POST {{hostAddress}}/api/Carts
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "saleNumber": 18,
-  "saleDate": "2025-02-01T17:52:07",
-  "branch": "Filial 7",
-  "userId": "327b51a5-f826-4d4b-8c0a-14c9998c89a7",
+  "userId": "bc28960b-a722-4194-9df4-4d7d1c2c37fe",
+  "date": "2025-02-06T19:52:07",
   "products": [
     {
-      "productId": "6822beab-c33e-469b-b01e-5343513f3d83",
-      "quantity": "9"
+      "productId": "bd3f2060-d319-4849-8429-a5a7da423440",
+      "quantity": 5
     }
   ]
 }
 
-### Buscar compra pelo ID
+### GET /carts/{id}
 
-GET {{hostAddress}}/api/Carts/79fd6120-d64a-4852-928f-3918fdf3f219
+GET {{hostAddress}}/api/Carts/47716ab3-7499-4ac4-ab9f-6c6d03098561
 Authorization: Bearer {{token}}
 Accept: application/json
 
-### Remover compra
+### PUT /carts/{id}
 
-DELETE {{hostAddress}}/api/Carts/79fd6120-d64a-4852-928f-3918fdf3f219
-Authorization: Bearer {{token}}
-Accept: application/json
-
-### Listar compras
-
-GET {{hostAddress}}/api/Carts?_minSaleDate=2025-02-01T00:00:00
-Authorization: Bearer {{token}}
-Accept: application/json
-
-### Alterar compra
-
-PUT {{hostAddress}}/api/Carts/79fd6120-d64a-4852-928f-3918fdf3f219
+PUT {{hostAddress}}/api/Carts/47716ab3-7499-4ac4-ab9f-6c6d03098561
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "id": "79fd6120-d64a-4852-928f-3918fdf3f219",
-  "saleNumber": 22,
-  "saleDate": "2025-01-17T18:52:07",
-  "branch": "Filial 7",
-  "userId": "327b51a5-f826-4d4b-8c0a-14c9998c89a7",
+  "userId": "bc28960b-a722-4194-9df4-4d7d1c2c37fe",
+  "date": "2025-02-01T17:52:07",
   "products": [
     {
-      "productId": "7d18d6ad-d6a8-4eff-8435-c1348a5485a2",
-      "quantity": "30"
+      "productId": "982b5660-8050-477f-8b48-ccb6592e941a",
+      "quantity": 23
     },
     {
-      "productId": "6822beab-c33e-469b-b01e-5343513f3d83",
-      "quantity": "15"
+      "productId": "bd3f2060-d319-4849-8429-a5a7da423440",
+      "quantity": 10
     }
   ]
 }
+
+### DELETE /carts/{id}
+
+DELETE {{hostAddress}}/api/Carts/47716ab3-7499-4ac4-ab9f-6c6d03098561
+Authorization: Bearer {{token}}
+Accept: application/json

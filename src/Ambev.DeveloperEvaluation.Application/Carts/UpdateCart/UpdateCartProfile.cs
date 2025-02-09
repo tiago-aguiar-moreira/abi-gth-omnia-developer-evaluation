@@ -15,5 +15,8 @@ public class UpdateCartProfile :Profile
     {
         CreateMap<UpdateCartCommand, Cart>();
         CreateMap<UpdateCartItemCommand, CartItem>();
+
+        CreateMap<Cart, UpdateCartResult>();
+        CreateMap<CartItem, UpdateCartItemResult>();
     }
 }
