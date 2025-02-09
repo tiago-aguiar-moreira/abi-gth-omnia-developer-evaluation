@@ -4,10 +4,10 @@ using MediatR;
 namespace Ambev.DeveloperEvaluation.Domain.Events;
 public class SaleModifiedEvent : INotification
 {
-    public Cart Cart { get; }
+    public Sale Sale { get; }
 
-    public SaleModifiedEvent(Cart cart)
+    public SaleModifiedEvent(Sale sale)
     {
-        Cart = cart;
+        Sale = sale;
     }
 }
