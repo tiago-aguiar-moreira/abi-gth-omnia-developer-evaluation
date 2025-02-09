@@ -31,7 +31,7 @@ public class Sale : BaseEntity
     /// <summary>
     /// List of sold products.
     /// </summary>
-    public List<CartItem> Products { get; set; } = [];
+    public List<SaleItem> Products { get; set; } = [];
 
     /// <summary>
     /// Indicates whether the sale is canceled.
