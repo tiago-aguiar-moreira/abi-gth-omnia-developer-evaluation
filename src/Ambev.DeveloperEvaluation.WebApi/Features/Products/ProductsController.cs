@@ -203,7 +203,7 @@ public class ProductsController : BaseController
     /// </summary>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>The list of product categories if found, empty list if not found</returns>
-    [HttpGet("category")]
+    [HttpGet("categories")]
     [ProducesResponseType(typeof(string[]), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
