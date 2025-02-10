@@ -13,6 +13,16 @@ public class UpdateProductProfile : Profile
     /// </summary>
     public UpdateProductProfile()
     {
-        CreateMap<UpdateProductCommand, Product>();
+        CreateMap<UpdateProductCommand, Product>()
+            .ForMember(dest => dest.Rate, opt => opt.MapFrom(src => src.Rating.Rate))
+            .ForMember(dest => dest.Count, opt => opt.MapFrom(src => src.Rating.Count));
+
+        CreateMap<Product, UpdateProductResult>()
+            .ForMember(dest => dest.Rating, opt => opt.MapFrom(src => new UpdateProductRateResult
+            {
+                Rate = src.Rate,
+                Count = src.Count
+            }));
+
     }
 }

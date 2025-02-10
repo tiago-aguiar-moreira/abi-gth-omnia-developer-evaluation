@@ -13,6 +13,11 @@ public class GetProductProfile : Profile
     /// </summary>
     public GetProductProfile()
     {
-        CreateMap<Product, GetProductResult>();
+        CreateMap<Product, GetProductResult>()
+            .ForMember(dest => dest.Rating, opt => opt.MapFrom(src => new GetProductRateResult
+            {
+                Rate = src.Rate,
+                Count = src.Count
+            }));
     }
 }

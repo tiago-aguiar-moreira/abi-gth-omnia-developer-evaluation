@@ -16,5 +16,6 @@ public class GetProductProfile : Profile
         CreateMap<GetProductRequest, GetProductCommand>();
 
         CreateMap<GetProductResult, GetProductResponse>();
+        CreateMap<GetProductRateResult, GetProductRateResponse>();
     }
 }

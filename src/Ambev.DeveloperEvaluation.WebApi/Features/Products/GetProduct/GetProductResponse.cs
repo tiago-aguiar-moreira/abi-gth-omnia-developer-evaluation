@@ -34,6 +34,14 @@ public class GetProductResponse
     public string Image { get; set; } = string.Empty;
 
     /// <summary>
+    /// The product rating information.
+    /// </summary>
+    public GetProductRateResponse Rating { get; set; } = new();
+}
+
+public class GetProductRateResponse
+{
+    /// <summary>
     /// The average rating of the product.
     /// </summary>
     public float Rate { get; set; }

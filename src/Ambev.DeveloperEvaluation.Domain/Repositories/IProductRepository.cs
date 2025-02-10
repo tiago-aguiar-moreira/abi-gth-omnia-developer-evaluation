@@ -67,7 +67,7 @@ public interface IProductRepository
     /// <param name="product">The product to update</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>The updated product</returns>
-    Task<bool> UpdateAsync(Product product, CancellationToken cancellationToken = default);
+    Task<Product?> UpdateAsync(Product product, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes a product from the repository

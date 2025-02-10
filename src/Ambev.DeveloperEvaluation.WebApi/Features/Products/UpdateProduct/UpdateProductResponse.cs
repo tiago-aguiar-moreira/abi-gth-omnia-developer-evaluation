@@ -1,10 +1,11 @@
-﻿namespace Ambev.DeveloperEvaluation.WebApi.Features.Products.CreateProduct;
+﻿namespace Ambev.DeveloperEvaluation.WebApi.Features.Products.UpdateProduct;
 
-public class CreateProductResponse
+public class UpdateProductResponse
 {
     /// <summary>
-    /// The unique identifier of the created product
+    /// Gets or sets the unique identifier of the newly created product.
     /// </summary>
+    /// <value>A GUID that uniquely identifies the created product in the system.</value>
     public Guid Id { get; set; }
 
     /// <summary>
@@ -35,10 +36,10 @@ public class CreateProductResponse
     /// <summary>
     /// The product rating information.
     /// </summary>
-    public CreateProductRateResponse Rating { get; set; } = new();
+    public UpdateProductRateResponse Rating { get; set; } = new();
 }
 
-public class CreateProductRateResponse
+public class UpdateProductRateResponse
 {
     /// <summary>
     /// The average rating of the product.

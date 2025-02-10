@@ -14,7 +14,14 @@ public class UpdateProductProfile : Profile
     public UpdateProductProfile()
     {
         CreateMap<UpdateProductRequest, UpdateProductCommand>()
-            .ForMember(dest => dest.Rate, opt => opt.MapFrom(src => src.Rating != null ? src.Rating.Rate : 0))
-            .ForMember(dest => dest.Count, opt => opt.MapFrom(src => src.Rating != null ? src.Rating.Count : 0));
+            .ConstructUsing((src, ctx) => new UpdateProductCommand()
+            {
+                Id = ctx.Items["Id"] as Guid? ?? Guid.Empty
+            }).ForMember(dest => dest.Id, opt => opt.Ignore());
+
+        CreateMap<UpdateProductRateRequest, UpdateProductRateCommand>();
+
+        CreateMap<UpdateProductResult, UpdateProductResponse>();
+        CreateMap<UpdateProductRateResult, UpdateProductRateResponse>();
     }
 }

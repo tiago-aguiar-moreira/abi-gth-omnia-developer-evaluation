@@ -180,11 +180,11 @@ public class ProductRepository : IProductRepository
     /// <param name="product">The product to update</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>The updated product</returns>
-    public async Task<bool> UpdateAsync(Product product, CancellationToken cancellationToken = default)
+    public async Task<Product?> UpdateAsync(Product product, CancellationToken cancellationToken = default)
     {
         var existingProduct = await GetByIdAsync(product.Id, cancellationToken);
         if (existingProduct == null)
-            return false;
+            return null;
 
         existingProduct.Update(
             product.Title,
@@ -197,6 +197,6 @@ public class ProductRepository : IProductRepository
 
         _context.Products.Update(existingProduct);
         await _context.SaveChangesAsync(cancellationToken);
-        return true;
+        return product;
     }
 }

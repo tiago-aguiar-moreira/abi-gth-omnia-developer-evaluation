@@ -65,7 +65,7 @@ public class ListUserHandler : IRequestHandler<ListUserCommand, PaginatedList<Li
 
         return new PaginatedList<ListUserResult>(
             _mapper.Map<List<ListUserResult>>(users),
-            users.TotalCount,
+            users.TotalItems,
             users.CurrentPage,
             users.PageSize
         );

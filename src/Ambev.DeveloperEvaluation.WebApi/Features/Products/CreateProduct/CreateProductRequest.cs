@@ -30,7 +30,7 @@ public class CreateProductRequest
     /// <summary>
     /// The product rating information.
     /// </summary>
-    public CreateProductRateRequest? Rating { get; set; }
+    public CreateProductRateRequest Rating { get; set; } = new();
 }
 
 public class CreateProductRateRequest

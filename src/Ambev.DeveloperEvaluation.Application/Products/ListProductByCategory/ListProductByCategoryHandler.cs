@@ -50,7 +50,7 @@ public class ListProductByCategoryHandler : IRequestHandler<ListProductByCategor
 
         return new PaginatedList<ListProductByCategoryResult>(
             _mapper.Map<List<ListProductByCategoryResult>>(products),
-            products.TotalCount,
+            products.TotalItems,
             products.CurrentPage,
             products.PageSize
         );

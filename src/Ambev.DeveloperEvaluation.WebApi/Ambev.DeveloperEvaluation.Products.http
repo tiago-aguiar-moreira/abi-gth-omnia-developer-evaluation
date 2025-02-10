@@ -1,20 +1,20 @@
 @hostAddress = https://localhost:7181
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI3ZDYzYjViNC01MzIzLTQyYjQtODAwMi0yN2MxMmFjNzM5ZjgiLCJ1bmlxdWVfbmFtZSI6IlRpYWdvIEFndWlhciIsInJvbGUiOiIzIiwibmJmIjoxNzM4NTM4MzMwLCJleHAiOjE3Mzg1NjcxMzAsImlhdCI6MTczODUzODMzMH0.JQNxX2VeFLhp324Rl7T4gUBUUL1Paorc0AOZzha6-Eg
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJiODk5YTQ4Yi0wNmQxLTQwOGQtYmUyNS03MTJmYTcxYmU5NWMiLCJ1bmlxdWVfbmFtZSI6IlRpYWdvIEFndWlhciIsInJvbGUiOiIzIiwibmJmIjoxNzM5MTQxNTIzLCJleHAiOjE3MzkxNzAzMjMsImlhdCI6MTczOTE0MTUyM30.EuLm8D5av-3mi7PH2QI4fD2PjOKJWzQQj1KLCVc9yGQ
 
-### Listar produtos
+### GET /products
 
-GET {{hostAddress}}/api/Products?minPrice=1200&maxPrice=1300&title=iphone*
+GET {{hostAddress}}/api/Products
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
-### Criar
+### POST /products
 
 POST {{hostAddress}}/api/Products
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "title": "Celular",
+  "title": "Celular Iphone X",
   "price": 899.99,
   "description": "abc teste",
   "category": "Eletrônico",
@@ -25,45 +25,44 @@ Content-Type: application/json
   }
 }
 
-### Obter produto por ID
+### GET /products/{id}
 
-GET {{hostAddress}}/api/Products/cdaea54b-9005-4107-bc64-e6e8b83fb6e4
+GET {{hostAddress}}/api/Products/b8c5bdcf-e3da-4d6e-bd1b-88e2d84f2b1e
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
-### Altera produto
+### PUT /products/{id}
 
-PUT {{hostAddress}}/api/Products/7d18d6ad-d6a8-4eff-8435-c1348a5485a2
+PUT {{hostAddress}}/api/Products/b8c5bdcf-e3da-4d6e-bd1b-88e2d84f2b1e
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "id": "7d18d6ad-d6a8-4eff-8435-c1348a5485a2",
-  "title": "Smartphone S21",
-  "price": 1399.99,
-  "description": "Smartphone com câmera de 50MP e tela AMOLED",
-  "category": "Eletrônicos",
+  "title": "Celular Iphone XS",
+  "price": 900.99,
+  "description": "abc teste",
+  "category": "Eletrônico",
   "image": "https://meusite.com/imagem-smartphone.jpg",
   "rating": {
     "rate": 4.7,
-    "count": 210
+    "count": 231
   }
 }
 
-### Remove produto
+### DELETE /products/{id}
 
-DELETE {{hostAddress}}/api/Products/1fb56425-1cfe-493b-b81d-6d3d361fe8df
+DELETE {{hostAddress}}/api/Products/b8c5bdcf-e3da-4d6e-bd1b-88e2d84f2b1e
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
-### Recupera todas as cotegorias de produtos
+### GET /products/categories
 
-GET {{hostAddress}}/api/Products/Category
+GET {{hostAddress}}/api/Products/Categories
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
-### Recupera todos os produtos de uma cotegoria
+### GET /products/category/{category}
 
-GET {{hostAddress}}/api/Products/Category/Eletrônicos?minPrice=1200&maxPrice=1300&title=iphone*
+GET {{hostAddress}}/api/Products/Category/Eletrodomestico
 Authorization: Bearer {{token}}
 Content-Type: application/json

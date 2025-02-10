@@ -66,7 +66,7 @@ public class ListCartHandler : IRequestHandler<ListCartCommand, PaginatedList<Li
 
         return new PaginatedList<ListCartResult>(
             _mapper.Map<List<ListCartResult>>(carts),
-            carts.TotalCount,
+            carts.TotalItems,
             carts.CurrentPage,
             carts.PageSize
         );

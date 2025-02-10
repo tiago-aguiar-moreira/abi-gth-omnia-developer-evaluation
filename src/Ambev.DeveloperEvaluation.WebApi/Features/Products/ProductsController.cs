@@ -114,7 +114,7 @@ public class ProductsController : BaseController
         if (!validationResult.IsValid)
             throw new ValidationException(validationResult.Errors);
 
-        var command = _mapper.Map<GetProductCommand>(request.Id);
+        var command = _mapper.Map<GetProductCommand>(request);
         var response = await _mediator.Send(command, cancellationToken);
 
         return Ok(
@@ -137,19 +137,16 @@ public class ProductsController : BaseController
         [FromBody] UpdateProductRequest request,
         CancellationToken cancellationToken)
     {
-        if (request.Id != id)
-            throw new ValidationException("The ID provided in the route does not match the ID in the request body");
-
         var validator = new UpdateProductRequestValidator();
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
 
         if (!validationResult.IsValid)
             throw new ValidationException(validationResult.Errors);
 
-        var command = _mapper.Map<UpdateProductCommand>(request);
-        await _mediator.Send(command, cancellationToken);
+        var command = _mapper.Map<UpdateProductCommand>(request, opt => opt.Items["Id"] = id);
+        var response = await _mediator.Send(command, cancellationToken);
 
-        return Ok("Product updated successfully");
+        return Ok(_mapper.Map<UpdateProductResponse>(response), "Product updated successfully");
     }
 
     /// <summary>

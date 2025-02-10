@@ -1,15 +1,21 @@
 @hostAddress = https://localhost:7181
 @token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJiYzI4OTYwYi1hNzIyLTQxOTQtOWRmNC00ZDdkMWMyYzM3ZmUiLCJ1bmlxdWVfbmFtZSI6IlZhbmVzc2EgZGUgQXpldmVkbyBTaWx2YSIsInJvbGUiOiIzIiwibmJmIjoxNzM5MDUzMTYyLCJleHAiOjE3MzkwODE5NjIsImlhdCI6MTczOTA1MzE2Mn0.A0bJrmrU3nx_oio86ZAIiVPxTm8-0NwWpvRoPWiuPwk
 
-### Criar usuário
+### GET /users
+
+GET {{hostAddress}}/api/Users?_page=1&_size=10
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### POST /users
 
 POST {{hostAddress}}/api/Users
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "email": "vanessa.azevedo@example.com",
-  "username": "Vanessa de Azevedo Silva",
+  "email": "tiago.aguiar@example.com",
+  "username": "Tiago Aguiar",
   "password": "SenhaForte@123",
   "address": {
     "city": "São Paulo",
@@ -26,32 +32,20 @@ Content-Type: application/json
   "role": 3
 }
 
-### Buscar usuário pelo ID
+### GET /users/{id}
 
 GET {{hostAddress}}/api/Users/4f270cbe-3e23-46e5-a410-365aaf7d24c0
 Authorization: Bearer {{token}}
 Accept: application/json
 
-### Remover usuários
-
-DELETE {{hostAddress}}/api/Users/4f270cbe-3e23-46e5-a410-365aaf7d24c0
-Authorization: Bearer {{token}}
-Accept: application/json
-
-### Listar usuários
-
-GET {{hostAddress}}/api/Users?_page=1&_size=10
-Authorization: Bearer {{token}}
-Accept: application/json
-
-### Alterar usuário
+### PUT /users/{id}
 
 PUT {{hostAddress}}/api/Users/4f270cbe-3e23-46e5-a410-365aaf7d24c0
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "email": "vanessa.azevedo@example.com",
+  "email": "vanessa.azevedo1@example.com",
   "username": "Vanessa de Azevedo Silva",
   "password": "SenhaForte@123",
   "address": {
@@ -68,3 +62,9 @@ Content-Type: application/json
   "status": 1,
   "role": 3
 }
+
+### Remover usuários
+
+DELETE {{hostAddress}}/api/Users/4f270cbe-3e23-46e5-a410-365aaf7d24c0
+Authorization: Bearer {{token}}
+Accept: application/json

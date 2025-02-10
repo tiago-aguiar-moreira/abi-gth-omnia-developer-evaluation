@@ -41,10 +41,11 @@ public class UpdateProductHandler : IRequestHandler<UpdateProductCommand, Update
 
         var product = _mapper.Map<Product>(command);
 
-        var success = await _productRepository.UpdateAsync(product, cancellationToken);
-        if (!success)
-            throw new KeyNotFoundException($"Product with ID {command.Id} not found");
+        var updatedProduct = await _productRepository.UpdateAsync(product, cancellationToken);
 
-        return new UpdateProductResult { Success = true };
+        var abc = _mapper.Map<UpdateProductResult>(updatedProduct);
+        return updatedProduct == null
+            ? throw new KeyNotFoundException($"Product with ID {command.Id} not found")
+            : abc;
     }
 }

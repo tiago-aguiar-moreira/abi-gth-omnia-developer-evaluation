@@ -6,6 +6,6 @@ POST {{hostAddress}}/api/Auth
 Content-Type: application/json
 
 {
-  "email": "vanessa.azevedo@example.com",
+  "email": "tiago.aguiar@example.com",
   "password": "SenhaForte@123"
 }

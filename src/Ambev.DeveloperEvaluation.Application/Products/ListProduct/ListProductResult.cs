@@ -37,6 +37,14 @@ public class ListProductResult
     public string Image { get; set; } = string.Empty;
 
     /// <summary>
+    /// The product rating information.
+    /// </summary>
+    public ListProductRateResult Rating { get; set; } = new();
+}
+
+public class ListProductRateResult
+{
+    /// <summary>
     /// The average rating of the product.
     /// </summary>
     public float Rate { get; set; }

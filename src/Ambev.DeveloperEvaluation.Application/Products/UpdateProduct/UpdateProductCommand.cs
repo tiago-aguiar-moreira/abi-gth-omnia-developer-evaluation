@@ -48,6 +48,14 @@ public class UpdateProductCommand : IRequest<UpdateProductResult>
     public string Image { get; set; } = string.Empty;
 
     /// <summary>
+    /// The product rating information.
+    /// </summary>
+    public UpdateProductRateCommand Rating { get; set; } = new();
+}
+
+public class UpdateProductRateCommand
+{
+    /// <summary>
     /// The average rating of the product.
     /// </summary>
     public float Rate { get; set; }

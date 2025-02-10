@@ -38,7 +38,6 @@ public class UpdateCartCommand : IRequest<UpdateCartResult>
     public List<UpdateCartItemCommand> Products { get; set; } = [];
 }
 
-
 public class UpdateCartItemCommand
 {
     /// <summary>
