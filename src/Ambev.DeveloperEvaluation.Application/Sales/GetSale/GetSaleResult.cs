@@ -1,9 +1,9 @@
-﻿namespace Ambev.DeveloperEvaluation.Application.Sales.CreateSale;
+﻿namespace Ambev.DeveloperEvaluation.Application.Sales.GetSale;
 
 /// <summary>
-/// Response model for CreateSale operation
+/// Response model for GetSale operation
 /// </summary>
-public class CreateSaleResult
+public class GetSaleResult
 {
     /// <summary>
     /// Unique identifier for the sale.
@@ -43,13 +43,13 @@ public class CreateSaleResult
     /// <summary>
     /// List of sold products.
     /// </summary>
-    public List<CreateSaleItemResult> Products { get; set; } = [];
+    public List<GetSaleItemResult> Products { get; set; } = [];
 }
 
 /// <summary>
 /// Command for creating a sale item.
 /// </summary>
-public class CreateSaleItemResult
+public class GetSaleItemResult
 {
     /// <summary>
     /// Product identifier.

@@ -29,7 +29,7 @@ Content-Type: application/json
 
 ### GET /sales/{id}
 
-GET {{hostAddress}}/api/sales/47716ab3-7499-4ac4-ab9f-6c6d03098561
+GET {{hostAddress}}/api/sales/1b2db7c1-cf0b-4764-9a17-8a22cee27092
 Authorization: Bearer {{token}}
 Accept: application/json
 
