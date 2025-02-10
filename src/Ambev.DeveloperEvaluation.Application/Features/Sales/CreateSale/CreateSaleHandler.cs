@@ -1,4 +1,5 @@
 ﻿using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.Events;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Ambev.DeveloperEvaluation.Domain.Services;
 using AutoMapper;
@@ -15,13 +16,15 @@ public class CreateSaleHandler : IRequestHandler<CreateSaleCommand, CreateSaleRe
     private readonly ISaleRepository _saleRepository;
     private readonly IProductService _productService;
     private readonly IMapper _mapper;
+    private readonly IMediator _mediator;
 
     public CreateSaleHandler(
-        ISaleRepository saleRepository, IProductService productService, IMapper mapper)
+        ISaleRepository saleRepository, IProductService productService, IMapper mapper, IMediator mediator)
     {
         _saleRepository = saleRepository;
         _productService = productService;
         _mapper = mapper;
+        _mediator = mediator;
     }
 
     public async Task<CreateSaleResult> Handle(CreateSaleCommand command, CancellationToken cancellationToken)
@@ -38,8 +41,11 @@ public class CreateSaleHandler : IRequestHandler<CreateSaleCommand, CreateSaleRe
 
         var createSale = await _saleRepository.CreateAsync(sale, cancellationToken);
 
-        return createSale == null
-            ? throw new Exception($"An error occurred while creating the cart with user id {sale.UserId}, sale numer {sale.SaleNumber} and date {sale.SaleDate}.")
-            : _mapper.Map<CreateSaleResult>(createSale);
+        if (createSale == null)
+            throw new Exception($"An error occurred while creating the cart with user id {sale.UserId}, sale numer {sale.SaleNumber} and date {sale.SaleDate}.");
+
+        await _mediator.Publish(new SaleCreatedEvent(createSale), cancellationToken);
+
+        return _mapper.Map<CreateSaleResult>(createSale);
     }
 }

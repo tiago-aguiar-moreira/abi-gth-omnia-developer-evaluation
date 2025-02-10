@@ -1,4 +1,5 @@
 ﻿using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.Events;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Ambev.DeveloperEvaluation.Domain.Services;
 using AutoMapper;
@@ -11,12 +12,14 @@ public class UpdateSaleHandler : IRequestHandler<UpdateSaleCommand, UpdateSaleRe
     private readonly ISaleRepository _saleRepository;
     private readonly IProductService _productService;
     private readonly IMapper _mapper;
+    private readonly IMediator _mediator;
 
-    public UpdateSaleHandler(ISaleRepository saleRepository, IProductService productService, IMapper mapper)
+    public UpdateSaleHandler(ISaleRepository saleRepository, IProductService productService, IMapper mapper, IMediator mediator)
     {
         _saleRepository = saleRepository;
         _productService = productService;
         _mapper = mapper;
+        _mediator = mediator;
     }
 
     public async Task<UpdateSaleResult> Handle(UpdateSaleCommand command, CancellationToken cancellationToken)
@@ -33,8 +36,11 @@ public class UpdateSaleHandler : IRequestHandler<UpdateSaleCommand, UpdateSaleRe
 
         var updatedSale = await _saleRepository.UpdateAsync(sale, cancellationToken);
 
-        return updatedSale == null
-            ? throw new KeyNotFoundException($"Sale with ID {command.Id} not found")
-            : _mapper.Map<UpdateSaleResult>(updatedSale);
+        if (updatedSale == null)
+            throw new KeyNotFoundException($"Sale with ID {command.Id} not found");
+
+        await _mediator.Publish(new SaleModifiedEvent(updatedSale), cancellationToken);
+
+        return _mapper.Map<UpdateSaleResult>(updatedSale);
     }
 }
