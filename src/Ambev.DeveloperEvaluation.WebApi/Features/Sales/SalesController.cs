@@ -1,7 +1,9 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Features.Sales.CreateSale;
+using Ambev.DeveloperEvaluation.Application.Features.Sales.DeleteSale;
 using Ambev.DeveloperEvaluation.Application.Features.Sales.GetSale;
 using Ambev.DeveloperEvaluation.WebApi.Common;
 using Ambev.DeveloperEvaluation.WebApi.Features.Sales.CreateSale;
+using Ambev.DeveloperEvaluation.WebApi.Features.Sales.DeleteSale;
 using Ambev.DeveloperEvaluation.WebApi.Features.Sales.GetSale;
 using AutoMapper;
 using FluentValidation;
@@ -85,5 +87,30 @@ public class SalesController : BaseController
 
         return Ok(
             _mapper.Map<GetSaleResponse>(response), "Sale retrieved successfully");
+    }
+
+    /// <summary>
+    /// Deletes a sale by their ID
+    /// </summary>
+    /// <param name="id">The unique identifier of the sale to delete</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>Success response if the sale was canceled</returns>
+    [HttpDelete("{id}")]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> DeleteSale([FromRoute] Guid id, CancellationToken cancellationToken)
+    {
+        var request = new DeleteSaleRequest { Id = id };
+        var validator = new DeleteSaleRequestValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+
+        if (!validationResult.IsValid)
+            throw new ValidationException(validationResult.Errors);
+
+        var command = _mapper.Map<DeleteSaleCommand>(request.Id);
+        await _mediator.Send(command, cancellationToken);
+
+        return Ok("Sale canceled successfully");
     }
 }

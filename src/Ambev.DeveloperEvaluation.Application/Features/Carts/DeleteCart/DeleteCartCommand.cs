@@ -16,8 +16,5 @@ public class DeleteCartCommand : IRequest<DeleteCartResult>
     /// Initializes a new instance of DeleteCartCommand
     /// </summary>
     /// <param name="id">The ID of the cart to delete</param>
-    public DeleteCartCommand(Guid id)
-    {
-        Id = id;
-    }
+    public DeleteCartCommand(Guid id) => Id = id;
 }

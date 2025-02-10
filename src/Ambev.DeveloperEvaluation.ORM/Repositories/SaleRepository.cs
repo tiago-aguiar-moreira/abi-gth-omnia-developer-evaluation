@@ -47,7 +47,9 @@ public class SaleRepository : ISaleRepository
         if (cart == null)
             return false;
 
-        _context.Sales.Remove(cart);
+        cart.Cancel();
+
+        _context.Sales.Update(cart);
         await _context.SaveChangesAsync(cancellationToken);
         return true;
     }
