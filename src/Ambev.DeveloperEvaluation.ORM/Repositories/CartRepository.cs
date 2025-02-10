@@ -89,10 +89,11 @@ public class CartRepository : ICartRepository
 
             query = property.ToLower() switch
             {
-                "userid" => query.Where(w => w.UserId == (Guid)value),
                 "date" => query.Where(w => w.Date == (DateTime)value),
                 "_mindate" => query.FilterRangeField(property,(DateTime)value),
                 "_maxdate" => query.FilterRangeField(property,(DateTime)value),
+                "userid" => query.Where(w => w.UserId == (Guid)value),
+                "productid" => query.Where(w => w.Products.Any(a => a.ProductId == (Guid)value)),
                 "quantity" => query.Where(w => w.Products.Any(a => a.Quantity == (int)value)),
                 "_minquantity" => query.FilterRangeField(property, (int)value),
                 "_maxquantity" => query.FilterRangeField(property, (int)value),

@@ -1,11 +1,14 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Features.Sales.CreateSale;
 using Ambev.DeveloperEvaluation.Application.Features.Sales.DeleteSale;
 using Ambev.DeveloperEvaluation.Application.Features.Sales.GetSale;
+using Ambev.DeveloperEvaluation.Application.Features.Sales.ListSale;
 using Ambev.DeveloperEvaluation.Application.Features.Sales.UpdateSale;
 using Ambev.DeveloperEvaluation.WebApi.Common;
+using Ambev.DeveloperEvaluation.WebApi.Features.Carts.ListCart;
 using Ambev.DeveloperEvaluation.WebApi.Features.Sales.CreateSale;
 using Ambev.DeveloperEvaluation.WebApi.Features.Sales.DeleteSale;
 using Ambev.DeveloperEvaluation.WebApi.Features.Sales.GetSale;
+using Ambev.DeveloperEvaluation.WebApi.Features.Sales.ListSale;
 using Ambev.DeveloperEvaluation.WebApi.Features.Sales.UpdateSale;
 using AutoMapper;
 using FluentValidation;
@@ -96,7 +99,7 @@ public class SalesController : BaseController
     /// </summary>
     /// <param name="id">The unique identifier of the sale to delete</param>
     /// <param name="cancellationToken">Cancellation token</param>
-    /// <returns>Success response if the sale was canceled</returns>
+    /// <returns>Success response if the sale was deleted</returns>
     [HttpDelete("{id}")]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
@@ -113,7 +116,7 @@ public class SalesController : BaseController
         var command = _mapper.Map<DeleteSaleCommand>(request.Id);
         await _mediator.Send(command, cancellationToken);
 
-        return Ok("Sale canceled successfully");
+        return Ok("Sale deleted successfully");
     }
 
     /// <summary>
@@ -139,5 +142,28 @@ public class SalesController : BaseController
         var response = await _mediator.Send(command, cancellationToken);
 
         return Ok(_mapper.Map<UpdateSaleResponse>(response), "Sale updated successfully");
+    }
+
+    /// <summary>
+    /// Retrieves a list of sales
+    /// </summary>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>The lis of sales if found, empty list if not found</returns>
+    [HttpGet()]
+    [ProducesResponseType(typeof(PaginatedResponse<GetSaleResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> ListCart(ListSaleRequest request, CancellationToken cancellationToken)
+    {
+        var validator = new ListSaleRequestValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+
+        if (!validationResult.IsValid)
+            throw new ValidationException(validationResult.Errors);
+
+        var command = _mapper.Map<ListSaleCommand>(request);
+        var response = await _mediator.Send(command, cancellationToken);
+
+        return OkPaginated(response);
     }
 }

@@ -18,6 +18,7 @@ public class ListCartHandler : IRequestHandler<ListCartCommand, PaginatedList<Li
     /// Initializes a new instance of <see cref="ListCartHandler"/>
     /// </summary>
     /// <param name="cartRepository">The cart repository</param>
+    /// <param name="mapper">The AutoMapper instance</param>
     public ListCartHandler(ICartRepository cartRepository, IMapper mapper)
     {
         _cartRepository = cartRepository;
@@ -40,21 +41,14 @@ public class ListCartHandler : IRequestHandler<ListCartCommand, PaginatedList<Li
 
         var filters = new List<(string PropertyName, object? Value)>
         {
-            (nameof(command.SaleNumber), command.SaleNumber),
-            ("_" + nameof(command.MinSaleNumber), command.MinSaleNumber),
-            ("_" + nameof(command.MaxSaleNumber), command.MaxSaleNumber),
-            (nameof(command.Branch), command.Branch),
-            (nameof(command.SaleDate), command.SaleDate),
-            ("_" + nameof(command.MinSaleDate), command.MinSaleDate),
-            ("_" + nameof(command.MaxSaleDate), command.MaxSaleDate),
-            (nameof(command.IsCanceled), command.IsCanceled),
+            (nameof(command.Date), command.Date),
+            ("_" + nameof(command.MinDate), command.MinDate),
+            ("_" + nameof(command.MaxDate), command.MaxDate),
             (nameof(command.UserId), command.UserId),
+            (nameof(command.ProductId), command.ProductId),
             (nameof(command.Quantity), command.Quantity),
             ("_" + nameof(command.MinQuantity), command.MinQuantity),
-            ("_" + nameof(command.MaxQuantity), command.MaxQuantity),
-            (nameof(command.Price), command.Price),
-            ("_" + nameof(command.MinPrice), command.MinPrice),
-            ("_" + nameof(command.MaxPrice), command.MaxPrice)
+            ("_" + nameof(command.MaxQuantity), command.MaxQuantity)
         };
 
         var carts = await _cartRepository.ListAsync(

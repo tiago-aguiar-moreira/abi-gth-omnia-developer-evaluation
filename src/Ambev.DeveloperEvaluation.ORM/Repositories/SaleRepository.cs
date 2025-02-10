@@ -43,13 +43,11 @@ public class SaleRepository : ISaleRepository
     /// <returns>True if the sale was deleted, false if not found</returns>
     public async Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        var cart = await GetByIdAsync(id, cancellationToken);
-        if (cart == null)
+        var sale = await GetByIdAsync(id, cancellationToken);
+        if (sale == null)
             return false;
 
-        cart.Cancel();
-
-        _context.Sales.Update(cart);
+        _context.Sales.Remove(sale);
         await _context.SaveChangesAsync(cancellationToken);
         return true;
     }
@@ -93,11 +91,13 @@ public class SaleRepository : ISaleRepository
                 "saledate" => query.Where(w => w.SaleDate == (DateTime)value),
                 "_minsaledate" => query.FilterRangeField(property, (DateTime)value),
                 "_maxsaledate" => query.FilterRangeField(property, (DateTime)value),
+                "userid" => query.Where(w => w.UserId == (Guid)value),
                 "totalamount" => query.Where(w => w.TotalAmount == (decimal)value),
                 "_mintotalamount" => query.FilterRangeField(property, (decimal)value),
                 "_maxtotalamount" => query.FilterRangeField(property, (decimal)value),
                 "branch" => query.FilterStringField(property, (string)value),
-                "iscanceled" => query.Where(w => w.Status == (short)value),
+                "status" => query.Where(w => w.Status == (short)value),
+                "productid" => query.Where(w => w.Products.Any(a => a.ProductId == (Guid)value)),
                 "quantity" => query.Where(w => w.Products.Any(a => a.Quantity == (int)value)),
                 "_minquantity" => query.Where(w => w.Products.Any(a => a.Quantity >= (int)value)),
                 "_maxquantity" => query.Where(w => w.Products.Any(a => a.Quantity <= (int)value)),

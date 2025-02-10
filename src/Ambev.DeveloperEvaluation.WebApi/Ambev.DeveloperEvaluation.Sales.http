@@ -3,7 +3,7 @@
 
 ### GET /sales
 
-GET {{hostAddress}}/api/sales?_page=1&_size=2
+GET {{hostAddress}}/api/sales?_page=1&_size=2&totalamount=31589.76
 Authorization: Bearer {{token}}
 Accept: application/json
 
@@ -55,6 +55,6 @@ Content-Type: application/json
 
 ### DELETE /sales/{id}
 
-DELETE {{hostAddress}}/api/sales/1b2db7c1-cf0b-4764-9a17-8a22cee27092
+DELETE {{hostAddress}}/api/sales/12654676-10b0-4080-8c03-aaa1b50d2d95
 Authorization: Bearer {{token}}
 Accept: application/json
