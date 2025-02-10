@@ -16,9 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Sales\DeleteSale\" />
-    <Folder Include="Sales\ListSale\" />
-    <Folder Include="Sales\UpdateSale\" />
+    <Folder Include="Features\Sales\DeleteSale\" />
+    <Folder Include="Features\Sales\ListSale\" />
+    <Folder Include="Features\Sales\UpdateSale\" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-﻿using Ambev.DeveloperEvaluation.Application.Users.ListUsers;
+﻿using Ambev.DeveloperEvaluation.Application.Features.Users.ListUsers;
 using Ambev.DeveloperEvaluation.Common.Helpers;
 using AutoMapper;
 

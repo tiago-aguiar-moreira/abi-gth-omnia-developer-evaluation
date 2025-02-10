@@ -1,4 +1,4 @@
-﻿using Ambev.DeveloperEvaluation.Application.Products.ListProductByCategory;
+﻿using Ambev.DeveloperEvaluation.Application.Features.Products.ListProductByCategory;
 using Ambev.DeveloperEvaluation.Common.Helpers;
 using AutoMapper;
 

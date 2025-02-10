@@ -1,10 +1,10 @@
-﻿using Ambev.DeveloperEvaluation.Application.Products.CreateProduct;
-using Ambev.DeveloperEvaluation.Application.Products.DeleteProduct;
-using Ambev.DeveloperEvaluation.Application.Products.GetProduct;
-using Ambev.DeveloperEvaluation.Application.Products.ListCategory;
-using Ambev.DeveloperEvaluation.Application.Products.ListProduct;
-using Ambev.DeveloperEvaluation.Application.Products.ListProductByCategory;
-using Ambev.DeveloperEvaluation.Application.Products.UpdateProduct;
+﻿using Ambev.DeveloperEvaluation.Application.Features.Products.CreateProduct;
+using Ambev.DeveloperEvaluation.Application.Features.Products.DeleteProduct;
+using Ambev.DeveloperEvaluation.Application.Features.Products.GetProduct;
+using Ambev.DeveloperEvaluation.Application.Features.Products.ListCategory;
+using Ambev.DeveloperEvaluation.Application.Features.Products.ListProduct;
+using Ambev.DeveloperEvaluation.Application.Features.Products.ListProductByCategory;
+using Ambev.DeveloperEvaluation.Application.Features.Products.UpdateProduct;
 using Ambev.DeveloperEvaluation.WebApi.Common;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.CreateProduct;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.DeleteProduct;

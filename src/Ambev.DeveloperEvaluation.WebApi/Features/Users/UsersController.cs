@@ -1,8 +1,8 @@
-﻿using Ambev.DeveloperEvaluation.Application.Users.CreateUser;
-using Ambev.DeveloperEvaluation.Application.Users.DeleteUser;
-using Ambev.DeveloperEvaluation.Application.Users.GetUser;
-using Ambev.DeveloperEvaluation.Application.Users.ListUsers;
-using Ambev.DeveloperEvaluation.Application.Users.UpdateUser;
+﻿using Ambev.DeveloperEvaluation.Application.Features.Users.CreateUser;
+using Ambev.DeveloperEvaluation.Application.Features.Users.DeleteUser;
+using Ambev.DeveloperEvaluation.Application.Features.Users.GetUser;
+using Ambev.DeveloperEvaluation.Application.Features.Users.ListUsers;
+using Ambev.DeveloperEvaluation.Application.Features.Users.UpdateUser;
 using Ambev.DeveloperEvaluation.WebApi.Common;
 using Ambev.DeveloperEvaluation.WebApi.Features.Users.CreateUser;
 using Ambev.DeveloperEvaluation.WebApi.Features.Users.DeleteUser;
