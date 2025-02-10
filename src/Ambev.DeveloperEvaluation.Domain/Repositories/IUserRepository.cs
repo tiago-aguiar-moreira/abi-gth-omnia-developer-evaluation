@@ -49,7 +49,7 @@ public interface IUserRepository
         int? pageNumber,
         int? pageSize,
         List<(string PropertyName, bool Ascendent)> sortingFields,
-        List<(string PropertyName, object?)> filters,
+        List<(string PropertyName, object? Value)> filters,
         CancellationToken cancellationToken = default);
 
     /// <summary>

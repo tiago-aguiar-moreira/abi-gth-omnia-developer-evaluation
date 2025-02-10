@@ -24,7 +24,7 @@ public class ListProductHandler : IRequestHandler<ListProductCommand, PaginatedL
         if (!validationResult.IsValid)
             throw new ValidationException(validationResult.Errors);
 
-        var filters = new List<(string PropertyName, object?)>
+        var filters = new List<(string PropertyName, object? Value)>
         {
             (nameof(command.Title), command.Title),
             (nameof(command.Price), command.Price),

@@ -38,7 +38,7 @@ public class ListCartHandler : IRequestHandler<ListCartCommand, PaginatedList<Li
         if (!validationResult.IsValid)
             throw new ValidationException(validationResult.Errors);
 
-        var filters = new List<(string PropertyName, object?)>
+        var filters = new List<(string PropertyName, object? Value)>
         {
             (nameof(command.SaleNumber), command.SaleNumber),
             ("_" + nameof(command.MinSaleNumber), command.MinSaleNumber),

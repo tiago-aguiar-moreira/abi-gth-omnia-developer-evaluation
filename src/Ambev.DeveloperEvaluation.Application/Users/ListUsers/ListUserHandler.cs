@@ -38,7 +38,7 @@ public class ListUserHandler : IRequestHandler<ListUserCommand, PaginatedList<Li
         if (!validationResult.IsValid)
             throw new ValidationException(validationResult.Errors);
 
-        var filters = new List<(string PropertyName, object?)>
+        var filters = new List<(string PropertyName, object? Value)>
         {
             (nameof(command.Username), command.Username),
             (nameof(command.Email), command.Email),

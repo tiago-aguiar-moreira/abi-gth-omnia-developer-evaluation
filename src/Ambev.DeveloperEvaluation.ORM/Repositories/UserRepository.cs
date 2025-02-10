@@ -83,7 +83,7 @@ public class UserRepository : IUserRepository
         int? pageNumber,
         int? pageSize,
         List<(string PropertyName, bool Ascendent)> sortingFields,
-        List<(string PropertyName, object?)> filters,
+        List<(string PropertyName, object? Value)> filters,
         CancellationToken cancellationToken = default)
     {
         var query = _context.Users.AsQueryable();
