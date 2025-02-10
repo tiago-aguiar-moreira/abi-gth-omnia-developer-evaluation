@@ -30,11 +30,5 @@ public class SaleItemConfiguration : IEntityTypeConfiguration<SaleItem>
 
         builder.Property(ci => ci.CreatedAt)
             .IsRequired();
-
-        builder.Property(c => c.IsCanceled)
-            .IsRequired();
-
-        builder.Property(c => c.CanceledAt)
-            .IsRequired();
     }
 }

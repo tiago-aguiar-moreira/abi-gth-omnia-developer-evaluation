@@ -15,7 +15,7 @@ public class SaleCreatedEventHandler : INotificationHandler<SaleCreatedEvent>
     public Task Handle(SaleCreatedEvent notification, CancellationToken cancellationToken)
     {
         _logger.LogInformation(
-            "Sale number {SaleNumber} created at {CreatedAt}.",
+            "Sale number {SaleNumber} was created at {CreatedAt}.",
             notification.Sale.SaleNumber,
             notification.Sale.CreatedAt);
         return Task.CompletedTask;

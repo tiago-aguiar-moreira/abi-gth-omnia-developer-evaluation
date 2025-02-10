@@ -15,7 +15,7 @@ public class SaleModifiedEventHandler : INotificationHandler<SaleModifiedEvent>
     public Task Handle(SaleModifiedEvent notification, CancellationToken cancellationToken)
     {
         _logger.LogInformation(
-            "Sale number {SaleNumber} modified at {UpdatedAt}.",
+            "Sale number {SaleNumber} was modified at {UpdatedAt}.",
             notification.Sale.SaleNumber,
             notification.Sale.UpdatedAt);
 

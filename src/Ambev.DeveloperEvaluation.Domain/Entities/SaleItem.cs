@@ -28,15 +28,5 @@ public class SaleItem : BaseEntity
     /// </summary>
     public DateTime CreatedAt { get; set; }
 
-    /// <summary>
-    /// Indicates whether the sale is canceled.
-    /// </summary>
-    public bool? IsCanceled { get; set; }
-
-    /// <summary>
-    /// Indicates when the sale was canceled.
-    /// </summary>
-    public DateTime? CanceledAt { get; set; }
-
     public SaleItem() => CreatedAt = DateTime.UtcNow;
 }

@@ -104,7 +104,6 @@ public class CartRepository : ICartRepository
             query.ApplyOrdering(sortingFields), pageNumber, pageSize, cancellationToken);
     }
 
-
     /// <summary>
     /// Updates a cart from the database
     /// </summary>

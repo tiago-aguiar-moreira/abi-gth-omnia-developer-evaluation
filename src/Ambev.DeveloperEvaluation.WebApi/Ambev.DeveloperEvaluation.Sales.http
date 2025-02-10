@@ -1,0 +1,61 @@
+@hostAddress = https://localhost:7181
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJiYzI4OTYwYi1hNzIyLTQxOTQtOWRmNC00ZDdkMWMyYzM3ZmUiLCJ1bmlxdWVfbmFtZSI6IlZhbmVzc2EgZGUgQXpldmVkbyBTaWx2YSIsInJvbGUiOiIzIiwibmJmIjoxNzM5MTI5OTIzLCJleHAiOjE3MzkxNTg3MjMsImlhdCI6MTczOTEyOTkyM30.0UN2_VOjnlvKAY3E0O-HC8gnF-a_m8P7NOg_PQvN8CI
+
+### GET /sales
+
+GET {{hostAddress}}/api/sales?_page=1&_size=2
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### POST /sales
+
+POST {{hostAddress}}/api/sales
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "saleNumber": 15,
+  "saleDate": "2025-02-06T19:52:07",
+  "userId": "bc28960b-a722-4194-9df4-4d7d1c2c37fe",
+  "branch": "Filial ABC",
+  "status": 1,
+  "products": [
+    {
+      "productId": "bd3f2060-d319-4849-8429-a5a7da423440",
+      "quantity": 25
+    }
+  ]
+}
+
+### GET /sales/{id}
+
+GET {{hostAddress}}/api/sales/47716ab3-7499-4ac4-ab9f-6c6d03098561
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### PUT /sales/{id}
+
+PUT {{hostAddress}}/api/sales/47716ab3-7499-4ac4-ab9f-6c6d03098561
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "userId": "bc28960b-a722-4194-9df4-4d7d1c2c37fe",
+  "date": "2025-02-01T17:52:07",
+  "products": [
+    {
+      "productId": "982b5660-8050-477f-8b48-ccb6592e941a",
+      "quantity": 23
+    },
+    {
+      "productId": "bd3f2060-d319-4849-8429-a5a7da423440",
+      "quantity": 10
+    }
+  ]
+}
+
+### DELETE /sales/{id}
+
+DELETE {{hostAddress}}/api/sales/47716ab3-7499-4ac4-ab9f-6c6d03098561
+Authorization: Bearer {{token}}
+Accept: application/json

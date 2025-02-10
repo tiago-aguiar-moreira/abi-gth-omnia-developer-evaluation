@@ -24,10 +24,9 @@ public class SaleConfiguration : IEntityTypeConfiguration<Sale>
             .IsRequired()
             .HasMaxLength(100);
 
-        builder.Property(c => c.IsCanceled)
-            .IsRequired();
-
-        builder.Property(c => c.CanceledAt)
+        builder.Property(c => c.Status)
+            .HasConversion<short>()
+            .HasColumnType("smallint")
             .IsRequired();
 
         builder.Property(c => c.CreatedAt)

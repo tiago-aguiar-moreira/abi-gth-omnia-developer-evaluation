@@ -15,9 +15,7 @@ public class SaleCancelledEventHandler : INotificationHandler<SaleCancelledEvent
     public Task Handle(SaleCancelledEvent notification, CancellationToken cancellationToken)
     {
         _logger.LogInformation(
-            "Sale number {SaleNumber} cancelled at {CanceledAt}.",
-            notification.Sale.SaleNumber,
-            notification.Sale.CanceledAt);
+            "Sale number {SaleNumber} was cancelled.", notification.Sale.SaleNumber);
 
         return Task.CompletedTask;
     }

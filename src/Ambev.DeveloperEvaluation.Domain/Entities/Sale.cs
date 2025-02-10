@@ -1,4 +1,5 @@
 ﻿using Ambev.DeveloperEvaluation.Domain.Common;
+using Ambev.DeveloperEvaluation.Domain.Enums;
 
 namespace Ambev.DeveloperEvaluation.Domain.Entities;
 public class Sale : BaseEntity
@@ -34,14 +35,9 @@ public class Sale : BaseEntity
     public List<SaleItem> Products { get; set; } = [];
 
     /// <summary>
-    /// Indicates whether the sale is canceled.
+    /// Indicates whether the sale is active/canceled.
     /// </summary>
-    public bool IsCanceled { get; set; }
-
-    /// <summary>
-    /// Indicates when the sale was canceled.
-    /// </summary>
-    public DateTime CanceledAt { get; set; }
+    public short Status { get; set; }
 
     /// <summary>
     /// Gets the date and time when the user was created.
@@ -61,16 +57,16 @@ public class Sale : BaseEntity
     /// </summary>
     public void Cancel()
     {
-        IsCanceled = true;
+        Status = (short)SaleStatus.Canceled;
         UpdatedAt = DateTime.UtcNow;
     }
 
-    public void Update(int saleNumber, DateTime saleDate, string branch, bool isCanceled)
+    public void Update(int saleNumber, DateTime saleDate, string branch, short status)
     {
         SaleNumber = saleNumber;
         SaleDate = saleDate;
         Branch = branch;
-        IsCanceled = isCanceled;
+        Status = status;
         UpdatedAt = DateTime.UtcNow;
 
         ApplyDiscounts();

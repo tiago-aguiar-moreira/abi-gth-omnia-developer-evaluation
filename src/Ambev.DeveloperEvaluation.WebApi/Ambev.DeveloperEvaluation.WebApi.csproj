@@ -24,4 +24,11 @@
     <ProjectReference Include="..\Ambev.DeveloperEvaluation.IoC\Ambev.DeveloperEvaluation.IoC.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Sales\DeleteSale\" />
+    <Folder Include="Features\Sales\GetSale\" />
+    <Folder Include="Features\Sales\ListSale\" />
+    <Folder Include="Features\Sales\UpdateSale\" />
+  </ItemGroup>
+
 </Project>
