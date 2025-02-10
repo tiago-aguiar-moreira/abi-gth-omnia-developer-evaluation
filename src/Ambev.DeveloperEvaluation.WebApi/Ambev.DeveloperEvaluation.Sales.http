@@ -29,27 +29,26 @@ Content-Type: application/json
 
 ### GET /sales/{id}
 
-GET {{hostAddress}}/api/sales/1b2db7c1-cf0b-4764-9a17-8a22cee27092
+GET {{hostAddress}}/api/sales/53037054-0a02-44fa-93d7-c9df5093e953
 Authorization: Bearer {{token}}
 Accept: application/json
 
 ### PUT /sales/{id}
 
-PUT {{hostAddress}}/api/sales/47716ab3-7499-4ac4-ab9f-6c6d03098561
+PUT {{hostAddress}}/api/sales/53037054-0a02-44fa-93d7-c9df5093e953
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
+  "saleNumber": 15,
+  "saleDate": "2025-02-07T19:52:07",
   "userId": "bc28960b-a722-4194-9df4-4d7d1c2c37fe",
-  "date": "2025-02-01T17:52:07",
+  "branch": "Filial ABC",
+  "status": 1,
   "products": [
     {
-      "productId": "982b5660-8050-477f-8b48-ccb6592e941a",
-      "quantity": 23
-    },
-    {
       "productId": "bd3f2060-d319-4849-8429-a5a7da423440",
-      "quantity": 10
+      "quantity": 27
     }
   ]
 }

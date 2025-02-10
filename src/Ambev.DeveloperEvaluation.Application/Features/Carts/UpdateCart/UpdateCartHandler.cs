@@ -45,7 +45,8 @@ public class UpdateCartHandler : IRequestHandler<UpdateCartCommand, UpdateCartRe
 
         var cart = _mapper.Map<Cart>(command);
 
-        await _productService.CheckProductAsync(cart.Products, cancellationToken);
+        await _productService.CheckProductAsync(
+            cart.Products.Select(s => s.ProductId).Distinct(), cancellationToken);
 
         var updatedCart = await _cartRepository.UpdateAsync(cart, cancellationToken);
 

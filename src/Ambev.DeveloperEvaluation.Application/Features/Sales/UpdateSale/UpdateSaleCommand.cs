@@ -1,9 +1,8 @@
-﻿namespace Ambev.DeveloperEvaluation.Application.Features.Sales.GetSale;
+﻿using MediatR;
 
-/// <summary>
-/// Response model for GetSale operation
-/// </summary>
-public class GetSaleResult
+namespace Ambev.DeveloperEvaluation.Application.Features.Sales.UpdateSale;
+
+public class UpdateSaleCommand : IRequest<UpdateSaleResult>
 {
     /// <summary>
     /// Unique identifier for the sale.
@@ -26,11 +25,6 @@ public class GetSaleResult
     public Guid UserId { get; set; }
 
     /// <summary>
-    /// Total amount of the sale.
-    /// </summary>
-    public decimal TotalAmount { get; set; }
-
-    /// <summary>
     /// Branch where the sale took place.
     /// </summary>
     public string? Branch { get; set; }
@@ -43,10 +37,10 @@ public class GetSaleResult
     /// <summary>
     /// List of sold products.
     /// </summary>
-    public List<GetSaleItemResult> Products { get; set; } = [];
+    public List<UpdateSaleItemCommand> Products { get; set; } = [];
 }
 
-public class GetSaleItemResult
+public class UpdateSaleItemCommand
 {
     /// <summary>
     /// Product identifier.
@@ -57,14 +51,4 @@ public class GetSaleItemResult
     /// Quantity of the product sold.
     /// </summary>
     public int Quantity { get; set; }
-
-    /// <summary>
-    /// Price per unit of the product.
-    /// </summary>
-    public decimal UnitPrice { get; set; }
-
-    /// <summary>
-    /// Discount applied to the product.
-    /// </summary>
-    public decimal Discount { get; set; }
 }

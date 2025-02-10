@@ -50,7 +50,8 @@ public class CreateCartHandler : IRequestHandler<CreateCartCommand, CreateCartRe
 
         var cart = _mapper.Map<Cart>(command);
 
-        await _productService.CheckProductAsync(cart.Products, cancellationToken);
+        await _productService.CheckProductAsync(
+            cart.Products.Select(s => s.ProductId).Distinct(), cancellationToken);
 
         var createdCart = await _cartRepository.CreateAsync(cart, cancellationToken);
 

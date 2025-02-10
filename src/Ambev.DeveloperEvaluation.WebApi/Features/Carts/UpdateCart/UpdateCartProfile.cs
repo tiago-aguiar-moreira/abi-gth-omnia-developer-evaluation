@@ -19,8 +19,6 @@ public class UpdateCartProfile : Profile
             .ConstructUsing((src, ctx) => new UpdateCartCommand
             {
                 Id = ctx.Items["Id"] as Guid? ?? Guid.Empty,
-                //Date = src.Date,
-                //UserId = src.UserId,
                 Products = ctx.Mapper.Map<List<UpdateCartItemCommand>>(src.Products)
             }).ForMember(dest => dest.Id, opt => opt.Ignore());
 

@@ -26,15 +26,14 @@ public class ProductService : IProductService
         }
     }
 
-    public async Task CheckProductAsync(List<CartItem> cartItems, CancellationToken cancellationToken)
+    public async Task CheckProductAsync(IEnumerable<Guid> productIds, CancellationToken cancellationToken)
     {
-        var productIds = cartItems.Select(s => s.ProductId).Distinct();
         var products = await _productRepository.ListAsync(productIds, cancellationToken);
 
-        foreach (var item in cartItems)
+        foreach (var productId in productIds)
         {
-            var selectedProduct = products.FirstOrDefault(f => f.Id == item.ProductId)
-                ?? throw new KeyNotFoundException($"Product with ID {item.ProductId} not found");
+            var selectedProduct = products.FirstOrDefault(f => f.Id == productId)
+                ?? throw new KeyNotFoundException($"Product with ID {productId} not found");
         }
     }
 }

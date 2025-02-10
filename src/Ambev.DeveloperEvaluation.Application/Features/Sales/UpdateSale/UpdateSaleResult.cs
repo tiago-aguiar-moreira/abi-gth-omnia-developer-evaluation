@@ -1,9 +1,9 @@
-﻿namespace Ambev.DeveloperEvaluation.Application.Features.Sales.GetSale;
+﻿namespace Ambev.DeveloperEvaluation.Application.Features.Sales.UpdateSale;
 
 /// <summary>
-/// Response model for GetSale operation
+/// Response model for UpdateSale operation
 /// </summary>
-public class GetSaleResult
+public class UpdateSaleResult
 {
     /// <summary>
     /// Unique identifier for the sale.
@@ -43,10 +43,11 @@ public class GetSaleResult
     /// <summary>
     /// List of sold products.
     /// </summary>
-    public List<GetSaleItemResult> Products { get; set; } = [];
+    public List<UpdateSaleItemResult> Products { get; set; } = [];
 }
 
-public class GetSaleItemResult
+
+public class UpdateSaleItemResult
 {
     /// <summary>
     /// Product identifier.
